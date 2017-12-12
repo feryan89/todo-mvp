@@ -20,7 +20,7 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     private Unbinder unbinder;
     private View rootView;
 
-    /********* Lifecycle Methods Implementation ********/
+    /********* Lifecycle Methods ********/
 
     @Override
     @CallSuper
@@ -43,7 +43,7 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
         super.onDestroy();
     }
 
-    /********* View Interface Methods Implementation ********/
+    /********* BaseContract.View Inherited Methods ********/
 
     @Override
     public void hideKeyboard() {
@@ -64,6 +64,11 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     @Override
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
     }
 
     /********* Member Methods  ********/

@@ -16,10 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:background="@color/all_primary"
-            android:elevation="@dimen/toolbar_elevation" />
+            android:elevation="@dimen/toolbar_elevation"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/AppTheme.Toolbar.Primary" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/tasks_recyclerview_tasks"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

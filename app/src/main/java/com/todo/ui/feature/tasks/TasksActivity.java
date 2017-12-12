@@ -2,15 +2,24 @@ package com.todo.ui.feature.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.todo.R;
+import com.todo.data.model.Task;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.addedittask.AddEditTaskActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,6 +32,11 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     /********* Butterknife View Binding Fields  ********/
 
+    @BindView(R.id.tasks_recyclerview_tasks)
+    RecyclerView recyclerViewTasks;
+
+    private TasksAdapter tasksAdapter;
+
     /********* Lifecycle Methods Implementation ********/
 
     @Override
@@ -31,7 +45,15 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         setContentView(R.layout.tasks_activity);
         setUnbinder(ButterKnife.bind(this));
         setupToolbar();
+        setupRecyclerview();
         presenter.attachView(this);
+        presenter.getTasks();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.tasks_menu, menu);
+        return true;
     }
 
     /********* DaggerActivity Inherited Methods ********/
@@ -48,6 +70,11 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         startActivity(intent);
     }
 
+    @Override
+    public void showTasks(List<Task> tasks) {
+        tasksAdapter.updateTasks(tasks);
+    }
+
     /********* Butterknife Binded Methods  ********/
 
     @OnClick(R.id.tasks_button_add_task)
@@ -60,6 +87,14 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     private void setupToolbar() {
         Toolbar myToolbar = findViewById(R.id.tasks_toolbar);
         setSupportActionBar(myToolbar);
+    }
+
+    private void setupRecyclerview() {
+        tasksAdapter = new TasksAdapter(new ArrayList<>());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewTasks.setLayoutManager(linearLayoutManager);
+        recyclerViewTasks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerViewTasks.setAdapter(tasksAdapter);
     }
 
 }

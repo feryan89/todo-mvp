@@ -11,17 +11,13 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(
-        modules = {
-                ApplicationModule.class,
-                ThreadingModule.class,
-                UtilsModule.class,
-                DataModule.class,
-        }
-)
+@Component(modules = {ApplicationModule.class, ThreadingModule.class, UtilsModule.class, DataModule.class,})
 public interface ApplicationComponent extends ApplicationComponentInjects, ApplicationComponentExposes {
 
     final class Initializer {
+
+        private Initializer() {
+        }
 
         public static ApplicationComponent init(final TodoApplication todoApplication) {
             return DaggerApplicationComponent.builder()
@@ -30,9 +26,6 @@ public interface ApplicationComponent extends ApplicationComponentInjects, Appli
                     .utilsModule(new UtilsModule())
                     .dataModule(new DataModule())
                     .build();
-        }
-
-        private Initializer() {
         }
     }
 }

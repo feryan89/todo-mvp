@@ -17,9 +17,16 @@ import javax.inject.Inject;
 
 public class EmailValidator {
 
+    /********* Constant Fields  ********/
+
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    /********* Member Fields  ********/
+
     private Pattern pattern;
     private Resources resources;
+
+    /********* Constructors ********/
 
     @Inject
     public EmailValidator(Resources resources) {
@@ -27,12 +34,8 @@ public class EmailValidator {
         this.resources = resources;
     }
 
-    /**
-     * Validate hex with regular expression
-     *
-     * @param email email for validation
-     * @return true valid email, false invalid email
-     */
+    /********* Member Methods  ********/
+
     public ValidationResultViewModel validate(final String email) {
 
         Matcher matcher = pattern.matcher(email);

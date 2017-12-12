@@ -17,8 +17,6 @@ public final class LauncherActivity extends BaseActivity implements LauncherCont
     @Inject
     LauncherContract.Presenter presenter;
 
-    /********* Butterknife View Binding Fields  ********/
-
     /********* Lifecycle Methods Implementation ********/
 
     @Override
@@ -29,6 +27,7 @@ public final class LauncherActivity extends BaseActivity implements LauncherCont
     }
 
     /********* DaggerActivity Inherited Methods ********/
+
     @Override
     protected void inject(final ActivityComponent activityComponent) {
         activityComponent.inject(this);

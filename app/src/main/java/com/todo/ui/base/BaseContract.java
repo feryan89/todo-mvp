@@ -15,6 +15,8 @@ public interface BaseContract {
 
         void showToast(String message);
 
+        void finishActivity();
+
     }
 
     interface Presenter<V extends BaseContract.View> {

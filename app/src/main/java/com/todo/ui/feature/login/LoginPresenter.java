@@ -72,7 +72,8 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
         });
 
         Observable.combineLatest(emailValidObservable, passwordValidObservable,
-                (emailValidResult, passwordValidResult) -> emailValidResult.isValid() && passwordValidResult.isValid())
+                (emailValidResult, passwordValidResult)
+                        -> emailValidResult.isValid() && passwordValidResult.isValid())
                 .subscribe(isValid -> {
                     if (isValid)
                         getView().enableLoginButton();

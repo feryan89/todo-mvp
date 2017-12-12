@@ -9,6 +9,6 @@ public interface AddEditTaskContract {
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
-
+        void createTask(String title,long deadline,short priority);
     }
 }

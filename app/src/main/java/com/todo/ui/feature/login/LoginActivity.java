@@ -54,7 +54,7 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
     @BindView(R.id.login_progress_bar)
     ProgressBar progressBar;
 
-    /********* Lifecycle Methods Implementation ********/
+    /********* Lifecycle Methods ********/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,8 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
         presenter.bindLoginFormObservables(getEmailObservable(), getPasswordObservable());
     }
 
-    /********* DaggerActivity Inherited Methods ********/
+    /********* BaseActivity Inherited Methods ********/
+
     @Override
     protected void inject(final ActivityComponent activityComponent) {
         activityComponent.inject(this);

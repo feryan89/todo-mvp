@@ -9,13 +9,23 @@ import com.todo.di.component.ActivityComponent;
 
 public abstract class DaggerActivity extends AppCompatActivity {
 
+    /********* Member Fields  ********/
+
     private ActivityComponent activityComponent;
+
+    /********* Lifecycle Methods ********/
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inject(getActivityComponent());
     }
+
+    /********* Abstract Methods ********/
+
+    protected abstract void inject(final ActivityComponent activityComponent);
+
+    /********* Member Methods  ********/
 
     public ActivityComponent getActivityComponent() {
         if (activityComponent == null) {
@@ -28,5 +38,4 @@ public abstract class DaggerActivity extends AppCompatActivity {
         return ((TodoApplication) getApplication());
     }
 
-    protected abstract void inject(final ActivityComponent activityComponent);
 }

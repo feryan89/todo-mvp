@@ -8,6 +8,8 @@ import com.todo.ui.validator.EmailValidator;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public final class TasksPresenter extends BasePresenter<TasksContract.View> implements TasksContract.Presenter {
 
     /********* Dagger Injected Fields  ********/
@@ -27,15 +29,22 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
         super();
     }
 
-    /********* BaseContract.Presenter Interface Methods Implementation ********/
-
-    /********* LauncherContract.Presenter Interface Methods Implementation ********/
+    /********* LauncherContract.Presenter Interface Methods ********/
 
     @Override
     public void addTask() {
         getView().showAddEditTaskActivity();
     }
 
-    /********* Member Methods Implementation ********/
+    @Override
+    public void getTasks() {
+        todoRepository.getTasks()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(tasks -> {
+                    getView().showTasks(tasks);
+                }, Timber::e);
+    }
+
 
 }

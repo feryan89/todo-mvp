@@ -12,11 +12,13 @@ import com.todo.util.RxFirebaseUtils;
 public class RemoteDataSource {
 
 
-    protected FirebaseDatabase firebaseDatabase;
-    protected FirebaseAuth firebaseAuth;
-    protected RxFirebaseUtils rxFirebaseUtils;
+    final static String FIREBASE_CHILD_KEY_TASKS = "tasks";
 
-    public RemoteDataSource(FirebaseDatabase firebaseDatabase, FirebaseAuth firebaseAuth,RxFirebaseUtils rxFirebaseUtils) {
+    FirebaseDatabase firebaseDatabase;
+    FirebaseAuth firebaseAuth;
+    RxFirebaseUtils rxFirebaseUtils;
+
+    RemoteDataSource(FirebaseDatabase firebaseDatabase, FirebaseAuth firebaseAuth, RxFirebaseUtils rxFirebaseUtils) {
         this.firebaseDatabase = firebaseDatabase;
         this.firebaseAuth = firebaseAuth;
         this.rxFirebaseUtils=rxFirebaseUtils;

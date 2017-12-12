@@ -70,7 +70,7 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
 
     }
 
-    /********* DaggerActivity Inherited Methods ********/
+    /********* BaseActivity Inherited Methods ********/
 
     @Override
     protected void inject(final ActivityComponent activityComponent) {

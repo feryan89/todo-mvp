@@ -1,8 +1,12 @@
 package com.todo.data.repository;
 
+import com.todo.data.model.Task;
 import com.todo.data.source.UserRemoteDataSource;
 
+import java.util.List;
+
 import rx.Completable;
+import rx.Observable;
 import rx.Single;
 
 /**
@@ -12,11 +16,17 @@ import rx.Single;
 
 public class TodoRepositoryImpl implements TodoRepository {
 
+    /********* Member Fields  ********/
+
     private UserRemoteDataSource userRemoteDataSource;
+
+    /********* Constructors ********/
 
     public TodoRepositoryImpl(UserRemoteDataSource userRemoteDataSource) {
         this.userRemoteDataSource = userRemoteDataSource;
     }
+
+    /********* TodoRepository Inherited Methods ********/
 
     @Override
     public Single<Boolean> isUserLoggedIn() {
@@ -25,13 +35,23 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     @Override
     public Completable login(String email, String password) {
-        return Completable.fromSingle(userRemoteDataSource.login(email, password));
+        return userRemoteDataSource.login(email, password);
 
     }
 
     @Override
     public Completable register(String email, String password) {
-        return Completable.fromSingle(userRemoteDataSource.register(email, password));
+        return userRemoteDataSource.register(email, password);
+    }
+
+    @Override
+    public Observable<List<Task>> getTasks() {
+        return userRemoteDataSource.getTasks();
+    }
+
+    @Override
+    public void createTask(String title, long deadline, short priority) {
+        userRemoteDataSource.createTask(title, deadline, priority);
     }
 
 }

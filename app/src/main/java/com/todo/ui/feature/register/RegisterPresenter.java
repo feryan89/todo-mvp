@@ -27,12 +27,6 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
     @Inject
     EmailValidator emailValidator;
 
-    /********* Constructors ********/
-
-    public RegisterPresenter() {
-        super();
-    }
-
     /********* RegisterContract.Presenter Inherited Methods ********/
 
     @Override

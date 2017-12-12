@@ -9,6 +9,13 @@ import android.support.annotation.Nullable;
 
 public final class ValidationResultViewModel {
 
+    /********* Member Fields  ********/
+
+    private boolean valid;
+    private String errorMessage;
+
+    /********* Static Methods  ********/
+
     public static ValidationResultViewModel success() {
         return new ValidationResultViewModel(true, null);
     }
@@ -17,13 +24,9 @@ public final class ValidationResultViewModel {
         return new ValidationResultViewModel(false, errorMessage);
     }
 
-    private boolean valid;
-    private String errorMessage;
+    /********* Constructors ********/
 
-    public ValidationResultViewModel() {
-    }
-
-    public ValidationResultViewModel(boolean valid, String errorMessage) {
+    private ValidationResultViewModel(boolean valid, String errorMessage) {
         this.valid = valid;
         this.errorMessage = errorMessage;
     }
