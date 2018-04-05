@@ -44,8 +44,8 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tasks_activity);
         setUnbinder(ButterKnife.bind(this));
-        setupToolbar();
-        setupRecyclerview();
+        initializeToolbar();
+        initializeRecyclerView();
         presenter.attachView(this);
         presenter.getTasks();
     }
@@ -84,17 +84,26 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     /********* Member Methods  ********/
 
-    private void setupToolbar() {
+    private void initializeToolbar() {
         Toolbar myToolbar = findViewById(R.id.tasks_toolbar);
         setSupportActionBar(myToolbar);
     }
 
-    private void setupRecyclerview() {
+    private void initializeRecyclerView() {
+
         tasksAdapter = new TasksAdapter(new ArrayList<>());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewTasks.setAdapter(tasksAdapter);
+        tasksAdapter.onItemClick()
+                .subscribe(this::onTaskSelected);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewTasks.setLayoutManager(linearLayoutManager);
         recyclerViewTasks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerViewTasks.setAdapter(tasksAdapter);
+
+    }
+
+    private void onTaskSelected(final Task task) {
+
     }
 
 }

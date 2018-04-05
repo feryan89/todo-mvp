@@ -50,7 +50,7 @@ public class TodoRepositoryImpl implements TodoRepository {
     }
 
     @Override
-    public void createTask(String title, long deadline, short priority) {
+    public void createTask(String title, long deadline, int priority) {
         userRemoteDataSource.createTask(title, deadline, priority);
     }
 

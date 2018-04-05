@@ -10,9 +10,14 @@ import com.todo.R;
 import com.todo.data.model.Task;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.Observable;
+import rx.subjects.BehaviorSubject;
+import rx.subjects.Subject;
 
 /**
  * @author Waleed Sarwar
@@ -21,9 +26,14 @@ import butterknife.ButterKnife;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemViewHolder> {
 
+
+    private static final long CLICK_THROTTLE_WINDOW_MILLIS = 300L;
+
     /********* Member Fields  ********/
 
     private List<Task> tasks;
+
+    private final Subject<Task, Task> onItemClickSubject = BehaviorSubject.create();
 
     /********* Constructors ********/
 
@@ -37,13 +47,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
     public TaskItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
-        return new TaskItemViewHolder(itemView);
+        return new TaskItemViewHolder(itemView, onItemClickSubject);
     }
 
     @Override
     public void onBindViewHolder(TaskItemViewHolder holder, int position) {
-        Task task = tasks.get(position);
-        holder.textViewTitle.setText(task.getTitle());
+        holder.setItem(tasks.get(position));
     }
 
     @Override
@@ -59,6 +68,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
         notifyDataSetChanged();
     }
 
+    public Observable<Task> onItemClick() {
+        return onItemClickSubject.throttleFirst(CLICK_THROTTLE_WINDOW_MILLIS, TimeUnit.MILLISECONDS);
+    }
+
+
     /********* Nested Classes  ********/
 
     class TaskItemViewHolder extends RecyclerView.ViewHolder {
@@ -72,9 +86,28 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
         @BindView(R.id.task_textview_deadline)
         TextView textViewDeadline;
 
-        TaskItemViewHolder(View itemView) {
+
+        private Task task;
+        private final Subject<Task, Task> clickSubject;
+
+        public TaskItemViewHolder(View itemView, Subject<Task, Task> clickSubject) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            ButterKnife.bind(this,itemView);
+            this.clickSubject = clickSubject;
         }
+
+        public void setItem(final Task task) {
+            this.task = task;
+            textViewTitle.setText(task.getTitle());
+
+        }
+
+
+        @OnClick(R.id.task_layout)
+        void onTaskClick() {
+            clickSubject.onNext(task);
+        }
+
+
     }
 }

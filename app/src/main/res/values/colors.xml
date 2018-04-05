@@ -8,4 +8,10 @@
     <color name="all_primary_dark">#FFA12F2F</color>
     <color name="all_accent">#FFFFCB2B</color>
     <color name="all_text_input_error">#FFD50000</color>
+
+
+    <color name="all_color_divider">#1FFFFFFF</color>
+
+
+    <color name="colorGray00">#4D000000</color>
 </resources>

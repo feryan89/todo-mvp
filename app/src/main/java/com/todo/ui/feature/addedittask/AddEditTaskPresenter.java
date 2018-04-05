@@ -29,7 +29,7 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
     }
 
     @Override
-    public void createTask(String title, long deadline, short priority) {
+    public void createTask(String title, long deadline, int priority) {
         if (Strings.isNotBlank(title)) {
             todoRepository.createTask(title, deadline, priority);
             getView().finishActivity();

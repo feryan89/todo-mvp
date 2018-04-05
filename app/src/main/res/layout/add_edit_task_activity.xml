@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_edit_task_label_priority"
+                    android:text="@string/all_label_priority"
                     android:textColor="@color/black"
                     android:textSize="@dimen/typography_body1" />
 
@@ -134,7 +134,7 @@
                     android:id="@+id/add_edit_task_text_view_priority"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_edit_task_label_normal"
+                    android:text="@string/all_label_priority_1"
                     android:textSize="@dimen/typography_caption" />
 
             </LinearLayout>

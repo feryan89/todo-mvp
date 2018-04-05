@@ -3,6 +3,7 @@ package com.todo.ui.feature.addedittask;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.FragmentManager;
 import android.text.format.DateUtils;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     private int startDay;
 
     private long deadline;
-    private short priority;
+    private int priority;
 
     /********* Lifecycle Methods ********/
 
@@ -77,13 +78,15 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
             this.startDay = dayOfMonth;
             calendar.set(startYear, startMonth, startDay);
 
+            updateDeadlineTextView(calendar.getTimeInMillis());
+
         }, startYear, startMonth, startDay);
         dialog.show();
     }
 
     @OnClick(R.id.add_edit_task_linear_layout_priority)
     public void linearLayoutPriorityClicked() {
-
+        showSelectPriorityDialog();
     }
 
     @OnClick(R.id.add_edit_task_button_done)
@@ -114,21 +117,27 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     }
 
     private void updatePriorityTextView(int priority) {
-
+        this.priority = priority;
         switch (priority) {
             case Task.PRIORITY_1:
-                textViewPriority.setText(R.string.add_edit_task_label_priority_1);
+                textViewPriority.setText(R.string.all_label_priority_1);
                 break;
             case Task.PRIORITY_2:
-                textViewPriority.setText(R.string.add_edit_task_label_priority_1);
+                textViewPriority.setText(R.string.all_label_priority_2);
                 break;
             case Task.PRIORITY_3:
-                textViewPriority.setText(R.string.add_edit_task_label_priority_1);
+                textViewPriority.setText(R.string.all_label_priority_3);
                 break;
             case Task.PRIORITY_4:
-                textViewPriority.setText(R.string.add_edit_task_label_priority_1);
+                textViewPriority.setText(R.string.all_label_priority_4);
                 break;
         }
+    }
+
+    private void showSelectPriorityDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SelectPriorityDialog selectPriorityDialog = SelectPriorityDialog.newInstance(this::updatePriorityTextView);
+        selectPriorityDialog.show(fragmentManager, SelectPriorityDialog.TAG);
     }
 
 }
