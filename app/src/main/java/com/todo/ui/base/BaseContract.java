@@ -1,5 +1,10 @@
 package com.todo.ui.base;
 
+
+import android.view.View;
+
+import rx.Observable;
+
 /**
  * @author Waleed Sarwar
  * @since Nov 25, 2017
@@ -11,9 +16,14 @@ public interface BaseContract {
 
         void hideKeyboard();
 
-        void showSnackBar(String message);
+        void showSnackBar(final String message);
 
-        void showToast(String message);
+        void showSnackBar(final String message, final String action, android.view.View.OnClickListener onClickListener);
+
+        void showSnackBar(int messageRes, final int actionRes, android.view.View.OnClickListener onClickListener);
+
+
+        void showToast(final String message);
 
         void finishActivity();
 

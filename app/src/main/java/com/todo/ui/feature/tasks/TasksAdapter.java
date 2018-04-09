@@ -1,6 +1,8 @@
 package com.todo.ui.feature.tasks;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 
 import com.todo.R;
 import com.todo.data.model.Task;
+import com.todo.util.UiUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -68,6 +71,18 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
         notifyDataSetChanged();
     }
 
+    public Task removeTask(int position) {
+        Task task = tasks.get(position);
+        tasks.remove(position);
+        notifyItemRemoved(position);
+        return task;
+    }
+
+    public void restoreTask(Task task, int position) {
+        tasks.add(position, task);
+        notifyItemInserted(position);
+    }
+
     public Observable<Task> onItemClick() {
         return onItemClickSubject.throttleFirst(CLICK_THROTTLE_WINDOW_MILLIS, TimeUnit.MILLISECONDS);
     }
@@ -76,6 +91,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
     /********* Nested Classes  ********/
 
     class TaskItemViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.task_delete_layout)
+        ConstraintLayout taskDeleteLayout;
+
+        @BindView(R.id.task_completed_layout)
+        ConstraintLayout taskCompletedLayout;
+
+        @BindView(R.id.task_layout)
+        ConstraintLayout taskLayout;
+
 
         @BindView(R.id.task_view_priority)
         View viewPriority;
@@ -92,13 +117,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
         public TaskItemViewHolder(View itemView, Subject<Task, Task> clickSubject) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             this.clickSubject = clickSubject;
         }
 
         public void setItem(final Task task) {
             this.task = task;
             textViewTitle.setText(task.getTitle());
+            textViewDeadline.setText(DateUtils.getRelativeTimeSpanString(task.getDeadline(), System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS));
+            viewPriority.setBackgroundResource(UiUtils.getPriorityColorRes(task.getPriority()));
 
         }
 

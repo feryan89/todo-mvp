@@ -2,11 +2,14 @@ package com.todo.ui.feature.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
+import android.view.View;
 
 import com.todo.R;
 import com.todo.data.model.Task;
@@ -22,8 +25,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
-public final class TasksActivity extends BaseActivity implements TasksContract.View {
+public final class TasksActivity extends BaseActivity implements TasksContract.View, TaskItemTouchHelper.TaskItemTouchHelperCallback {
 
     /********* Dagger Injected Fields  ********/
 
@@ -75,6 +81,22 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         tasksAdapter.updateTasks(tasks);
     }
 
+
+    /********* askItemTouchHelper.TaskItemTouchHelperCallback Implemented Methods ********/
+
+
+    @Override
+    public void onTaskDeleted(int position) {
+        final Task removedTask = tasksAdapter.removeTask(position);
+        showSnackBar(R.string.tasks_message_deleted, R.string.tasks_action_undo, v -> tasksAdapter.restoreTask(removedTask, position));
+    }
+
+    @Override
+    public void onTaskCompleted(int position) {
+        final Task removedTask = tasksAdapter.removeTask(position);
+        showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo, v -> tasksAdapter.restoreTask(removedTask, position));
+    }
+
     /********* Butterknife Binded Methods  ********/
 
     @OnClick(R.id.tasks_button_add_task)
@@ -98,12 +120,16 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewTasks.setLayoutManager(linearLayoutManager);
+        recyclerViewTasks.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTasks.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new TaskItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerViewTasks);
 
     }
 
     private void onTaskSelected(final Task task) {
 
     }
+
 
 }

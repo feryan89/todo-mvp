@@ -9,9 +9,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.todo.R;
 import com.todo.di.DaggerActivity;
 
+
 import butterknife.Unbinder;
+import rx.Emitter;
+import rx.Observable;
 
 public abstract class BaseActivity extends DaggerActivity implements BaseContract.View {
 
@@ -31,7 +35,7 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     @Override
     protected void onStart() {
         super.onStart();
-        rootView = findViewById(android.R.id.content);
+        rootView = findViewById(R.id.root_view);
     }
 
     @Override
@@ -57,9 +61,27 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     }
 
     @Override
-    public void showSnackBar(String message) {
+    public void showSnackBar(final String message) {
         Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show();
     }
+
+    @Override
+    public void showSnackBar(final String message, final String action, View.OnClickListener onClickListener) {
+
+        final Snackbar snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        snackBar.setAction(action, onClickListener);
+        snackBar.show();
+
+    }
+
+    @Override
+    public void showSnackBar(final int messageRes, final int actionRes, View.OnClickListener onClickListener) {
+        final Snackbar snackBar = Snackbar.make(rootView, messageRes, Snackbar.LENGTH_LONG);
+        snackBar.setAction(actionRes, onClickListener);
+        snackBar.show();
+    }
+
+
 
     @Override
     public void showToast(String message) {

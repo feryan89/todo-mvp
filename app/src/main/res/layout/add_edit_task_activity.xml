@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/add_edit_task_hint_task_title"
                     android:maxLength="100"
-                    android:textColor="@color/white"
+                    android:textColor="@color/all_white"
                     android:textSize="@dimen/typography_headline" />
             </android.support.design.widget.TextInputLayout>
 
@@ -86,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_edit_task_label_deadline"
-                    android:textColor="@color/black"
+                    android:textColor="@color/all_black"
                     android:textSize="@dimen/typography_body1" />
 
                 <TextView
@@ -127,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/all_label_priority"
-                    android:textColor="@color/black"
+                    android:textColor="@color/all_black"
                     android:textSize="@dimen/typography_body1" />
 
                 <TextView

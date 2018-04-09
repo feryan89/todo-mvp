@@ -3,7 +3,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGray00"
+    android:background="@color/all_white_30"
     android:paddingLeft="@dimen/padding_normal"
     android:paddingRight="@dimen/padding_normal">
 
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/white"
+        android:background="@color/all_white"
         android:orientation="vertical">
 
         <TextView
@@ -21,7 +21,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:text="Priority"
-            android:textColor="@color/black"
+            android:textColor="@color/all_black"
             android:textSize="@dimen/typography_title" />
 
 
@@ -29,13 +29,14 @@
             android:id="@+id/select_priority_linear_layout_priority_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="4"
-            android:orientation="horizontal">
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:tag="4">
 
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/all_accent" />
+                android:background="@color/task_priority_4" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -50,20 +51,21 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:layout_height="1dp"
+            android:background="?android:attr/dividerHorizontal" />
 
         <LinearLayout
             android:id="@+id/select_priority_linear_layout_priority_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="3"
-            android:orientation="horizontal">
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:tag="3">
 
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/all_accent" />
+                android:background="@color/task_priority_3" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -76,20 +78,21 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:layout_height="1dp"
+            android:background="?android:attr/dividerHorizontal" />
 
         <LinearLayout
             android:id="@+id/select_priority_linear_layout_priority_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="2"
-            android:orientation="horizontal">
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:tag="2">
 
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/all_primary" />
+                android:background="@color/task_priority_2" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -102,20 +105,21 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:layout_height="1dp"
+            android:background="?android:attr/dividerHorizontal" />
 
         <LinearLayout
             android:id="@+id/select_priority_linear_layout_priority_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="1"
-            android:orientation="horizontal">
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:tag="1">
 
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/all_primary_dark" />
+                android:background="@color/task_priority_1" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -129,8 +133,8 @@
         <View
             android:id="@+id/task_view_priority"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black" />
+            android:layout_height="1dp"
+            android:background="?android:attr/dividerHorizontal" />
 
         <Button
             android:id="@+id/select_priority_button_cancel"
