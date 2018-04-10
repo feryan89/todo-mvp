@@ -84,7 +84,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     /********* askItemTouchHelper.TaskItemTouchHelperCallback Implemented Methods ********/
 
-
+    // TODO: 10/04/2018 Is the implementation to remove task should be in view or presenter?
     @Override
     public void onTaskDeleted(int position) {
         final Task removedTask = tasksAdapter.removeTask(position);
