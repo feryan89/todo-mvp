@@ -1,5 +1,6 @@
 package com.todo.ui.feature.addedittask;
 
+import com.todo.data.model.Task;
 import com.todo.ui.base.BaseContract;
 
 public interface AddEditTaskContract {
@@ -9,6 +10,7 @@ public interface AddEditTaskContract {
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
-        void createTask(String title,long deadline,int priority);
+        void createTask(Task task);
+        void updateTask(Task task);
     }
 }

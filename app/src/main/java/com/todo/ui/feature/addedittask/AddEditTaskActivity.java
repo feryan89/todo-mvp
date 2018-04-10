@@ -1,6 +1,8 @@
 package com.todo.ui.feature.addedittask;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import com.todo.R;
 import com.todo.data.model.Task;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
+import com.todo.util.StringUtils;
 
 import java.util.Calendar;
 
@@ -22,6 +25,11 @@ import butterknife.OnClick;
 
 public final class AddEditTaskActivity extends BaseActivity implements AddEditTaskContract.View {
 
+
+    /********* Constants Fields  ********/
+
+    private static final String EXTRA_TASK = "extra_task";
+
     /********* Dagger Injected Fields  ********/
 
     @Inject
@@ -30,7 +38,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     /********* Butterknife Binded Fields  ********/
 
     @BindView(R.id.add_edit_task_input_edit_text_task_title)
-    TextInputEditText textInputEditTextTittle;
+    TextInputEditText textInputEditTextTitle;
 
     @BindView(R.id.add_edit_task_text_view_deadline)
     TextView textViewDeadline;
@@ -38,13 +46,22 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     @BindView(R.id.add_edit_task_text_view_priority)
     TextView textViewPriority;
 
-    private Calendar calendar;
-    private int startYear;
-    private int startMonth;
-    private int startDay;
+    private Task task;
 
-    private long deadline;
-    private int priority;
+    /********* Static Methods ********/
+
+
+    public static void startActivity(Context context) {
+        Intent starter = new Intent(context, AddEditTaskActivity.class);
+        context.startActivity(starter);
+    }
+
+    public static void startActivity(Context context, Task task) {
+        Intent starter = new Intent(context, AddEditTaskActivity.class);
+        starter.putExtra(EXTRA_TASK, task);
+        context.startActivity(starter);
+    }
+
 
     /********* Lifecycle Methods ********/
 
@@ -71,16 +88,15 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
     @OnClick(R.id.add_edit_task_linear_layout_deadline)
     public void linearLayoutDeadlineClicked() {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(task.getDeadline());
         DatePickerDialog dialog = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
 
-            this.startYear = year;
-            this.startMonth = monthOfYear;
-            this.startDay = dayOfMonth;
-            calendar.set(startYear, startMonth, startDay);
-
+            calendar.set(year, monthOfYear, dayOfMonth);
             updateDeadlineTextView(calendar.getTimeInMillis());
 
-        }, startYear, startMonth, startDay);
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         dialog.show();
     }
 
@@ -91,25 +107,32 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
     @OnClick(R.id.add_edit_task_button_done)
     public void buttonDoneClicked() {
-        presenter.createTask(textInputEditTextTittle.getText().toString(), deadline, priority);
+        task.setTitle(textInputEditTextTitle.getText().toString());
+        if (StringUtils.isEmpty(task.getId())) {
+            presenter.createTask(task);
+        } else {
+            presenter.updateTask(task);
+        }
     }
 
     /********* Member Methods  ********/
 
     private void init() {
 
-        this.calendar = Calendar.getInstance();
-        this.startYear = calendar.get(Calendar.YEAR);
-        this.startMonth = calendar.get(Calendar.MONTH);
-        this.startDay = calendar.get(Calendar.DAY_OF_MONTH);
-        this.deadline = System.currentTimeMillis();
-        this.priority = Task.PRIORITY_4;
+        task = getIntent().getParcelableExtra(EXTRA_TASK);
+
+        if (task == null) {
+            task = new Task();
+            task.setDeadline(System.currentTimeMillis());
+            task.setPriority(Task.PRIORITY_4);
+        }
     }
 
     private void populateViews() {
+        textInputEditTextTitle.setText(task.getTitle());
+        updateDeadlineTextView(task.getDeadline());
+        updatePriorityTextView(task.getPriority());
 
-        updateDeadlineTextView(deadline);
-        updatePriorityTextView(priority);
     }
 
     private void updateDeadlineTextView(long deadline) {
@@ -117,7 +140,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     }
 
     private void updatePriorityTextView(int priority) {
-        this.priority = priority;
+        task.setPriority(priority);
         switch (priority) {
             case Task.PRIORITY_1:
                 textViewPriority.setText(R.string.all_label_priority_1);

@@ -16,13 +16,15 @@ public interface TodoRepository {
 
     Completable register(String email, String password);
 
-    Observable<List<Task>> getTasks();
+
+    void createTask(Task task);
 
     Completable updateTask(Task task);
 
     Completable deleteTask(Task task);
 
 
-    void createTask(String title, long deadline, int priority, boolean completed);
+    Observable<List<Task>> getTasks();
+
 
 }

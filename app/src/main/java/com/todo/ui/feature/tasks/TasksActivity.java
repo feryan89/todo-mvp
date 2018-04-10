@@ -96,8 +96,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     @Override
     public void showAddEditTaskActivity() {
-        Intent intent = new Intent(this, AddEditTaskActivity.class);
-        startActivity(intent);
+        AddEditTaskActivity.startActivity(this);
     }
 
     @Override
@@ -167,7 +166,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     }
 
     private void onTaskSelected(final Task task) {
-
+        AddEditTaskActivity.startActivity(this, task);
     }
 
 

@@ -1,5 +1,8 @@
 package com.todo.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +10,7 @@ import java.util.Map;
  * @author Waleed Sarwar
  * @since Dec 11, 2017
  */
-public final class Task {
+public final class Task implements Parcelable {
 
     /********* Constants Fields  ********/
 
@@ -15,6 +18,17 @@ public final class Task {
     public final static int PRIORITY_2 = 2;
     public final static int PRIORITY_3 = 3;
     public final static int PRIORITY_4 = 4;
+    public static final Creator<Task> CREATOR = new Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 
     /********* Member Fields  ********/
 
@@ -24,9 +38,30 @@ public final class Task {
     private int priority;
     private boolean completed;
 
+    /********* Static Methods  ********/
+
+    public static Map<String, Object> toHasHMap(Task task) {
+        Map<String, Object> taskMap = new HashMap<>();
+        taskMap.put("id", task.getId());
+        taskMap.put("title", task.getTitle());
+        taskMap.put("deadline", task.getDeadline());
+        taskMap.put("priority", task.getPriority());
+        taskMap.put("completed", task.isCompleted());
+        return taskMap;
+    }
+
+
     /********* Constructors ********/
 
     public Task() {
+    }
+
+    protected Task(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        deadline = in.readLong();
+        priority = in.readInt();
+        completed = in.readByte() != 0;
     }
 
     public Task(String id, String title, long deadline, int priority, boolean completed) {
@@ -79,14 +114,17 @@ public final class Task {
         this.completed = completed;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-    public static Map<String, Object> toHasHMap(Task task) {
-        Map<String, Object> taskMap = new HashMap<>();
-        taskMap.put("id", task.getId());
-        taskMap.put("title", task.getTitle());
-        taskMap.put("deadline", task.getDeadline());
-        taskMap.put("priority", task.getPriority());
-        taskMap.put("completed", task.isCompleted());
-        return taskMap;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeLong(deadline);
+        dest.writeInt(priority);
+        dest.writeByte((byte) (completed ? 1 : 0));
     }
 }

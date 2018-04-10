@@ -4,8 +4,10 @@ import android.content.res.Resources;
 
 import com.fernandocejas.frodo.core.strings.Strings;
 import com.todo.R;
+import com.todo.data.model.Task;
 import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
+import com.todo.util.StringUtils;
 
 import javax.inject.Inject;
 
@@ -29,9 +31,19 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
     }
 
     @Override
-    public void createTask(String title, long deadline, int priority) {
-        if (Strings.isNotBlank(title)) {
-            todoRepository.createTask(title, deadline, priority, false);
+    public void createTask(Task task) {
+        if (StringUtils.isNotEmpty(task.getTitle())) {
+            todoRepository.createTask(task);
+            getView().finishActivity();
+        } else {
+            getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));
+        }
+    }
+
+    @Override
+    public void updateTask(Task task) {
+        if (StringUtils.isNotEmpty(task.getTitle())) {
+            todoRepository.updateTask(task);
             getView().finishActivity();
         } else {
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));

@@ -44,9 +44,10 @@ public class TodoRepositoryImpl implements TodoRepository {
         return userRemoteDataSource.register(email, password);
     }
 
+
     @Override
-    public Observable<List<Task>> getTasks() {
-        return userRemoteDataSource.getTasks();
+    public void createTask(Task task) {
+        userRemoteDataSource.createTask(task);
     }
 
     @Override
@@ -60,8 +61,9 @@ public class TodoRepositoryImpl implements TodoRepository {
     }
 
     @Override
-    public void createTask(String title, long deadline, int priority, boolean completed) {
-        userRemoteDataSource.createTask(title, deadline, priority, completed);
+    public Observable<List<Task>> getTasks() {
+        return userRemoteDataSource.getTasks();
     }
+
 
 }
