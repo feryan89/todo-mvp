@@ -4,6 +4,7 @@ package com.todo.ui.base;
 import android.view.View;
 
 import rx.Observable;
+import rx.Single;
 
 /**
  * @author Waleed Sarwar
@@ -18,9 +19,9 @@ public interface BaseContract {
 
         void showSnackBar(final String message);
 
-        void showSnackBar(final String message, final String action, android.view.View.OnClickListener onClickListener);
+        Single<Boolean> showSnackBar(final String message, final String action);
 
-        void showSnackBar(int messageRes, final int actionRes, android.view.View.OnClickListener onClickListener);
+        Single<Boolean> showSnackBar(int messageRes, final int actionRes);
 
 
         void showToast(final String message);

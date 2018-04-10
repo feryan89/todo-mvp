@@ -103,7 +103,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
         this.startMonth = calendar.get(Calendar.MONTH);
         this.startDay = calendar.get(Calendar.DAY_OF_MONTH);
         this.deadline = System.currentTimeMillis();
-        this.priority = Task.PRIORITY_1;
+        this.priority = Task.PRIORITY_4;
     }
 
     private void populateViews() {

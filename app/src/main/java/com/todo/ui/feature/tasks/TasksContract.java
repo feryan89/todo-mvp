@@ -12,12 +12,20 @@ public interface TasksContract {
         void showAddEditTaskActivity();
 
         void showTasks(List<Task> tasks);
+
     }
 
     interface Presenter extends BaseContract.Presenter<TasksContract.View> {
 
+
+        void setTasksSortType(TasksSortType tasksSortType);
+
         void addTask();
 
         void getTasks();
+
+        void deleteTask(int position,Task task);
+
+        void updateTask(Task task);
     }
 }

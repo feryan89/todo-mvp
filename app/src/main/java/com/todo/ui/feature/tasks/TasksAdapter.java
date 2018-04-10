@@ -3,6 +3,7 @@ package com.todo.ui.feature.tasks;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,10 +66,18 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
     /********* Member Methods  ********/
 
+    Task getItem(int position) {
+        return tasks.get(position);
+    }
+
     void updateTasks(List<Task> tasks) {
         this.tasks.clear();
         this.tasks.addAll(tasks);
         notifyDataSetChanged();
+    }
+
+    public Task deleteTask(Task task) {
+        return removeTask(tasks.indexOf(task));
     }
 
     public Task removeTask(int position) {
@@ -78,7 +87,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
         return task;
     }
 
-    public void restoreTask(Task task, int position) {
+    public void restoreTask(int position, Task task) {
         tasks.add(position, task);
         notifyItemInserted(position);
     }
@@ -115,13 +124,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
         private Task task;
         private final Subject<Task, Task> clickSubject;
 
-        public TaskItemViewHolder(View itemView, Subject<Task, Task> clickSubject) {
+        TaskItemViewHolder(View itemView, Subject<Task, Task> clickSubject) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.clickSubject = clickSubject;
         }
 
-        public void setItem(final Task task) {
+        void setItem(final Task task) {
             this.task = task;
             textViewTitle.setText(task.getTitle());
             textViewDeadline.setText(DateUtils.getRelativeTimeSpanString(task.getDeadline(), System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS));

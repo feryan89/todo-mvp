@@ -31,7 +31,7 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
     @Override
     public void createTask(String title, long deadline, int priority) {
         if (Strings.isNotBlank(title)) {
-            todoRepository.createTask(title, deadline, priority);
+            todoRepository.createTask(title, deadline, priority, false);
             getView().finishActivity();
         } else {
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));

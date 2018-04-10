@@ -2,8 +2,10 @@ package com.todo.data.source;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.todo.data.model.Task;
 import com.todo.util.RxFirebaseUtils;
 
@@ -13,6 +15,9 @@ import java.util.List;
 import rx.Completable;
 import rx.Observable;
 import rx.Single;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.functions.Func1;
 
 /**
  * @author Waleed Sarwar
@@ -45,13 +50,18 @@ public class UserRemoteDataSource extends RemoteDataSource {
         return Completable.fromSingle(rxFirebaseUtils.getSingle(firebaseAuth.createUserWithEmailAndPassword(email, password)));
     }
 
-    public void createTask(final String title, final long deadline, final int priority) {
+    public void createTask(final String title, final long deadline, final int priority, final boolean completed) {
 
         final String key = getChildReference().push().getKey();
-        Task task = new Task(key, title, deadline, priority);
+        Task task = new Task(key, title, deadline, priority, completed);
         getChildReference().child(key).setValue(task);
 
     }
+
+    public Completable updateTask(final Task task) {
+        return Completable.fromSingle(rxFirebaseUtils.getSingle(getChildReference().child(task.getId()).updateChildren(Task.toHasHMap(task))));
+    }
+
 
     public Observable<List<Task>> getTasks() {
         return rxFirebaseUtils.getObservable(getChildReference())
@@ -63,6 +73,14 @@ public class UserRemoteDataSource extends RemoteDataSource {
                     return tasks;
                 });
     }
+
+
+    public Completable deleteTask(final Task task) {
+        return Completable.fromSingle(rxFirebaseUtils.getSingle(getChildReference().child(task.getId()).removeValue()));
+
+
+    }
+
 
     private DatabaseReference getChildReference() {
         if (this.childReference == null) {

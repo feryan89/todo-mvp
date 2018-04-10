@@ -1,5 +1,8 @@
 package com.todo.data.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Waleed Sarwar
  * @since Dec 11, 2017
@@ -19,17 +22,19 @@ public final class Task {
     private String title;
     private long deadline;
     private int priority;
+    private boolean completed;
 
     /********* Constructors ********/
 
     public Task() {
     }
 
-    public Task(String id, String title, long deadline, int priority) {
+    public Task(String id, String title, long deadline, int priority, boolean completed) {
         this.id = id;
         this.title = title;
         this.deadline = deadline;
         this.priority = priority;
+        this.completed = completed;
     }
 
     /********* Member Methods  ********/
@@ -41,6 +46,7 @@ public final class Task {
     public void setId(String id) {
         this.id = id;
     }
+
     public String getTitle() {
         return title;
     }
@@ -63,5 +69,24 @@ public final class Task {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+
+    public static Map<String, Object> toHasHMap(Task task) {
+        Map<String, Object> taskMap = new HashMap<>();
+        taskMap.put("id", task.getId());
+        taskMap.put("title", task.getTitle());
+        taskMap.put("deadline", task.getDeadline());
+        taskMap.put("priority", task.getPriority());
+        taskMap.put("completed", task.isCompleted());
+        return taskMap;
     }
 }

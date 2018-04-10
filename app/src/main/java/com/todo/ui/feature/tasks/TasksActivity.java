@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
-import android.view.View;
+import android.view.MenuItem;
 
 import com.todo.R;
 import com.todo.data.model.Task;
@@ -25,9 +25,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 public final class TasksActivity extends BaseActivity implements TasksContract.View, TaskItemTouchHelper.TaskItemTouchHelperCallback {
 
@@ -53,6 +50,12 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         initializeToolbar();
         initializeRecyclerView();
         presenter.attachView(this);
+        presenter.setTasksSortType(TasksSortType.BY_DATE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         presenter.getTasks();
     }
 
@@ -60,6 +63,27 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.tasks_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.tasks_menu_item_by_date:
+                presenter.setTasksSortType(TasksSortType.BY_DATE);
+                presenter.getTasks();
+                return true;
+            case R.id.tasks_menu_item_by_priority:
+                presenter.setTasksSortType(TasksSortType.BY_PRIORITY);
+                presenter.getTasks();
+                return true;
+            case R.id.tasks_menu_item_by_name:
+                presenter.setTasksSortType(TasksSortType.BY_NAME);
+                presenter.getTasks();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /********* DaggerActivity Inherited Methods ********/
@@ -81,20 +105,35 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         tasksAdapter.updateTasks(tasks);
     }
 
+    /********* TaskItemTouchHelper.TaskItemTouchHelperCallback Implemented Methods ********/
 
-    /********* askItemTouchHelper.TaskItemTouchHelperCallback Implemented Methods ********/
-
-    // TODO: 10/04/2018 Is the implementation to remove task should be in view or presenter?
     @Override
-    public void onTaskDeleted(int position) {
+    public void onTaskDeleted(final int position) {
         final Task removedTask = tasksAdapter.removeTask(position);
-        showSnackBar(R.string.tasks_message_deleted, R.string.tasks_action_undo, v -> tasksAdapter.restoreTask(removedTask, position));
+        showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo)
+                .subscribe(undo -> {
+                    if (undo) {
+                        tasksAdapter.restoreTask(position, removedTask);
+                    } else {
+                        // remove from backend
+                        presenter.deleteTask(position, removedTask);
+                    }
+                });
     }
 
     @Override
     public void onTaskCompleted(int position) {
-        final Task removedTask = tasksAdapter.removeTask(position);
-        showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo, v -> tasksAdapter.restoreTask(removedTask, position));
+        presenter.updateTask(tasksAdapter.getItem(position));
+        final Task completedTask = tasksAdapter.removeTask(position);
+        showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo)
+                .subscribe(undo -> {
+                    if (undo) {
+                        tasksAdapter.restoreTask(position, completedTask);
+                    } else {
+                        completedTask.setCompleted(true);
+                        presenter.updateTask(completedTask);
+                    }
+                });
     }
 
     /********* Butterknife Binded Methods  ********/

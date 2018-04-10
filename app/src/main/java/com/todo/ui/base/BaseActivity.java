@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,6 +17,7 @@ import com.todo.di.DaggerActivity;
 import butterknife.Unbinder;
 import rx.Emitter;
 import rx.Observable;
+import rx.Single;
 
 public abstract class BaseActivity extends DaggerActivity implements BaseContract.View {
 
@@ -66,21 +68,30 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     }
 
     @Override
-    public void showSnackBar(final String message, final String action, View.OnClickListener onClickListener) {
+    public Single<Boolean> showSnackBar(final String message, final String action) {
 
-        final Snackbar snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
-        snackBar.setAction(action, onClickListener);
-        snackBar.show();
+        return Single.fromEmitter(emitter -> {
+
+            final Snackbar snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+            snackBar.setAction(action, v -> emitter.onSuccess(Boolean.TRUE));
+
+            snackBar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar transientBottomBar, int event) {
+                    super.onDismissed(transientBottomBar, event);
+                    emitter.onSuccess(Boolean.FALSE);
+                }
+            });
+            snackBar.show();
+        });
 
     }
 
     @Override
-    public void showSnackBar(final int messageRes, final int actionRes, View.OnClickListener onClickListener) {
-        final Snackbar snackBar = Snackbar.make(rootView, messageRes, Snackbar.LENGTH_LONG);
-        snackBar.setAction(actionRes, onClickListener);
-        snackBar.show();
-    }
+    public Single<Boolean> showSnackBar(@StringRes int messageRes, @StringRes int actionRes) {
 
+        return showSnackBar(getString(messageRes), getString(actionRes));
+    }
 
 
     @Override

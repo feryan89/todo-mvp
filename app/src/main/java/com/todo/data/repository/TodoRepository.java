@@ -18,6 +18,11 @@ public interface TodoRepository {
 
     Observable<List<Task>> getTasks();
 
-    void createTask(String title, long deadline, int priority);
+    Completable updateTask(Task task);
+
+    Completable deleteTask(Task task);
+
+
+    void createTask(String title, long deadline, int priority, boolean completed);
 
 }

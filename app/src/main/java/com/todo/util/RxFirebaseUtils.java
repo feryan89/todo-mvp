@@ -31,10 +31,11 @@ public class RxFirebaseUtils {
     @NonNull
     public Observable<DataSnapshot> getObservable(@NonNull final Query query) {
 
-        return Observable.create(emitter -> query.addValueEventListener(new ValueEventListener() {
+        return Observable.create(emitter -> query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 emitter.onNext(dataSnapshot);
+                emitter.onCompleted();
             }
 
             @Override
@@ -42,6 +43,23 @@ public class RxFirebaseUtils {
                 emitter.onError(new FirebaseDataException(databaseError));
             }
         }), Emitter.BackpressureMode.BUFFER);
+
+    }
+
+    @NonNull
+    public Single<DataSnapshot> getSingle(@NonNull final Query query) {
+
+        return Single.fromEmitter(emitter -> query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                emitter.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                emitter.onError(new FirebaseDataException(databaseError));
+            }
+        }));
 
     }
 

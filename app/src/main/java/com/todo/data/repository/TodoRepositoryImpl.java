@@ -50,8 +50,18 @@ public class TodoRepositoryImpl implements TodoRepository {
     }
 
     @Override
-    public void createTask(String title, long deadline, int priority) {
-        userRemoteDataSource.createTask(title, deadline, priority);
+    public Completable updateTask(Task task) {
+        return userRemoteDataSource.updateTask(task);
+    }
+
+    @Override
+    public Completable deleteTask(Task task) {
+        return userRemoteDataSource.deleteTask(task);
+    }
+
+    @Override
+    public void createTask(String title, long deadline, int priority, boolean completed) {
+        userRemoteDataSource.createTask(title, deadline, priority, completed);
     }
 
 }
