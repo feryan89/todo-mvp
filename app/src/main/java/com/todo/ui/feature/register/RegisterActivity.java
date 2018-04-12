@@ -1,9 +1,11 @@
 package com.todo.ui.feature.register;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -52,6 +54,14 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
     @BindView(R.id.register_progress_bar)
     ProgressBar progressBar;
 
+    /********* Static Methods ********/
+
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, RegisterActivity.class);
+        context.startActivity(intent);
+    }
+
     /********* Lifecycle Methods ********/
 
     @Override
@@ -59,6 +69,7 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
         setUnbinder(ButterKnife.bind(this));
+        initializeToolbar();
         presenter.attachView(this);
         presenter.bindRegisterFormObservables(getEmailObservable(), getPasswordObservable());
     }
@@ -136,6 +147,14 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
     }
 
     /********* Member Methods  ********/
+
+    private void initializeToolbar() {
+        Toolbar myToolbar = findViewById(R.id.register_toolbar);
+        setSupportActionBar(myToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
     private Observable<String> getEmailObservable() {
         return RxTextView.textChanges(inputEditTextEmail).skip(1).map(CharSequence::toString);

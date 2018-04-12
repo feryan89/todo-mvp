@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="all_primary">#FFC63A3A</color>
-    <color name="all_primary_dark">#FFA12F2F</color>
-    <color name="all_accent">#FFFFCB2B</color>
-    <color name="all_text_input_error">#FFD50000</color>
+    <color name="all_primary">#9c27b0</color>
+    <color name="all_primary_dark">#691a99</color>
+    <color name="all_accent">#68efad</color>
+    <color name="all_text_input_error">#d50000</color>
 
 
     <color name="all_white">#FFFFFFFF</color>

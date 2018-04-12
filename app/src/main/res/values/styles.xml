@@ -1,10 +1,18 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/all_primary</item>
         <item name="colorPrimaryDark">@color/all_primary_dark</item>
         <item name="colorAccent">@color/all_accent</item>
         <item name="textColorError">@color/all_text_input_error</item>
+        <item name="android:textViewStyle">@style/TextAppearance</item>
+        <item name="editTextStyle">@style/EditText</item>
+    </style>
+
+
+    <style name="AppTheme" parent="BaseTheme">
+
+        <item name="editTextStyle">@style/EditText</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -23,14 +31,29 @@
 
     </style>
 
-    <style name="ButtonBorderless" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <style name="Button.Borderless" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:minHeight">52dp</item>
 
     </style>
 
+    <style name="BaseEditText" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:textAppearance">@style/TextAppearance</item>
+    </style>
+
+    <style name="EditText" parent="BaseEditText" />
+
+    <style name="TextAppearance" parent="TextAppearance.AppCompat"/>
 
 
-    <style name="TextAppearance.AppTheme.Accent.Small" parent="TextAppearance.AppCompat.Small">
+    <style name="TextAppearance.ErrorCaption" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/all_text_input_error</item>
+    </style>
+
+    <style name="TextAppearance.AccentSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/all_accent</item>
+    </style>
+
+    <style name="TextAppearance.AccentCaption" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">@color/all_accent</item>
     </style>
 

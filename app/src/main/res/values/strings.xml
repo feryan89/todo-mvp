@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="all_name_app">TodoApp</string>
+    <string name="all_name_app">Todo Lite</string>
 
     <string name="all_message_welcome">Welcome</string>
 
@@ -20,10 +20,12 @@
     <string name="all_error_email_invalid">Email address is invalid</string>
     <string name="all_error_password_required">Password is required</string>
 
+    <string name="login_title">Login</string>
     <string name="login_action_login">Login</string>
     <string name="login_action_register">Register Now</string>
     <string name="login_error_invalid_credentials">Invalid credentials</string>
 
+    <string name="register_title">Register</string>
     <string name="register_hint_confirm_password">Confirm Password</string>
     <string name="register_action_register">Register</string>
     <string name="register_error_email_already_exist">Email already exist</string>

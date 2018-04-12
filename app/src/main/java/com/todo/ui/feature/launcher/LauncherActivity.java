@@ -1,6 +1,5 @@
 package com.todo.ui.feature.launcher;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.todo.di.component.ActivityComponent;
@@ -37,15 +36,13 @@ public final class LauncherActivity extends BaseActivity implements LauncherCont
 
     @Override
     public void showLoginActivity() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        LoginActivity.startActivity(this);
         finish();
     }
 
     @Override
     public void showTasksActivity() {
-        Intent intent = new Intent(this, TasksActivity.class);
-        startActivity(intent);
+        TasksActivity.startActivity(this);
         finish();
     }
 

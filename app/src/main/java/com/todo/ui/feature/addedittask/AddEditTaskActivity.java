@@ -75,8 +75,6 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
         presenter.attachView(this);
     }
 
-    /********* AddEditTaskContract.View Inherited Methods ********/
-
     /********* BaseActivity Inherited Methods ********/
 
     @Override
@@ -85,6 +83,12 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     }
 
     /********* Butterknife Binded Methods  ********/
+
+    @OnClick(R.id.add_edit_task_image_view_back_arrow)
+    public void imageViewBackArrowClicked() {
+        super.onBackPressed();
+    }
+
 
     @OnClick(R.id.add_edit_task_linear_layout_deadline)
     public void linearLayoutDeadlineClicked() {

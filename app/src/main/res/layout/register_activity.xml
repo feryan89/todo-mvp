@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/all_primary"
+        android:elevation="@dimen/toolbar_elevation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/Toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,7 +26,6 @@
             android:id="@+id/register_linear_layout_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="vertical"
             android:padding="32dp">
 
@@ -25,8 +36,7 @@
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:text="@string/all_message_welcome"
                 android:textColor="@color/all_primary"
-                android:textSize="@dimen/typography_display1"
-                android:textStyle="bold" />
+                android:textSize="@dimen/typography_display1" />
 
 
             <LinearLayout
@@ -39,7 +49,8 @@
                     android:layout_height="@dimen/text_field_icon_size"
                     android:layout_marginEnd="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:src="@drawable/all_selector_email" />
+                    android:src="@drawable/all_selector_email"
+                    tools:ignore="ContentDescription" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/register_input_layout_email"
@@ -69,7 +80,8 @@
                     android:layout_height="@dimen/text_field_icon_size"
                     android:layout_marginEnd="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:src="@drawable/all_selector_lock" />
+                    android:src="@drawable/all_selector_lock"
+                    tools:ignore="ContentDescription" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/register_input_layout_password"
@@ -95,7 +107,7 @@
                 android:id="@+id/register_button_register"
                 style="@style/Button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:enabled="false"
                 android:text="@string/register_action_register" />
@@ -113,4 +125,4 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone" />
-</FrameLayout>
+</LinearLayout>

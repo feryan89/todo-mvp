@@ -27,12 +27,14 @@
 
         <activity
             android:name=".ui.feature.login.LoginActivity"
+            android:label="@string/login_title"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".ui.feature.register.RegisterActivity"
+            android:label="@string/register_title"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />

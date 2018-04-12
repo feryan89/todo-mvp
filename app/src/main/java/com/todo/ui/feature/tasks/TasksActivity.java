@@ -1,5 +1,6 @@
 package com.todo.ui.feature.tasks;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,6 +17,7 @@ import com.todo.data.model.Task;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.addedittask.AddEditTaskActivity;
+import com.todo.ui.feature.login.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,15 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     RecyclerView recyclerViewTasks;
 
     private TasksAdapter tasksAdapter;
+
+
+    /********* Static Methods ********/
+
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, TasksActivity.class);
+        context.startActivity(intent);
+    }
 
     /********* Lifecycle Methods Implementation ********/
 

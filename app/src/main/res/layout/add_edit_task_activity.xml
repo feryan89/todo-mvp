@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,9 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/add_edit_task_toolbar_height">
+
+            <ImageView
+                android:id="@+id/add_edit_task_image_view_back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:background="?selectableItemBackground"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/all_vector_arrow_back_white"
+                tools:ignore="ContentDescription" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -21,7 +33,7 @@
                 android:layout_margin="@dimen/margin_normal"
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
-                app:counterTextAppearance="@style/TextAppearance.AppTheme.Accent.Small">
+                app:counterTextAppearance="@style/TextAppearance.AccentSmall">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/add_edit_task_input_edit_text_task_title"
@@ -73,7 +85,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add_edit_task_vector_calender" />
+                android:src="@drawable/add_edit_task_vector_calender"
+                tools:ignore="ContentDescription" />
 
 
             <LinearLayout
@@ -115,7 +128,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add_edit_task_vector_priority" />
+                android:src="@drawable/add_edit_task_vector_priority"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
