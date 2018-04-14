@@ -12,7 +12,12 @@ Simple Todo List app, shows the **MVP** pattern usage on Android.
 
 </p>
 
+# App
 
+- Login/Register 
+- Add Task
+- Update Task
+- Delete/Complete Task by swiping the card left/right
 
 ## Project structure
 
