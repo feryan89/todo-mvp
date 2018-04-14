@@ -1,9 +1,9 @@
-ToDo, Android MVP example
-==========
+# ToDo Lite Android MVP example
 
-Simple Todo List app, shows the **MVP** pattern usage on Android.
 
-# Screenshots:
+Todo Lite app, shows the **MVP** pattern usage on Android.
+
+## Screenshots:
 <p float="left">
 <img src="screenshots/1-login.png" width="220"/>
 <img src="screenshots/2-home_empty.png" width="220"/>
@@ -12,7 +12,7 @@ Simple Todo List app, shows the **MVP** pattern usage on Android.
 
 </p>
 
-# App
+## App
 
 - Login/Register 
 - Add Task
@@ -22,12 +22,30 @@ Simple Todo List app, shows the **MVP** pattern usage on Android.
 ## Project structure
 
 **data**: Implementation of the Repository pattern, contains all the data accessing.<br/>
-**di**: Contains the classes that provide dependencies.<br />
+**di**: Contains the classes that provide dependencies using Dagger2.<br />
 **ui**: MVP structure, all Activities, Fragments and UI elements in this package.<br />
 **util**: Utility classes.<br />
 
-## Tools
-* Dagger 2
-* RxJava
-* Retrofit 2
-* ButterKnife
+## Tools/Libraries
+
+* [Constraint Layout](https://developer.android.com/training/constraint-layout/index.html)
+* [Firebase Auth](https://firebase.google.com/docs/auth/)
+* [Firebase Database](https://firebase.google.com/docs/database/)
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+* [RxBindings](https://github.com/JakeWharton/RxBinding)
+* [Retrofit 2](https://github.com/square/retrofit)
+* [Stetho](https://github.com/facebook/stetho)
+* [ButterKnife](https://github.com/JakeWharton/butterknife)
+* [Timer](https://github.com/JakeWharton/timber)
+* [Dagger 2](https://github.com/google/dagger)
+
+## Future work
+
+### Todo:
+- 
+- Make presenter to survive configuration changes using ViewModel.
+- Write Unit and instrumentation tests
+- Setup continues integration using Circle.ci
+- Convert the project to kotlin.
+

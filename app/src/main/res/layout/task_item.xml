@@ -67,7 +67,7 @@
             android:layout_marginStart="@dimen/margin_normal"
             app:layout_constraintBottom_toTopOf="@id/task_textview_deadline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/task_view_priority"
+            app:layout_constraintStart_toStartOf="@id/task_view_priority"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Task title" />
@@ -79,9 +79,8 @@
             android:layout_marginStart="@dimen/margin_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/task_textview_title"
-            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Deadline" />
 
     </android.support.constraint.ConstraintLayout>

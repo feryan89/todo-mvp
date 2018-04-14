@@ -2,7 +2,6 @@ package com.todo.ui.feature.addedittask;
 
 import android.content.res.Resources;
 
-import com.fernandocejas.frodo.core.strings.Strings;
 import com.todo.R;
 import com.todo.data.model.Task;
 import com.todo.data.repository.TodoRepository;

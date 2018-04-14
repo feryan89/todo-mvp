@@ -88,10 +88,7 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
         getView().hideKeyboard();
         getView().showLoading();
         addSubscription(todoRepository.login(email, password)
-                .subscribe(() -> {
-                    getView().hideLoading();
-                    getView().showTasksActivity();
-                }, throwable -> {
+                .subscribe(() -> getView().showTasksActivity(), throwable -> {
                     Timber.e(throwable);
                     if (throwable instanceof FirebaseAuthInvalidUserException
                             || throwable instanceof FirebaseAuthInvalidCredentialsException) {
