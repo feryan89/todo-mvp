@@ -17,8 +17,8 @@ Simple Todo List app, shows the **MVP** pattern usage on Android.
 ## Project structure
 
 **data**: Implementation of the Repository pattern, contains all the data accessing.
-**di**: Contains the classes that provide dependencies.         
-**ui**: MVP structure, all Activities, Fragments and UI elements in this package.          
+**di**: Contains the classes that provide dependencies.
+**ui**: MVP structure, all Activities, Fragments and UI elements in this package.
 **util**: Utility classes.
 
 ## Tools
