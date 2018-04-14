@@ -42,8 +42,8 @@ Todo Lite app, shows the **MVP** pattern usage on Android.
 
 ## Future work
 
-### Todo:
-- 
+### Todo
+
 - Make presenter to survive configuration changes using ViewModel.
 - Write Unit and instrumentation tests
 - Setup continues integration using Circle.ci
