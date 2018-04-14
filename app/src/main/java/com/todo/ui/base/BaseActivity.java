@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +26,7 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
 
     private Unbinder unbinder;
     private View rootView;
+    private Snackbar snackbar;
 
     /********* Lifecycle Methods ********/
 
@@ -72,17 +74,22 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
 
         return Single.fromEmitter(emitter -> {
 
-            final Snackbar snackBar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
-            snackBar.setAction(action, v -> emitter.onSuccess(Boolean.TRUE));
+            if (snackbar != null) {
+                snackbar.setText(message);
+                snackbar.setDuration(Snackbar.LENGTH_LONG);
+            } else {
+                snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
 
-            snackBar.addCallback(new Snackbar.Callback() {
+            }
+            snackbar.setAction(action, v -> emitter.onSuccess(Boolean.TRUE));
+            snackbar.addCallback(new Snackbar.Callback() {
                 @Override
                 public void onDismissed(Snackbar transientBottomBar, int event) {
                     super.onDismissed(transientBottomBar, event);
                     emitter.onSuccess(Boolean.FALSE);
                 }
             });
-            snackBar.show();
+            snackbar.show();
         });
 
     }

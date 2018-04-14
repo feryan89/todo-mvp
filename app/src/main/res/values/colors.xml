@@ -4,6 +4,7 @@
     <color name="all_primary">#9c27b0</color>
     <color name="all_primary_dark">#691a99</color>
     <color name="all_accent">#68efad</color>
+    <color name="all_accent_light">#9effdf</color>
     <color name="all_text_input_error">#d50000</color>
 
 

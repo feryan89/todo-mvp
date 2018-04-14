@@ -22,6 +22,8 @@
             app:theme="@style/Toolbar" />
     </android.support.design.widget.AppBarLayout>
 
+    <include layout="@layout/tasks_layout_empty" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tasks_recyclerview_tasks"
         android:layout_width="match_parent"

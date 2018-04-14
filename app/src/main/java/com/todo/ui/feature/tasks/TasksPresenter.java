@@ -3,11 +3,16 @@ package com.todo.ui.feature.tasks;
 import android.content.res.Resources;
 
 import com.todo.data.model.Task;
+import com.todo.data.model.TaskComparator;
 import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.inject.Inject;
 
+import rx.functions.Func1;
 import rx.functions.Func2;
 import timber.log.Timber;
 
@@ -46,20 +51,25 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
         addSubscription(todoRepository.getTasks()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .flatMapIterable(tasks -> tasks)
-                .sorted((task1, task2) -> {
+                .map(tasks -> {
                     switch (tasksSortType) {
                         case BY_DATE:
-                            return Long.compare(task1.getDeadline(), task2.getDeadline());
+                            Collections.sort(tasks, new TaskComparator.ByDateComparator());
                         case BY_PRIORITY:
-                            return Integer.compare(task1.getPriority(), task2.getPriority());
+                            Collections.sort(tasks, new TaskComparator.ByPriorityComparator());
                         case BY_NAME:
-                            return task1.getTitle().compareToIgnoreCase(task2.getTitle());
+                            Collections.sort(tasks, new TaskComparator.ByNameComparator());
                     }
-                    return null;
+                    return tasks;
                 })
-                .toList()
-                .subscribe(tasks -> getView().showTasks(tasks), Timber::e));
+                .subscribe(tasks -> {
+                    if (tasks.isEmpty()) {
+                        getView().showTasksEmptyView();
+                    } else {
+                        getView().hideTasksEmptyView();
+                        getView().showTasks(tasks);
+                    }
+                }, Timber::e));
     }
 
     @Override
@@ -67,11 +77,8 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
         addSubscription(todoRepository.deleteTask(task)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribe(() -> Timber.d("Task deleted successfully")
-                        , throwable -> {
-                            getTasks();
-                            Timber.e(throwable);
-                        }));
+                .subscribe(this::getTasks
+                        , Timber::e));
     }
 
     @Override

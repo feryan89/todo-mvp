@@ -13,6 +13,10 @@ public interface TasksContract {
 
         void showTasks(List<Task> tasks);
 
+        void showTasksEmptyView();
+
+        void hideTasksEmptyView();
+
     }
 
     interface Presenter extends BaseContract.Presenter<TasksContract.View> {

@@ -134,14 +134,12 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
 
     @Override
     public void showRegisterActivity() {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        RegisterActivity.startActivity(this);
     }
 
     @Override
     public void showTasksActivity() {
-        Intent intent = new Intent(this, TasksActivity.class);
-        startActivity(intent);
+        TasksActivity.startActivity(this);
         finish();
     }
 

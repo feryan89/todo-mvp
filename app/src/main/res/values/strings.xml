@@ -39,6 +39,7 @@
     <string name="tasks_action_undo">Undo</string>
     <string name="tasks_message_deleted">Deleted</string>
     <string name="tasks_message_completed">Completed</string>
+    <string name="tasks_message_empty">You don\'t have any todos</string>
 
 
 

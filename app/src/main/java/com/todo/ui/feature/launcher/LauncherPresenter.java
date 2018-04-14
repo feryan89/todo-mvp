@@ -28,8 +28,6 @@ public final class LauncherPresenter extends BasePresenter<LauncherContract.View
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(isUserLoggedIn -> {
-
-                    getView().showLoginActivity();
                     if (isUserLoggedIn) {
                         getView().showTasksActivity();
                     } else {

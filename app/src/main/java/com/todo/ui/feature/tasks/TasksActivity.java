@@ -11,13 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.todo.R;
 import com.todo.data.model.Task;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.addedittask.AddEditTaskActivity;
-import com.todo.ui.feature.login.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,9 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     @BindView(R.id.tasks_recyclerview_tasks)
     RecyclerView recyclerViewTasks;
+
+    @BindView(R.id.tasks_linear_layout_empty)
+    LinearLayout linearLayoutEmpty;
 
     private TasksAdapter tasksAdapter;
 
@@ -62,12 +66,12 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         initializeRecyclerView();
         presenter.attachView(this);
         presenter.setTasksSortType(TasksSortType.BY_DATE);
+        presenter.getTasks();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.getTasks();
     }
 
     @Override
@@ -115,12 +119,26 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         tasksAdapter.updateTasks(tasks);
     }
 
+    @Override
+    public void showTasksEmptyView() {
+        recyclerViewTasks.setVisibility(View.GONE);
+        linearLayoutEmpty.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideTasksEmptyView() {
+
+        linearLayoutEmpty.setVisibility(View.GONE);
+        recyclerViewTasks.setVisibility(View.VISIBLE);
+    }
+
+
     /********* TaskItemTouchHelper.TaskItemTouchHelperCallback Implemented Methods ********/
 
     @Override
     public void onTaskDeleted(final int position) {
         final Task removedTask = tasksAdapter.removeTask(position);
-        showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo)
+        showSnackBar(R.string.tasks_message_deleted, R.string.tasks_action_undo)
                 .subscribe(undo -> {
                     if (undo) {
                         tasksAdapter.restoreTask(position, removedTask);
