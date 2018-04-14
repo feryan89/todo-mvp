@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -86,6 +87,20 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
     @Override
     protected void inject(final ActivityComponent activityComponent) {
         activityComponent.inject(this);
+    }
+
+
+    /********* Activity Inherited Methods ********/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /********* RegisterContract.View Inherited Methods ********/

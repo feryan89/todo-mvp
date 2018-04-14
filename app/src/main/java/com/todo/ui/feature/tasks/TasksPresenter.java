@@ -8,12 +8,9 @@ import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
 
 import java.util.Collections;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.functions.Func1;
-import rx.functions.Func2;
 import timber.log.Timber;
 
 public final class TasksPresenter extends BasePresenter<TasksContract.View> implements TasksContract.Presenter {
@@ -55,10 +52,13 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
                     switch (tasksSortType) {
                         case BY_DATE:
                             Collections.sort(tasks, new TaskComparator.ByDateComparator());
+                            break;
                         case BY_PRIORITY:
                             Collections.sort(tasks, new TaskComparator.ByPriorityComparator());
+                            break;
                         case BY_NAME:
                             Collections.sort(tasks, new TaskComparator.ByNameComparator());
+                            break;
                     }
                     return tasks;
                 })
