@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeight">
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:id="@+id/task_delete_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,16 +17,14 @@
             android:id="@+id/delete_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center|end"
             android:layout_marginEnd="@dimen/margin_medium"
             android:src="@drawable/all_vector_delete_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:ignore="ContentDescription" />
 
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:id="@+id/task_completed_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,14 +34,12 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center|end"
             android:layout_marginStart="@dimen/margin_medium"
             android:src="@drawable/all_vector_check_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:ignore="ContentDescription" />
 
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/task_layout"

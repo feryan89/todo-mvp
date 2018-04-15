@@ -7,6 +7,8 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.todo.R;
@@ -32,12 +34,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
 
     private static final long CLICK_THROTTLE_WINDOW_MILLIS = 300L;
-
+    private final Subject<Task, Task> onItemClickSubject = BehaviorSubject.create();
     /********* Member Fields  ********/
 
     private List<Task> tasks;
-
-    private final Subject<Task, Task> onItemClickSubject = BehaviorSubject.create();
 
     /********* Constructors ********/
 
@@ -102,27 +102,20 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
     class TaskItemViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.task_delete_layout)
-        ConstraintLayout taskDeleteLayout;
-
+        FrameLayout taskDeleteLayout;
         @BindView(R.id.task_completed_layout)
-        ConstraintLayout taskCompletedLayout;
-
+        FrameLayout taskCompletedLayout;
         @BindView(R.id.task_layout)
         ConstraintLayout taskLayout;
-
-
         @BindView(R.id.task_view_priority)
         View viewPriority;
-
         @BindView(R.id.task_textview_title)
         TextView textViewTitle;
 
         @BindView(R.id.task_textview_deadline)
         TextView textViewDeadline;
-
-
-        private Task task;
         private final Subject<Task, Task> clickSubject;
+        private Task task;
 
         TaskItemViewHolder(View itemView, Subject<Task, Task> clickSubject) {
             super(itemView);

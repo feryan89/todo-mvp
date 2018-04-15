@@ -3,20 +3,20 @@ package com.todo.ui.feature.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Group;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.todo.R;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
-import com.todo.ui.feature.addedittask.AddEditTaskActivity;
 import com.todo.ui.feature.register.RegisterActivity;
 import com.todo.ui.feature.tasks.TasksActivity;
 
@@ -36,8 +36,8 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
 
     /********* Butterknife View Binding Fields  ********/
 
-    @BindView(R.id.login_linear_layout_form)
-    LinearLayout linearLayoutForm;
+    @BindView(R.id.login_group_form)
+    Group groupForm;
 
     @BindView(R.id.login_input_layout_email)
     TextInputLayout inputLayoutEmail;
@@ -88,14 +88,14 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
 
     @Override
     public void showLoading() {
-        linearLayoutForm.setVisibility(View.INVISIBLE);
+        groupForm.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
         progressBar.setVisibility(View.INVISIBLE);
-        linearLayoutForm.setVisibility(View.VISIBLE);
+        groupForm.setVisibility(View.VISIBLE);
     }
 
     @Override
