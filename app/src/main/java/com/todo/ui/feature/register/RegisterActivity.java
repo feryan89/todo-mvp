@@ -3,6 +3,7 @@ package com.todo.ui.feature.register;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.Group;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
@@ -34,8 +35,8 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
 
     /********* Butterknife Binded Fields  ********/
 
-    @BindView(R.id.register_linear_layout_form)
-    LinearLayout linearLayoutForm;
+    @BindView(R.id.register_group_form)
+    Group groupForm;
 
     @BindView(R.id.register_input_layout_email)
     TextInputLayout inputLayoutEmail;
@@ -107,14 +108,14 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
 
     @Override
     public void showLoading() {
-        linearLayoutForm.setVisibility(View.INVISIBLE);
+        groupForm.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
         progressBar.setVisibility(View.INVISIBLE);
-        linearLayoutForm.setVisibility(View.VISIBLE);
+        groupForm.setVisibility(View.VISIBLE);
     }
 
     @Override

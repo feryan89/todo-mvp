@@ -76,6 +76,7 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
                     Timber.e(throwable);
                     getView().hideLoading();
                     if (throwable instanceof FirebaseAuthUserCollisionException) {
+                        getView().hideLoading();
                         getView().showSnackBar(resources.getString(R.string.register_error_email_already_exist));
                     }
                 }));
