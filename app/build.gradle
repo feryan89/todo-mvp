@@ -41,7 +41,7 @@ def constraintLayoutVersion = "1.1.0"
 def junitVersion = "4.12"
 def runnerVersion = "1.0.1"
 def rulesVersion = "1.0.1"
-
+def jobDispatcher = "0.8.5"
 
 
 dependencies {
@@ -62,6 +62,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:' + butterKnifeVersion
     implementation 'com.jakewharton.timber:timber:' + timberVersion
     implementation 'com.google.dagger:dagger:' + daggerVersion
+    implementation 'com.firebase:firebase-jobdispatcher:' + jobDispatcher
     annotationProcessor 'com.google.dagger:dagger-compiler:' + daggerVersion
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + butterKnifeVersion
 

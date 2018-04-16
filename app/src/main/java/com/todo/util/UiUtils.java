@@ -1,5 +1,8 @@
 package com.todo.util;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
+
 import com.todo.R;
 import com.todo.data.model.Task;
 
@@ -21,4 +24,23 @@ public class UiUtils {
                 return R.color.all_white;
         }
     }
+
+
+    public static String getPriorityString(Context context, int priority) {
+
+        switch (priority) {
+
+            case Task.PRIORITY_1:
+                return context.getString(R.string.all_label_priority_1);
+            case Task.PRIORITY_2:
+                return context.getString(R.string.all_label_priority_2);
+            case Task.PRIORITY_3:
+                return context.getString(R.string.all_label_priority_3);
+            case Task.PRIORITY_4:
+                return context.getString(R.string.all_label_priority_4);
+            default:
+                return context.getString(R.string.all_label_priority_1);
+        }
+    }
+
 }

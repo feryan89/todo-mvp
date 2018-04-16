@@ -5,10 +5,13 @@ import android.content.res.Resources;
 import com.todo.R;
 import com.todo.data.model.Task;
 import com.todo.data.repository.TodoRepository;
+import com.todo.device.TaskReminderScheduler;
 import com.todo.ui.base.BasePresenter;
 import com.todo.util.StringUtils;
 
 import javax.inject.Inject;
+
+import rx.functions.Action1;
 
 public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContract.View> implements AddEditTaskContract.Presenter {
 
@@ -16,6 +19,9 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
 
     @Inject
     TodoRepository todoRepository;
+
+    @Inject
+    TaskReminderScheduler taskReminderScheduler;
 
     @Inject
     Resources resources;
@@ -32,7 +38,7 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
     @Override
     public void createTask(Task task) {
         if (StringUtils.isNotEmpty(task.getTitle())) {
-            todoRepository.createTask(task);
+            todoRepository.createTask(task).subscribe(this::scheduleReminder);
             getView().finishActivity();
         } else {
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));
@@ -46,6 +52,12 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
             getView().finishActivity();
         } else {
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));
+        }
+    }
+
+    private void scheduleReminder(Task task) {
+        if (task.getReminder() > 0) {
+            taskReminderScheduler.scheduleTaskReminder(task);
         }
     }
 }

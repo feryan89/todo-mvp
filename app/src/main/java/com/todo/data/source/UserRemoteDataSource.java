@@ -50,11 +50,13 @@ public class UserRemoteDataSource extends RemoteDataSource {
         return Completable.fromSingle(rxFirebaseUtils.getSingle(firebaseAuth.createUserWithEmailAndPassword(email, password)));
     }
 
-    public void createTask(Task task) {
+    public Single<Task> createTask(Task task) {
 
         final String key = getChildReference().push().getKey();
         task.setId(key);
         getChildReference().child(key).setValue(task);
+
+        return Observable.just(task).toSingle();
 
     }
 

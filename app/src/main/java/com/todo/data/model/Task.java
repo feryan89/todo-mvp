@@ -20,8 +20,8 @@ public final class Task implements Parcelable {
     public final static int PRIORITY_4 = 4;
     public static final Creator<Task> CREATOR = new Creator<Task>() {
         @Override
-        public Task createFromParcel(Parcel in) {
-            return new Task(in);
+        public Task createFromParcel(Parcel source) {
+            return new Task(source);
         }
 
         @Override
@@ -29,12 +29,12 @@ public final class Task implements Parcelable {
             return new Task[size];
         }
     };
-
     /********* Member Fields  ********/
 
     private String id;
     private String title;
     private long deadline;
+    private long reminder;
     private int priority;
     private boolean completed;
 
@@ -50,18 +50,9 @@ public final class Task implements Parcelable {
         return taskMap;
     }
 
-
     /********* Constructors ********/
 
     public Task() {
-    }
-
-    protected Task(Parcel in) {
-        id = in.readString();
-        title = in.readString();
-        deadline = in.readLong();
-        priority = in.readInt();
-        completed = in.readByte() != 0;
     }
 
     public Task(String id, String title, long deadline, int priority, boolean completed) {
@@ -70,6 +61,31 @@ public final class Task implements Parcelable {
         this.deadline = deadline;
         this.priority = priority;
         this.completed = completed;
+    }
+
+    protected Task(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.deadline = in.readLong();
+        this.reminder = in.readLong();
+        this.priority = in.readInt();
+        this.completed = in.readByte() != 0;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+        dest.writeLong(this.deadline);
+        dest.writeLong(this.reminder);
+        dest.writeInt(this.priority);
+        dest.writeByte(this.completed ? (byte) 1 : (byte) 0);
     }
 
     /********* Member Methods  ********/
@@ -98,6 +114,14 @@ public final class Task implements Parcelable {
         this.deadline = deadline;
     }
 
+    public long getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(long reminder) {
+        this.reminder = reminder;
+    }
+
     public int getPriority() {
         return priority;
     }
@@ -114,17 +138,5 @@ public final class Task implements Parcelable {
         this.completed = completed;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(title);
-        dest.writeLong(deadline);
-        dest.writeInt(priority);
-        dest.writeByte((byte) (completed ? 1 : 0));
-    }
 }

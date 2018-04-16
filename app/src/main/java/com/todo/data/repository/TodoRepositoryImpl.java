@@ -46,8 +46,8 @@ public class TodoRepositoryImpl implements TodoRepository {
 
 
     @Override
-    public void createTask(Task task) {
-        userRemoteDataSource.createTask(task);
+    public Single<Task> createTask(Task task) {
+        return userRemoteDataSource.createTask(task);
     }
 
     @Override

@@ -55,6 +55,12 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         context.startActivity(intent);
     }
 
+    public static Intent getIntentForNotification(Context context){
+        Intent intent = new Intent(context, TasksActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
+
     /********* Lifecycle Methods Implementation ********/
 
     @Override
