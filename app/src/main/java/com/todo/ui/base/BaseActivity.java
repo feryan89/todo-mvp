@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,10 +13,7 @@ import android.widget.Toast;
 import com.todo.R;
 import com.todo.di.DaggerActivity;
 
-
 import butterknife.Unbinder;
-import rx.Emitter;
-import rx.Observable;
 import rx.Single;
 
 public abstract class BaseActivity extends DaggerActivity implements BaseContract.View {

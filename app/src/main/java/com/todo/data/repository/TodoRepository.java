@@ -17,7 +17,7 @@ public interface TodoRepository {
     Completable register(String email, String password);
 
 
-    void createTask(Task task);
+    Single<Task> createTask(Task task);
 
     Completable updateTask(Task task);
 
