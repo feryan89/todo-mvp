@@ -1,10 +1,13 @@
 package com.todo.device.notification;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
@@ -13,17 +16,40 @@ import com.todo.data.model.Task;
 import com.todo.ui.feature.tasks.TasksActivity;
 import com.todo.util.UiUtils;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 
 public final class NotificationFactoryImpl implements NotificationFactory {
 
     private final Context context;
-    private final Resources resources;
 
-    public NotificationFactoryImpl(final Context context, final Resources resources) {
+    public NotificationFactoryImpl(final Context context) {
         this.context = context;
-        this.resources = resources;
+        createNotificationChannels();
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
+    private void createNotificationChannels() {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+
+            if (notificationManager != null) {
+
+                if (notificationManager.getNotificationChannel(CHANNEL_ID_REMINDERS) == null) {
+
+                    CharSequence name = context.getString(R.string.notification_channel_name_reminders);
+                    String description = context.getString(R.string.notification_channel_description_reminders);
+                    NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID_REMINDERS, name, NotificationManager.IMPORTANCE_DEFAULT);
+                    mChannel.setDescription(description);
+                    notificationManager.createNotificationChannel(mChannel);
+
+
+                }
+            }
+        }
+    }
 
     @Override
     public Notification createTaskReminderNotification(Task task) {
@@ -36,17 +62,17 @@ public final class NotificationFactoryImpl implements NotificationFactory {
 
         final String taskDetails = "Priority: " + UiUtils.getPriorityString(context, task.getPriority()) + "\n";
 
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID_REMINDERS)
                 .setSmallIcon(R.drawable.notification_vector_alarm)
                 .setContentTitle(task.getTitle())
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(taskDetails))
                 .setAutoCancel(true)
                 .setColor(ContextCompat.getColor(context, R.color.all_primary))
-                .setGroup(NOTIFICATION_GROUP_KEY)
+                .setGroup(GROUP_KEY_TASK_REMINDERS)
                 .setGroupSummary(true)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_MAX);
+
         return builder.build();
     }
 }

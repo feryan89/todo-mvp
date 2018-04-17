@@ -36,8 +36,8 @@ public final class ServiceModule {
 
     @Provides
     @Singleton
-    NotificationFactory provideNotificationFactory(final TodoApplication application, final Resources resources) {
-        return new NotificationFactoryImpl(application.getApplicationContext(), resources);
+    NotificationFactory provideNotificationFactory(final TodoApplication application) {
+        return new NotificationFactoryImpl(application.getApplicationContext());
     }
 
     @Provides

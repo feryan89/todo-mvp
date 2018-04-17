@@ -8,7 +8,9 @@ import com.todo.data.model.Task;
 public interface NotificationFactory {
 
 
-    public static String NOTIFICATION_GROUP_KEY = "task_reminders";
+    String CHANNEL_ID_REMINDERS = "channel_reminders";
+
+    String GROUP_KEY_TASK_REMINDERS = "group_key_task_reminders";
 
     Notification createTaskReminderNotification(Task task);
 }

@@ -20,6 +20,10 @@
     <string name="all_error_email_invalid">Email address is invalid</string>
     <string name="all_error_password_required">Password is required</string>
 
+    <string name="notification_channel_name_reminders">Reminders</string>
+    <string name="notification_channel_description_reminders">Task reminders</string>
+
+
     <string name="login_title">Login</string>
     <string name="login_action_login">Login</string>
     <string name="login_action_register">Register Now</string>
