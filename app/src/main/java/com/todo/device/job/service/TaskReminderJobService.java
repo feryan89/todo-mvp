@@ -1,10 +1,8 @@
 package com.todo.device.job.service;
 
-import android.app.PendingIntent;
 import android.os.Bundle;
 
 import com.firebase.jobdispatcher.Constraint;
-import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -15,7 +13,6 @@ import com.todo.TodoApplication;
 import com.todo.data.model.Task;
 import com.todo.device.notification.NotificationFactory;
 import com.todo.device.notification.Notifications;
-import com.todo.util.scheduler.SchedulerProvider;
 
 import java.util.Calendar;
 
@@ -24,7 +21,9 @@ import javax.inject.Inject;
 public final class TaskReminderJobService extends JobService {
 
     private static final int TASK_REMINDER_NOTIFICATION_ID = 1832;
-    private static final String BUNDLE_TASK = "bundle_task";
+
+    private static final String BUNDLE_TASK_TITLE = "bundle_task_title";
+    private static final String BUNDLE_TASK_PRIORITY = "bundle_task_priority";
 
 
     @Inject
@@ -39,8 +38,9 @@ public final class TaskReminderJobService extends JobService {
         long nowMs = Calendar.getInstance().getTime().getTime();
         int diffSecs = (int) ((reminderMs - nowMs) / 1000);
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(BUNDLE_TASK, task);
+        Bundle extras = new Bundle();
+        extras.putString(BUNDLE_TASK_TITLE, task.getTitle());
+        extras.putInt(BUNDLE_TASK_PRIORITY, task.getPriority());
 
         return jobBuilder
                 .setService(TaskReminderJobService.class)
@@ -51,7 +51,7 @@ public final class TaskReminderJobService extends JobService {
                 .setReplaceCurrent(true)
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
-                .setExtras(new Bundle())
+                .setExtras(extras)
                 .build();
 
     }
@@ -65,9 +65,9 @@ public final class TaskReminderJobService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters job) {
-        Bundle bundle = job.getExtras();
-        if (bundle != null) {
-            Task task = bundle.getParcelable(BUNDLE_TASK);
+        Bundle extras = job.getExtras();
+        if (extras != null) {
+            Task task = getTask(extras);
             showTaskReminderNotification(task);
         }
         return false;
@@ -76,6 +76,13 @@ public final class TaskReminderJobService extends JobService {
     @Override
     public boolean onStopJob(JobParameters job) {
         return false;
+    }
+
+    private Task getTask(Bundle extras) {
+        Task task = new Task();
+        task.setTitle(extras.getString(BUNDLE_TASK_TITLE));
+        task.setPriority(extras.getInt(BUNDLE_TASK_PRIORITY));
+        return task;
     }
 
     private void showTaskReminderNotification(Task task) {

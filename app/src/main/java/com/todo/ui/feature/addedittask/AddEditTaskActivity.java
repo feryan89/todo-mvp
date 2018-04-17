@@ -1,19 +1,23 @@
 package com.todo.ui.feature.addedittask;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.FragmentManager;
-import android.text.format.DateUtils;
+import android.support.v7.widget.SwitchCompat;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.todo.R;
 import com.todo.data.model.Task;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
+import com.todo.util.CustomDateUtils;
 import com.todo.util.StringUtils;
+import com.todo.util.UiUtils;
 
 import java.util.Calendar;
 
@@ -21,6 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public final class AddEditTaskActivity extends BaseActivity implements AddEditTaskContract.View {
@@ -46,6 +51,17 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     @BindView(R.id.add_edit_task_text_view_priority)
     TextView textViewPriority;
 
+
+    @BindView(R.id.add_edit_task_image_view_add_alarm)
+    ImageView imageViewAddAlarm;
+    @BindView(R.id.add_edit_task_text_view_reminder_label)
+    TextView textViewReminderLabel;
+    @BindView(R.id.add_edit_task_text_view_reminder_time)
+    TextView textViewReminderTime;
+    @BindView(R.id.add_edit_task_switch_reminder)
+    SwitchCompat switchReminder;
+
+    private Calendar calendar;
     private Task task;
 
     /********* Static Methods ********/
@@ -93,8 +109,6 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     @OnClick(R.id.add_edit_task_linear_layout_deadline)
     public void linearLayoutDeadlineClicked() {
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(task.getDeadline());
         DatePickerDialog dialog = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
 
             calendar.set(year, monthOfYear, dayOfMonth);
@@ -108,6 +122,30 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     @OnClick(R.id.add_edit_task_linear_layout_priority)
     public void linearLayoutPriorityClicked() {
         showSelectPriorityDialog();
+    }
+
+    @OnCheckedChanged(R.id.add_edit_task_switch_reminder)
+    public void switchRemiderChecked(boolean isChecked) {
+        if (isChecked) {
+            setReminderEnabled();
+        } else {
+            setReminderDisabled();
+        }
+    }
+
+    @OnClick(R.id.add_edit_task_linear_layout_reminder)
+    public void linearLayoutReminderClicked() {
+        if (switchReminder.isChecked()) {
+
+            TimePickerDialog dialog = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                task.setReminder(calendar.getTimeInMillis());
+                updateReminderTime(calendar.getTimeInMillis());
+
+            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+            dialog.show();
+        }
     }
 
     @OnClick(R.id.add_edit_task_button_done)
@@ -128,20 +166,26 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
         if (task == null) {
             task = new Task();
-            task.setDeadline(System.currentTimeMillis());
+            calendar = Calendar.getInstance();
+            task.setDeadline(calendar.getTimeInMillis());
             task.setPriority(Task.PRIORITY_4);
         }
+
+        setReminderDisabled();
+
     }
 
     private void populateViews() {
         textInputEditTextTitle.setText(task.getTitle());
         updateDeadlineTextView(task.getDeadline());
         updatePriorityTextView(task.getPriority());
+        updateReminderTime(task.getDeadline());
 
     }
 
+
     private void updateDeadlineTextView(long deadline) {
-        textViewDeadline.setText(DateUtils.getRelativeTimeSpanString(deadline, System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS));
+        textViewDeadline.setText(CustomDateUtils.getDisplayDate(deadline));
     }
 
     private void updatePriorityTextView(int priority) {
@@ -161,6 +205,20 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
                 break;
         }
     }
+
+    private void updateReminderTime(long deadline) {
+        textViewReminderTime.setText(CustomDateUtils.getDisplayTime(deadline));
+    }
+
+
+    private void setReminderEnabled() {
+        UiUtils.enableWithAlpha(imageViewAddAlarm, textViewReminderLabel, textViewReminderTime);
+    }
+
+    private void setReminderDisabled() {
+        UiUtils.disableWithAlpha(imageViewAddAlarm, textViewReminderLabel, textViewReminderTime);
+    }
+
 
     private void showSelectPriorityDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();

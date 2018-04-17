@@ -47,6 +47,6 @@ public final class NotificationFactoryImpl implements NotificationFactory {
                 .setGroupSummary(true)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_MAX);
-        return null;
+        return builder.build();
     }
 }

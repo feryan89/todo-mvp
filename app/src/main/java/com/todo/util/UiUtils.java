@@ -2,11 +2,14 @@ package com.todo.util;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import com.todo.R;
 import com.todo.data.model.Task;
 
 public class UiUtils {
+
+    private static float DISABLE_ALPHA = 0.2f;
 
     public static int getPriorityColorRes(int priority) {
 
@@ -40,6 +43,20 @@ public class UiUtils {
                 return context.getString(R.string.all_label_priority_4);
             default:
                 return context.getString(R.string.all_label_priority_1);
+        }
+    }
+
+    public static void disableWithAlpha(View... views) {
+        for (View v : views) {
+            v.setEnabled(false);
+            v.setAlpha(0.2f);
+        }
+    }
+
+    public static void enableWithAlpha(View... views) {
+        for (View v : views) {
+            v.setEnabled(true);
+            v.setAlpha(1);
         }
     }
 
