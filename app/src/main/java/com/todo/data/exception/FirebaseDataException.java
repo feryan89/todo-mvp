@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseError;
 
 public class FirebaseDataException extends Exception {
 
-    private DatabaseError error;
+    private final DatabaseError error;
 
     public FirebaseDataException(@NonNull DatabaseError error) {
         this.error = error;

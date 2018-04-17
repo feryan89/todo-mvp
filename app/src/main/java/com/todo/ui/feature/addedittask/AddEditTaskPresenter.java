@@ -11,8 +11,6 @@ import com.todo.util.StringUtils;
 
 import javax.inject.Inject;
 
-import rx.functions.Action1;
-
 public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContract.View> implements AddEditTaskContract.Presenter {
 
     /********* Dagger Injected Fields  ********/

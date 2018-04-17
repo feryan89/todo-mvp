@@ -7,7 +7,7 @@ import com.todo.device.job.service.TaskReminderJobService;
 
 public class TaskReminderSchedulerImpl implements TaskReminderScheduler {
 
-    private FirebaseJobDispatcher jobDispatcher;
+    private final FirebaseJobDispatcher jobDispatcher;
 
     public TaskReminderSchedulerImpl(FirebaseJobDispatcher jobDispatcher) {
         this.jobDispatcher = jobDispatcher;

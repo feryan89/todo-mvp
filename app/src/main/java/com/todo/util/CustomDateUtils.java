@@ -1,7 +1,5 @@
 package com.todo.util;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 
 import java.text.DateFormat;

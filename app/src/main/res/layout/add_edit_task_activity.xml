@@ -171,7 +171,8 @@
                 android:id="@+id/add_edit_task_image_view_add_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add_edit_task_vector_add_alarm" />
+                android:src="@drawable/add_edit_task_vector_add_alarm"
+                android:contentDescription="TODO" />
 
             <LinearLayout
                 android:layout_width="0dp"

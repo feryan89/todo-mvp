@@ -1,8 +1,6 @@
 package com.todo.di.module;
 
-import android.app.job.JobInfo;
 import android.content.ComponentName;
-import android.content.res.Resources;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;

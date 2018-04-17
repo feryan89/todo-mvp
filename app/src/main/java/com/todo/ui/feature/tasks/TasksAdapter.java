@@ -3,12 +3,10 @@ package com.todo.ui.feature.tasks;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.todo.R;
@@ -37,7 +35,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
     private final Subject<Task, Task> onItemClickSubject = BehaviorSubject.create();
     /********* Member Fields  ********/
 
-    private List<Task> tasks;
+    private final List<Task> tasks;
 
     /********* Constructors ********/
 

@@ -1,9 +1,6 @@
 package com.todo.ui.base;
 
 
-import android.view.View;
-
-import rx.Observable;
 import rx.Single;
 
 /**

@@ -14,9 +14,9 @@ public class RemoteDataSource {
 
     final static String FIREBASE_CHILD_KEY_TASKS = "tasks";
 
-    FirebaseDatabase firebaseDatabase;
-    FirebaseAuth firebaseAuth;
-    RxFirebaseUtils rxFirebaseUtils;
+    final FirebaseDatabase firebaseDatabase;
+    final FirebaseAuth firebaseAuth;
+    final RxFirebaseUtils rxFirebaseUtils;
 
     RemoteDataSource(FirebaseDatabase firebaseDatabase, FirebaseAuth firebaseAuth, RxFirebaseUtils rxFirebaseUtils) {
         this.firebaseDatabase = firebaseDatabase;

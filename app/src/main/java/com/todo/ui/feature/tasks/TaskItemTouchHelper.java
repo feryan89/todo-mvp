@@ -7,7 +7,7 @@ import android.view.View;
 
 public class TaskItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
-    private TaskItemTouchHelperCallback callback;
+    private final TaskItemTouchHelperCallback callback;
 
     public TaskItemTouchHelper(int dragDirs, int swipeDirs, TaskItemTouchHelperCallback callback) {
         super(dragDirs, swipeDirs);

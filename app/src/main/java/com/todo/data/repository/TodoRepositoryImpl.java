@@ -18,7 +18,7 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     /********* Member Fields  ********/
 
-    private UserRemoteDataSource userRemoteDataSource;
+    private final UserRemoteDataSource userRemoteDataSource;
 
     /********* Constructors ********/
 

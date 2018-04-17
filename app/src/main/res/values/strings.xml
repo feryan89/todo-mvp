@@ -4,8 +4,6 @@
 
     <string name="all_message_welcome">Welcome</string>
 
-    <string name="all_label_today">Today</string>
-    <string name="all_label_tomorrow">Tomorrow</string>
     <string name="all_label_priority">Priority</string>
     <string name="all_label_priority_1">Priority 1</string>
     <string name="all_label_priority_2">Priority 2</string>
@@ -30,7 +28,6 @@
     <string name="login_error_invalid_credentials">Invalid credentials</string>
 
     <string name="register_title">Register</string>
-    <string name="register_hint_confirm_password">Confirm Password</string>
     <string name="register_action_register">Register</string>
     <string name="register_error_email_already_exist">Email already exist</string>
 
@@ -51,6 +48,10 @@
     <string name="add_edit_task_label_today">Today</string>
     <string name="add_edit_task_label_reminder">Reminder</string>
     <string name="add_edit_task_error_invalid_title">Please, provide a title for the task.</string>
+
+
+    <string name="select_priority_title">Priority</string>
+    <string name="select_priority_action_cancel">Cancel</string>
 
 
 </resources>

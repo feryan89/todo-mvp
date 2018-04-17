@@ -23,8 +23,8 @@ public class EmailValidator {
 
     /********* Member Fields  ********/
 
-    private Pattern pattern;
-    private Resources resources;
+    private final Pattern pattern;
+    private final Resources resources;
 
     /********* Constructors ********/
 

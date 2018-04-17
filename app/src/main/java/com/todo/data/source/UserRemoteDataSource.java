@@ -2,10 +2,8 @@ package com.todo.data.source;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.todo.data.model.Task;
 import com.todo.util.RxFirebaseUtils;
 
@@ -15,9 +13,6 @@ import java.util.List;
 import rx.Completable;
 import rx.Observable;
 import rx.Single;
-import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.functions.Func1;
 
 /**
  * @author Waleed Sarwar

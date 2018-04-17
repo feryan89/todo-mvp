@@ -1,7 +1,6 @@
 package com.todo.device.notification;
 
 import android.app.Notification;
-import android.app.PendingIntent;
 
 import com.todo.data.model.Task;
 

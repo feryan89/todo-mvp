@@ -1,6 +1,5 @@
 package com.todo.di.module;
 
-import android.content.Context;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.todo.TodoApplication;

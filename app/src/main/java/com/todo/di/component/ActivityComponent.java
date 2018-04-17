@@ -3,7 +3,6 @@ package com.todo.di.component;
 import com.todo.di.DaggerActivity;
 import com.todo.di.module.ActivityModule;
 import com.todo.di.module.ActivityPresenterModule;
-import com.todo.di.module.ServiceModule;
 import com.todo.di.scope.ActivityScope;
 
 import dagger.Component;
