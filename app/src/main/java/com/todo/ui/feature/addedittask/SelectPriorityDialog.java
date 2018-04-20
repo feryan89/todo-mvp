@@ -53,10 +53,10 @@ public class SelectPriorityDialog extends BaseDialog {
 
     /********* Butterknife Binded Methods  ********/
 
-    @OnClick({R.id.select_priority_linear_layout_priority_1,
-            R.id.select_priority_linear_layout_priority_2,
-            R.id.select_priority_linear_layout_priority_3,
-            R.id.select_priority_linear_layout_priority_4})
+    @OnClick({R.id.select_priority_linear_layout_priority_low,
+            R.id.select_priority_linear_layout_priority_normal,
+            R.id.select_priority_linear_layout_priority_high,
+            R.id.select_priority_linear_layout_priority_crcucial})
     public void onPrioritySelected(LinearLayout linearLayout) {
         int priority = Integer.valueOf(linearLayout.getTag().toString());
         callback.onPrioritySelected(priority);

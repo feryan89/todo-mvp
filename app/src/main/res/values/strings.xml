@@ -5,10 +5,10 @@
     <string name="all_message_welcome">Welcome</string>
 
     <string name="all_label_priority">Priority</string>
-    <string name="all_label_priority_1">Priority 1</string>
-    <string name="all_label_priority_2">Priority 2</string>
-    <string name="all_label_priority_3">Priority 3</string>
-    <string name="all_label_priority_4">Priority 4</string>
+    <string name="all_label_priority_low">Low</string>
+    <string name="all_label_priority_normal">Normal</string>
+    <string name="all_label_priority_high">high</string>
+    <string name="all_label_priority_crucial">Crucial</string>
 
     <string name="all_hint_email">Email Address</string>
     <string name="all_hint_password">Password</string>
@@ -31,8 +31,6 @@
     <string name="register_action_register">Register</string>
     <string name="register_error_email_already_exist">Email already exist</string>
 
-
-    <string name="tasks_action_completed_tasks">Completed tasks</string>
     <string name="tasks_action_sort">Sort</string>
     <string name="tasks_action_by_date">By date</string>
     <string name="tasks_action_by_priority">By priority</string>

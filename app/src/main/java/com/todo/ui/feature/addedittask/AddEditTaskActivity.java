@@ -190,20 +190,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
     private void updatePriorityTextView(int priority) {
         task.setPriority(priority);
-        switch (priority) {
-            case Task.PRIORITY_1:
-                textViewPriority.setText(R.string.all_label_priority_1);
-                break;
-            case Task.PRIORITY_2:
-                textViewPriority.setText(R.string.all_label_priority_2);
-                break;
-            case Task.PRIORITY_3:
-                textViewPriority.setText(R.string.all_label_priority_3);
-                break;
-            case Task.PRIORITY_4:
-                textViewPriority.setText(R.string.all_label_priority_4);
-                break;
-        }
+        textViewPriority.setText(UiUtils.getPriorityString(this, priority));
     }
 
     private void updateReminderTime(long deadline) {

@@ -27,7 +27,7 @@
 
 
         <LinearLayout
-            android:id="@+id/select_priority_linear_layout_priority_4"
+            android:id="@+id/select_priority_linear_layout_priority_low"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -37,7 +37,7 @@
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/task_priority_4" />
+                android:background="@color/task_priority_low" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
-                android:text="@string/all_label_priority_4" />
+                android:text="@string/all_label_priority_low" />
 
         </LinearLayout>
 
@@ -56,7 +56,7 @@
             android:background="?android:attr/dividerHorizontal" />
 
         <LinearLayout
-            android:id="@+id/select_priority_linear_layout_priority_3"
+            android:id="@+id/select_priority_linear_layout_priority_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -66,7 +66,7 @@
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/task_priority_3" />
+                android:background="@color/task_priority_normal" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
-                android:text="@string/all_label_priority_3" />
+                android:text="@string/all_label_priority_normal" />
         </LinearLayout>
 
         <View
@@ -83,7 +83,7 @@
             android:background="?android:attr/dividerHorizontal" />
 
         <LinearLayout
-            android:id="@+id/select_priority_linear_layout_priority_2"
+            android:id="@+id/select_priority_linear_layout_priority_high"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -93,7 +93,7 @@
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/task_priority_2" />
+                android:background="@color/task_priority_high" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -101,7 +101,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
-                android:text="@string/all_label_priority_2" />
+                android:text="@string/all_label_priority_high" />
         </LinearLayout>
 
         <View
@@ -110,7 +110,7 @@
             android:background="?android:attr/dividerHorizontal" />
 
         <LinearLayout
-            android:id="@+id/select_priority_linear_layout_priority_1"
+            android:id="@+id/select_priority_linear_layout_priority_crcucial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -120,7 +120,7 @@
             <View
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:background="@color/task_priority_1" />
+                android:background="@color/task_priority_crucial" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -128,7 +128,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_vertical"
-                android:text="@string/all_label_priority_1" />
+                android:text="@string/all_label_priority_crucial" />
         </LinearLayout>
 
         <View

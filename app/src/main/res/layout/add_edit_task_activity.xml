@@ -149,7 +149,7 @@
                     android:id="@+id/add_edit_task_text_view_priority"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/all_label_priority_1"
+                    android:text="@string/all_label_priority_low"
                     android:textSize="@dimen/typography_caption" />
 
             </LinearLayout>
@@ -172,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/add_edit_task_vector_add_alarm"
-                android:contentDescription="TODO" />
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="0dp"

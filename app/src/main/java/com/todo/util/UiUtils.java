@@ -13,13 +13,13 @@ public class UiUtils {
         switch (priority) {
 
             case Task.PRIORITY_1:
-                return R.color.task_priority_1;
+                return R.color.task_priority_crucial;
             case Task.PRIORITY_2:
-                return R.color.task_priority_2;
+                return R.color.task_priority_high;
             case Task.PRIORITY_3:
-                return R.color.task_priority_3;
+                return R.color.task_priority_normal;
             case Task.PRIORITY_4:
-                return R.color.task_priority_4;
+                return R.color.task_priority_low;
             default:
                 return R.color.all_white;
         }
@@ -31,15 +31,15 @@ public class UiUtils {
         switch (priority) {
 
             case Task.PRIORITY_1:
-                return context.getString(R.string.all_label_priority_1);
+                return context.getString(R.string.all_label_priority_crucial);
             case Task.PRIORITY_2:
-                return context.getString(R.string.all_label_priority_2);
+                return context.getString(R.string.all_label_priority_high);
             case Task.PRIORITY_3:
-                return context.getString(R.string.all_label_priority_3);
+                return context.getString(R.string.all_label_priority_normal);
             case Task.PRIORITY_4:
-                return context.getString(R.string.all_label_priority_4);
+                return context.getString(R.string.all_label_priority_low);
             default:
-                return context.getString(R.string.all_label_priority_1);
+                return context.getString(R.string.all_label_priority_low);
         }
     }
 

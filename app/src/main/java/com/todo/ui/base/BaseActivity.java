@@ -8,7 +8,6 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
 import com.todo.R;
 import com.todo.di.DaggerActivity;
@@ -96,11 +95,6 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
         return showSnackBar(getString(messageRes), getString(actionRes));
     }
 
-
-    @Override
-    public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
 
     @Override
     public void finishActivity() {

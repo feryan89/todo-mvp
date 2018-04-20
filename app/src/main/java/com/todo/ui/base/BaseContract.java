@@ -21,8 +21,6 @@ public interface BaseContract {
         Single<Boolean> showSnackBar(int messageRes, final int actionRes);
 
 
-        void showToast(final String message);
-
         void finishActivity();
 
     }

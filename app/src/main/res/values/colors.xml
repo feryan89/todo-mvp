@@ -16,9 +16,9 @@
     <color name="all_orange_400">#FFFF5722</color>
 
 
-    <color name="task_priority_1">#FFB71C1C</color>
-    <color name="task_priority_2">#FFFF6F00</color>
-    <color name="task_priority_3">#FFFFEB3B</color>
-    <color name="task_priority_4">@color/all_white</color>
+    <color name="task_priority_low">@color/all_white</color>
+    <color name="task_priority_normal">#FFFFEB3B</color>
+    <color name="task_priority_high">#FFFF6F00</color>
+    <color name="task_priority_crucial">#FFB71C1C</color>
 
 </resources>
