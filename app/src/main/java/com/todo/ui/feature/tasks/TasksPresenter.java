@@ -6,6 +6,7 @@ import com.todo.data.model.Task;
 import com.todo.data.model.TaskComparator;
 import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
+import com.todo.util.scheduler.SchedulerProvider;
 
 import java.util.Collections;
 
@@ -45,7 +46,7 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
 
     @Override
     public void getTasks() {
-        addSubscription(todoRepository.getTasks()
+        addDisposable(todoRepository.getTasks()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .map(tasks -> {
@@ -74,7 +75,7 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
 
     @Override
     public void deleteTask(int position, Task task) {
-        addSubscription(todoRepository.deleteTask(task)
+        addDisposable(todoRepository.deleteTask(task)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(this::getTasks
@@ -83,7 +84,7 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
 
     @Override
     public void updateTask(Task task) {
-        addSubscription(todoRepository.updateTask(task)
+        addDisposable(todoRepository.updateTask(task)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> Timber.d("Task updated successfully")

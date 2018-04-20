@@ -12,7 +12,7 @@ import com.todo.ui.validator.EmailValidator;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 public final class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter {
@@ -55,23 +55,23 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
         Observable<ValidationResultViewModel> emailValidObservable = emailObservable.map(s -> emailValidator.validate(s));
         Observable<ValidationResultViewModel> passwordValidObservable = passwordObservable.map(this::isPasswordValid);
 
-        emailValidObservable.subscribe(validationResultViewModel -> {
+        addDisposable(emailValidObservable.subscribe(validationResultViewModel -> {
             if (validationResultViewModel.isValid()) {
                 getView().hideEmailError();
             } else {
                 getView().showEmailError(validationResultViewModel.getErrorMessage());
             }
-        });
+        }));
 
-        passwordValidObservable.subscribe(validationResultViewModel -> {
+        addDisposable(passwordValidObservable.subscribe(validationResultViewModel -> {
             if (validationResultViewModel.isValid()) {
                 getView().hidePasswordError();
             } else {
                 getView().showPasswordError(validationResultViewModel.getErrorMessage());
             }
-        });
+        }));
 
-        Observable.combineLatest(emailValidObservable, passwordValidObservable,
+        addDisposable(Observable.combineLatest(emailValidObservable, passwordValidObservable,
                 (emailValidResult, passwordValidResult)
                         -> emailValidResult.isValid() && passwordValidResult.isValid())
                 .subscribe(isValid -> {
@@ -79,7 +79,7 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
                         getView().enableLoginButton();
                     else
                         getView().disableLoginButton();
-                });
+                }));
 
     }
 
@@ -87,7 +87,7 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
     public void login(final String email, final String password) {
         getView().hideKeyboard();
         getView().showLoading();
-        addSubscription(todoRepository.login(email, password)
+        addDisposable(todoRepository.login(email, password)
                 .subscribe(() -> getView().showTasksActivity(), throwable -> {
                     Timber.e(throwable);
                     if (throwable instanceof FirebaseAuthInvalidUserException

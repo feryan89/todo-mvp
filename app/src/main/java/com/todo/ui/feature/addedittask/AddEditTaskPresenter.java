@@ -36,7 +36,7 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
     @Override
     public void createTask(Task task) {
         if (StringUtils.isNotEmpty(task.getTitle())) {
-            todoRepository.createTask(task).subscribe(this::scheduleReminder);
+            addDisposable(todoRepository.createTask(task).subscribe(this::scheduleReminder));
             getView().finishActivity();
         } else {
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));

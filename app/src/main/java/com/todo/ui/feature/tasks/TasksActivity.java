@@ -55,7 +55,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
         context.startActivity(intent);
     }
 
-    public static Intent getIntentForNotification(Context context){
+    public static Intent getIntentForNotification(Context context) {
         Intent intent = new Intent(context, TasksActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
@@ -144,7 +144,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     @Override
     public void onTaskDeleted(final int position) {
         final Task removedTask = tasksAdapter.removeTask(position);
-        showSnackBar(R.string.tasks_message_deleted, R.string.tasks_action_undo)
+        addDisposable(showSnackBar(R.string.tasks_message_deleted, R.string.tasks_action_undo)
                 .subscribe(undo -> {
                     if (undo) {
                         tasksAdapter.restoreTask(position, removedTask);
@@ -152,14 +152,14 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
                         // remove from backend
                         presenter.deleteTask(position, removedTask);
                     }
-                });
+                }));
     }
 
     @Override
     public void onTaskCompleted(int position) {
         presenter.updateTask(tasksAdapter.getItem(position));
         final Task completedTask = tasksAdapter.removeTask(position);
-        showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo)
+        addDisposable(showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo)
                 .subscribe(undo -> {
                     if (undo) {
                         tasksAdapter.restoreTask(position, completedTask);
@@ -167,7 +167,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
                         completedTask.setCompleted(true);
                         presenter.updateTask(completedTask);
                     }
-                });
+                }));
     }
 
     /********* Butterknife Binded Methods  ********/
@@ -188,8 +188,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
         tasksAdapter = new TasksAdapter(new ArrayList<>());
         recyclerViewTasks.setAdapter(tasksAdapter);
-        tasksAdapter.onItemClick()
-                .subscribe(this::onTaskSelected);
+        addDisposable(tasksAdapter.onItemClick().subscribe(this::onTaskSelected));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerViewTasks.setLayoutManager(linearLayoutManager);

@@ -11,7 +11,7 @@ import com.todo.ui.validator.EmailValidator;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 public final class RegisterPresenter extends BasePresenter<RegisterContract.View> implements RegisterContract.Presenter {
@@ -66,7 +66,7 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
     public void register(String email, String password) {
         getView().hideKeyboard();
         getView().showLoading();
-        addSubscription(todoRepository.register(email, password)
+        addDisposable(todoRepository.register(email, password)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {

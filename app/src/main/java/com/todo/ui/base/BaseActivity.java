@@ -13,7 +13,11 @@ import com.todo.R;
 import com.todo.di.DaggerActivity;
 
 import butterknife.Unbinder;
-import rx.Single;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BaseActivity extends DaggerActivity implements BaseContract.View {
 
@@ -22,6 +26,7 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     private Unbinder unbinder;
     private View rootView;
     private Snackbar snackbar;
+    private CompositeDisposable compositeDisposable;
 
     /********* Lifecycle Methods ********/
 
@@ -42,6 +47,9 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     protected void onDestroy() {
         if (unbinder != null) {
             unbinder.unbind();
+        }
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
         }
         super.onDestroy();
     }
@@ -67,24 +75,28 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     @Override
     public Single<Boolean> showSnackBar(final String message, final String action) {
 
-        return Single.fromEmitter(emitter -> {
+        return Single.create(new SingleOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(SingleEmitter<Boolean> emitter) throws Exception {
+                if (snackbar != null) {
+                    snackbar.setText(message);
+                    snackbar.setDuration(Snackbar.LENGTH_LONG);
+                } else {
+                    snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
 
-            if (snackbar != null) {
-                snackbar.setText(message);
-                snackbar.setDuration(Snackbar.LENGTH_LONG);
-            } else {
-                snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
-
-            }
-            snackbar.setAction(action, v -> emitter.onSuccess(Boolean.TRUE));
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar transientBottomBar, int event) {
-                    super.onDismissed(transientBottomBar, event);
-                    emitter.onSuccess(Boolean.FALSE);
                 }
-            });
-            snackbar.show();
+                snackbar.setAction(action, v -> emitter.onSuccess(Boolean.TRUE));
+                snackbar.addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        super.onDismissed(transientBottomBar, event);
+                        if (!emitter.isDisposed()) {
+                            emitter.onSuccess(Boolean.FALSE);
+                        }
+                    }
+                });
+                snackbar.show();
+            }
         });
 
     }
@@ -106,4 +118,12 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
     public void setUnbinder(Unbinder unbinder) {
         this.unbinder = unbinder;
     }
+
+    protected void addDisposable(final Disposable disposable) {
+        if (compositeDisposable == null || compositeDisposable.isDisposed()) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
+    }
+
 }

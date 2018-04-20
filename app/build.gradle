@@ -29,12 +29,12 @@ android {
 }
 
 def supportLibVersion = "27.0.2"
-def rxJavaVersion = "1.3.8"
-def rxAndroidVersion = "1.2.1"
+def rxJava2Version = "2.1.12"
+def rxAndroid2Version = "2.0.2"
 def firebaseVersion = "15.0.0"
 def butterKnifeVersion = "8.8.1"
 def daggerVersion = "2.15"
-def rxBindingVersion = "1.0.1"
+def rxBinding2Version = "2.1.1"
 def timberVersion = "4.7.0"
 def stethoVersion = "1.5.0"
 def constraintLayoutVersion = "1.1.0"
@@ -54,10 +54,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:' + firebaseVersion
     implementation 'com.google.firebase:firebase-auth:' + firebaseVersion
     implementation 'com.google.firebase:firebase-database:' + firebaseVersion
-    implementation 'io.reactivex:rxjava:' + rxJavaVersion
-    implementation 'io.reactivex:rxandroid:' + rxAndroidVersion
-    implementation 'com.jakewharton.rxbinding:rxbinding:' + rxBindingVersion
-    implementation 'com.jakewharton.rxbinding:rxbinding-design:' + rxBindingVersion
+    implementation 'io.reactivex.rxjava2:rxjava:' + rxJava2Version
+    implementation 'io.reactivex.rxjava2:rxandroid:' + rxAndroid2Version
+    implementation 'com.jakewharton.rxbinding2:rxbinding:' + rxBinding2Version
+    implementation 'com.jakewharton.rxbinding2:rxbinding-design:' + rxBinding2Version
     implementation 'com.facebook.stetho:stetho:' + stethoVersion
     implementation 'com.jakewharton:butterknife:' + butterKnifeVersion
     implementation 'com.jakewharton.timber:timber:' + timberVersion

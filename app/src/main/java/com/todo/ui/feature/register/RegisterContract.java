@@ -2,7 +2,7 @@ package com.todo.ui.feature.register;
 
 import com.todo.ui.base.BaseContract;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface RegisterContract {
 

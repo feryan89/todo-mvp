@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.todo.R;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
+import io.reactivex.Observable;
 
 public final class RegisterActivity extends BaseActivity implements RegisterContract.View {
 

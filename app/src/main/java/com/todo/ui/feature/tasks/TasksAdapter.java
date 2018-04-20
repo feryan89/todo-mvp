@@ -19,9 +19,10 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
-import rx.subjects.Subject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * @author Waleed Sarwar
@@ -32,7 +33,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
 
     private static final long CLICK_THROTTLE_WINDOW_MILLIS = 300L;
-    private final Subject<Task, Task> onItemClickSubject = BehaviorSubject.create();
+    private final Subject<Task> onItemClickSubject = PublishSubject.create();
     /********* Member Fields  ********/
 
     private final List<Task> tasks;
@@ -112,10 +113,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
         @BindView(R.id.task_textview_deadline)
         TextView textViewDeadline;
-        private final Subject<Task, Task> clickSubject;
+        private final Subject<Task> clickSubject;
         private Task task;
 
-        TaskItemViewHolder(View itemView, Subject<Task, Task> clickSubject) {
+        TaskItemViewHolder(View itemView, Subject<Task> clickSubject) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.clickSubject = clickSubject;

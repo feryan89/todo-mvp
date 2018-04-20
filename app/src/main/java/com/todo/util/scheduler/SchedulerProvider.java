@@ -2,7 +2,8 @@ package com.todo.util.scheduler;
 
 import android.support.annotation.NonNull;
 
-import rx.Scheduler;
+import io.reactivex.Scheduler;
+
 
 /**
  * @author Waleed Sarwar

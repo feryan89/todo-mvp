@@ -6,8 +6,9 @@ import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 
 public abstract class BasePresenter<V extends BaseContract.View> implements BaseContract.Presenter<V> {
 
@@ -19,12 +20,11 @@ public abstract class BasePresenter<V extends BaseContract.View> implements Base
     /********* Member Fields  ********/
 
     private WeakReference<V> viewReference;
-    private CompositeSubscription subscriptions;
+    private CompositeDisposable compositeDisposable;
 
     /********* Constructors ********/
 
     public BasePresenter() {
-        subscriptions = new CompositeSubscription();
     }
 
     /********* BaseContract.Presenter Inherited Methods ********/
@@ -37,6 +37,7 @@ public abstract class BasePresenter<V extends BaseContract.View> implements Base
     @Override
     public void detachView() {
         this.viewReference = null;
+        this.compositeDisposable.clear();
     }
 
     /********* Member Methods ********/
@@ -49,11 +50,11 @@ public abstract class BasePresenter<V extends BaseContract.View> implements Base
         return viewReference.get();
     }
 
-    protected void addSubscription(final Subscription subscription) {
-        if (subscriptions == null || subscriptions.isUnsubscribed()) {
-            subscriptions = new CompositeSubscription();
+    protected void addDisposable(final Disposable disposable) {
+        if (compositeDisposable == null || compositeDisposable.isDisposed()) {
+            compositeDisposable = new CompositeDisposable();
         }
-        subscriptions.add(subscription);
+        compositeDisposable.add(disposable);
     }
 
 }

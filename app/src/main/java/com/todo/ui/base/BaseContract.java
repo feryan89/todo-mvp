@@ -1,7 +1,7 @@
 package com.todo.ui.base;
 
 
-import rx.Single;
+import io.reactivex.Single;
 
 /**
  * @author Waleed Sarwar

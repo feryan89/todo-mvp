@@ -10,9 +10,10 @@ import com.todo.util.RxFirebaseUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Completable;
-import rx.Observable;
-import rx.Single;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 
 /**
  * @author Waleed Sarwar
@@ -51,12 +52,12 @@ public class UserRemoteDataSource extends RemoteDataSource {
         task.setId(key);
         getChildReference().child(key).setValue(task);
 
-        return Observable.just(task).toSingle();
+        return Single.just(task);
 
     }
 
     public Completable updateTask(final Task task) {
-        return Completable.fromSingle(rxFirebaseUtils.getSingle(getChildReference().child(task.getId()).updateChildren(Task.toHasHMap(task))));
+        return rxFirebaseUtils.getCompleteable(getChildReference().child(task.getId()).updateChildren(Task.toHasHMap(task)));
     }
 
 
@@ -73,7 +74,7 @@ public class UserRemoteDataSource extends RemoteDataSource {
 
 
     public Completable deleteTask(final Task task) {
-        return Completable.fromSingle(rxFirebaseUtils.getSingle(getChildReference().child(task.getId()).removeValue()));
+        return rxFirebaseUtils.getCompleteable(getChildReference().child(task.getId()).removeValue());
 
 
     }
