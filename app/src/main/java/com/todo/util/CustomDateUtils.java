@@ -11,7 +11,7 @@ public class CustomDateUtils {
 
     public static String getDisplayDate(long deadline) {
 
-        return DateUtils.getRelativeTimeSpanString(deadline, System.currentTimeMillis(), android.text.format.DateUtils.DAY_IN_MILLIS).toString();
+        return DateUtils.getRelativeTimeSpanString(deadline, System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS).toString();
     }
 
     public static String getDisplayTime(long reminder) {

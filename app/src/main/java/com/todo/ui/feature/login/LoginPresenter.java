@@ -75,10 +75,11 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
                 (emailValidResult, passwordValidResult)
                         -> emailValidResult.isValid() && passwordValidResult.isValid())
                 .subscribe(isValid -> {
-                    if (isValid)
+                    if (isValid) {
                         getView().enableLoginButton();
-                    else
+                    } else {
                         getView().disableLoginButton();
+                    }
                 }));
 
     }

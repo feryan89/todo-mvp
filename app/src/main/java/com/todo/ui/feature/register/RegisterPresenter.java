@@ -35,30 +35,31 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
         Observable<ValidationResultViewModel> emailValidObservable = emailObservable.map(s -> emailValidator.validate(s));
         Observable<ValidationResultViewModel> passwordValidObservable = passwordObservable.map(this::isPasswordValid);
 
-        emailValidObservable.subscribe(validationResultViewModel -> {
+        addDisposable(emailValidObservable.subscribe(validationResultViewModel -> {
             if (validationResultViewModel.isValid()) {
                 getView().hideEmailError();
             } else {
                 getView().showEmailError(validationResultViewModel.getErrorMessage());
             }
-        });
+        }));
 
-        passwordValidObservable.subscribe(validationResultViewModel -> {
+        addDisposable(passwordValidObservable.subscribe(validationResultViewModel -> {
             if (validationResultViewModel.isValid()) {
                 getView().hidePasswordError();
             } else {
                 getView().showPasswordError(validationResultViewModel.getErrorMessage());
             }
-        });
+        }));
 
-        Observable.combineLatest(emailValidObservable, passwordValidObservable,
+        addDisposable(Observable.combineLatest(emailValidObservable, passwordValidObservable,
                 (emailValidResult, passwordValidResult) -> emailValidResult.isValid() && passwordValidResult.isValid())
                 .subscribe(isValid -> {
-                    if (isValid)
+                    if (isValid) {
                         getView().enableRegisterButton();
-                    else
+                    } else {
                         getView().disableRegisterButton();
-                });
+                    }
+                }));
 
     }
 

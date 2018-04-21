@@ -14,6 +14,8 @@ build/
 
 # Secret files
 google-services.json
+keystore/release.jks
+keystore/keystore.properties
 
 # Local configuration file (sdk path, etc)
 local.properties

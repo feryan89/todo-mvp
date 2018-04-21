@@ -6,7 +6,6 @@ import com.todo.data.model.Task;
 import com.todo.data.model.TaskComparator;
 import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
-import com.todo.util.scheduler.SchedulerProvider;
 
 import java.util.Collections;
 

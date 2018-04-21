@@ -3,13 +3,10 @@ package com.todo;
 import android.app.Application;
 import android.content.Context;
 
-import com.facebook.stetho.Stetho;
 import com.todo.di.ComponentFactory;
 import com.todo.di.component.ApplicationComponent;
 
-import timber.log.Timber;
-
-public final class TodoApplication extends Application {
+public class TodoApplication extends Application {
 
     /********* Member Fields  ********/
 
@@ -29,10 +26,6 @@ public final class TodoApplication extends Application {
         applicationComponent = ComponentFactory.createApplicationComponent(this);
         applicationComponent.inject(this);
 
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this);
-            Timber.plant(new Timber.DebugTree());
-        }
     }
 
     /********* Member Methods  ********/

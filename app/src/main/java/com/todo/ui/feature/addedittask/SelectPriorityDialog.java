@@ -58,7 +58,7 @@ public class SelectPriorityDialog extends BaseDialog {
             R.id.select_priority_linear_layout_priority_high,
             R.id.select_priority_linear_layout_priority_crcucial})
     public void onPrioritySelected(LinearLayout linearLayout) {
-        int priority = Integer.valueOf(linearLayout.getTag().toString());
+        int priority = Integer.parseInt(linearLayout.getTag().toString());
         callback.onPrioritySelected(priority);
         dismiss();
     }

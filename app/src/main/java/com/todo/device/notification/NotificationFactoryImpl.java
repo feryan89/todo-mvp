@@ -35,18 +35,14 @@ public final class NotificationFactoryImpl implements NotificationFactory {
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 
-            if (notificationManager != null) {
+            if (notificationManager != null && notificationManager.getNotificationChannel(CHANNEL_ID_REMINDERS) == null) {
 
-                if (notificationManager.getNotificationChannel(CHANNEL_ID_REMINDERS) == null) {
+                CharSequence name = context.getString(R.string.notification_channel_name_reminders);
+                String description = context.getString(R.string.notification_channel_description_reminders);
+                NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID_REMINDERS, name, NotificationManager.IMPORTANCE_DEFAULT);
+                mChannel.setDescription(description);
+                notificationManager.createNotificationChannel(mChannel);
 
-                    CharSequence name = context.getString(R.string.notification_channel_name_reminders);
-                    String description = context.getString(R.string.notification_channel_description_reminders);
-                    NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID_REMINDERS, name, NotificationManager.IMPORTANCE_DEFAULT);
-                    mChannel.setDescription(description);
-                    notificationManager.createNotificationChannel(mChannel);
-
-
-                }
             }
         }
     }

@@ -1,17 +1,19 @@
 package com.todo.data.model;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 public class TaskComparator {
 
-    public static class ByDateComparator implements Comparator<Task>{
+    public static class ByDateComparator implements Comparator<Task>, Serializable {
 
         @Override
         public int compare(Task task1, Task task2) {
             return Long.compare(task1.getDeadline(), task2.getDeadline());
         }
     }
-    public static class ByPriorityComparator implements Comparator<Task>{
+
+    public static class ByPriorityComparator implements Comparator<Task>, Serializable {
 
         @Override
         public int compare(Task task1, Task task2) {
@@ -19,7 +21,7 @@ public class TaskComparator {
         }
     }
 
-    public static class ByNameComparator implements Comparator<Task>{
+    public static class ByNameComparator implements Comparator<Task>, Serializable {
 
         @Override
         public int compare(Task task1, Task task2) {
