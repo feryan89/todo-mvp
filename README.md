@@ -1,5 +1,5 @@
 # ToDo Lite Android MVP example
-[![Build Status](https://circleci.com/gh/waleedsarwar86/todo-mvp.svg?style=shield)](https://circleci.com/gh/waleedsarwar86/todo-mvp)
+[![Build Status](https://circleci.com/gh/waleedsarwar86/todo-mvp.svg?style=shield)](https://circleci.com/gh/waleedsarwar86/todo-mvp)[![Android API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat&label=API&maxAge=300) ]
 
 
 Todo Lite app, shows the **MVP** pattern usage on Android.
