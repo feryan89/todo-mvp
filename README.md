@@ -1,4 +1,4 @@
-# ToDo Lite Android MVP example
+# ToDo Lite Android MVP example [![CircleCI](https://circleci.com/gh/waleedsarwar86/todo-mvp/tree/master.svg?style=svg)](https://circleci.com/gh/waleedsarwar86/todo-mvp/tree/master)
 
 
 Todo Lite app, shows the **MVP** pattern usage on Android.
@@ -9,6 +9,9 @@ Todo Lite app, shows the **MVP** pattern usage on Android.
 <img src="screenshots/2-home_empty.png" width="220"/>
 <img src="screenshots/3-home_tasks.png" width="220"/>
 <img src="screenshots/4-add_edit_task.png" width="220"/>
+<img src="screenshots/5-add_edit_task_deadline.png" width="220"/>
+<img src="screenshots/6-add_edit_task_priority.png" width="220"/>
+
 
 </p>
 
@@ -18,6 +21,7 @@ Todo Lite app, shows the **MVP** pattern usage on Android.
 - Add Task
 - Update Task
 - Delete/Complete Task by swiping the card left/right
+- Set Reminder on the Task. User will be notified by notification.
 
 ## Project structure
 
@@ -31,21 +35,19 @@ Todo Lite app, shows the **MVP** pattern usage on Android.
 * [Constraint Layout](https://developer.android.com/training/constraint-layout/index.html)
 * [Firebase Auth](https://firebase.google.com/docs/auth/)
 * [Firebase Database](https://firebase.google.com/docs/database/)
-* [RxJava](https://github.com/ReactiveX/RxJava)
-* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
-* [RxBindings](https://github.com/JakeWharton/RxBinding)
-* [Retrofit 2](https://github.com/square/retrofit)
-* [Stetho](https://github.com/facebook/stetho)
+* [Firebase JobDispatcher](https://github.com/firebase/firebase-jobdispatcher-android)
+* [RxJava 2](https://github.com/ReactiveX/RxJava)
+* [RxAndroid 2](https://github.com/ReactiveX/RxAndroid)
+* [RxBindings 2](https://github.com/JakeWharton/RxBinding)
 * [ButterKnife](https://github.com/JakeWharton/butterknife)
-* [Timer](https://github.com/JakeWharton/timber)
+* [Timber](https://github.com/JakeWharton/timber)
 * [Dagger 2](https://github.com/google/dagger)
 
 ## Future work
 
 ### Todo
 
-- Make presenter to survive configuration changes using ViewModel.
+- Update form validatoins code.
 - Write Unit and instrumentation tests
-- Setup continuous integration using Circle.ci
 - Convert the project to kotlin.
 

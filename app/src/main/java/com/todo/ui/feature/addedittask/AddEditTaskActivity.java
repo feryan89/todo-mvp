@@ -163,12 +163,14 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     private void init() {
 
         task = getIntent().getParcelableExtra(EXTRA_TASK);
+        calendar = Calendar.getInstance();
 
         if (task == null) {
             task = new Task();
-            calendar = Calendar.getInstance();
             task.setDeadline(calendar.getTimeInMillis());
             task.setPriority(Task.PRIORITY_4);
+        } else {
+            calendar.setTimeInMillis(task.getDeadline());
         }
 
         setReminderDisabled();

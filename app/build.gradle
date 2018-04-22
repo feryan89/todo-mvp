@@ -5,11 +5,6 @@ apply from: "$project.rootDir/code_quality_tools/script-pmd.gradle"
 apply from: "$project.rootDir/code_quality_tools/script-lint.gradle"
 
 check.dependsOn 'findbugs', 'pmd', 'lint'
-
-def keystorePropertiesFile = file("../keystore/keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
 
     compileSdkVersion project.ext.compileSdkVersion
@@ -26,16 +21,16 @@ android {
 
     signingConfigs {
         debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storePassword 'android'
-            storeFile file('../keystore/debug.jks')
+            keyAlias project.property('debug.key.alias')
+            keyPassword project.property('debug.key.password')
+            storePassword project.property('debug.store.password')
+            storeFile file(project.property('debug.store.file'))
         }
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storePassword keystoreProperties['storePassword']
-            storeFile file(keystoreProperties['storeFile'])
+            keyAlias project.property('release.key.alias')
+            keyPassword project.property('release.key.password')
+            storePassword project.property('release.store.password')
+            storeFile file(project.property('release.store.file'))
         }
     }
 
