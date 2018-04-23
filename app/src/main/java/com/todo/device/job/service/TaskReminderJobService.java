@@ -22,8 +22,8 @@ public final class TaskReminderJobService extends JobService {
 
     private static final int TASK_REMINDER_NOTIFICATION_ID = 1832;
 
-    private static final String BUNDLE_TASK_TITLE = "bundle_task_title";
-    private static final String BUNDLE_TASK_PRIORITY = "bundle_task_priority";
+    public static final String BUNDLE_TASK_TITLE = "bundle_task_title";
+    public static final String BUNDLE_TASK_PRIORITY = "bundle_task_priority";
 
 
     @Inject
@@ -32,29 +32,6 @@ public final class TaskReminderJobService extends JobService {
     @Inject
     NotificationFactory notificationFactory;
 
-
-    public static Job createJob(Job.Builder jobBuilder, Task task) {
-        long reminderMs = task.getReminder();
-        long nowMs = Calendar.getInstance().getTime().getTime();
-        int diffSecs = (int) ((reminderMs - nowMs) / 1000);
-
-        Bundle extras = new Bundle();
-        extras.putString(BUNDLE_TASK_TITLE, task.getTitle());
-        extras.putInt(BUNDLE_TASK_PRIORITY, task.getPriority());
-
-        return jobBuilder
-                .setService(TaskReminderJobService.class)
-                .setTag(task.getId())
-                .setRecurring(false)
-                .setLifetime(Lifetime.FOREVER)
-                .setTrigger(Trigger.executionWindow(diffSecs, (diffSecs + 60)))
-                .setReplaceCurrent(true)
-                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
-                .setConstraints(Constraint.ON_ANY_NETWORK)
-                .setExtras(extras)
-                .build();
-
-    }
 
 
     @Override

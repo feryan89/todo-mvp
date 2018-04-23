@@ -31,18 +31,18 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     @Override
     public Single<Boolean> isUserLoggedIn() {
-        return userRemoteDataSource.isUserLoggedIn();
+        return Single.just(userRemoteDataSource.getCurrentUser() != null);
     }
 
     @Override
     public Completable login(String email, String password) {
-        return userRemoteDataSource.login(email, password);
+        return Completable.fromSingle(userRemoteDataSource.login(email, password));
 
     }
 
     @Override
     public Completable register(String email, String password) {
-        return userRemoteDataSource.register(email, password);
+        return Completable.fromSingle(userRemoteDataSource.register(email, password));
     }
 
 

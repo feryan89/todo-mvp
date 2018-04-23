@@ -7,7 +7,7 @@ public interface TaskReminderScheduler {
     int WINDOW = 60; // in seconds
 
 
-    void scheduleTaskReminder(Task task);
+    int scheduleTaskReminder(Task task);
 
-    void cancelTaskReminder(String taskId);
+    int cancelTaskReminder(String taskId);
 }

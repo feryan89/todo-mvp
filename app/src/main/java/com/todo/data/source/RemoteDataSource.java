@@ -1,5 +1,7 @@
 package com.todo.data.source;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.todo.util.RxFirebaseUtils;
@@ -11,7 +13,7 @@ import com.todo.util.RxFirebaseUtils;
 
 public class RemoteDataSource {
 
-
+    @VisibleForTesting
     final static String FIREBASE_CHILD_KEY_TASKS = "tasks";
 
     final FirebaseDatabase firebaseDatabase;

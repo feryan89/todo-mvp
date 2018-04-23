@@ -56,18 +56,19 @@ android {
 }
 
 def supportLibVersion = "27.0.2"
+def constraintLayoutVersion = "1.1.0"
+def firebaseVersion = "15.0.0"
+def jobDispatcher = "0.8.5"
 def rxJava2Version = "2.1.12"
 def rxAndroid2Version = "2.0.2"
-def firebaseVersion = "15.0.0"
-def butterKnifeVersion = "8.8.1"
-def daggerVersion = "2.15"
 def rxBinding2Version = "2.1.1"
 def timberVersion = "4.7.0"
-def constraintLayoutVersion = "1.1.0"
+def butterKnifeVersion = "8.8.1"
+def daggerVersion = "2.15"
 def junitVersion = "4.12"
 def runnerVersion = "1.0.1"
 def rulesVersion = "1.0.1"
-def jobDispatcher = "0.8.5"
+def mockitoVersion = "2.18.3"
 
 
 dependencies {
@@ -80,18 +81,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:' + firebaseVersion
     implementation 'com.google.firebase:firebase-auth:' + firebaseVersion
     implementation 'com.google.firebase:firebase-database:' + firebaseVersion
+    implementation 'com.firebase:firebase-jobdispatcher:' + jobDispatcher
     implementation 'io.reactivex.rxjava2:rxjava:' + rxJava2Version
     implementation 'io.reactivex.rxjava2:rxandroid:' + rxAndroid2Version
     implementation 'com.jakewharton.rxbinding2:rxbinding:' + rxBinding2Version
     implementation 'com.jakewharton.rxbinding2:rxbinding-design:' + rxBinding2Version
-    implementation 'com.jakewharton:butterknife:' + butterKnifeVersion
     implementation 'com.jakewharton.timber:timber:' + timberVersion
-    implementation 'com.google.dagger:dagger:' + daggerVersion
-    implementation 'com.firebase:firebase-jobdispatcher:' + jobDispatcher
-    annotationProcessor 'com.google.dagger:dagger-compiler:' + daggerVersion
+    implementation 'com.jakewharton:butterknife:' + butterKnifeVersion
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + butterKnifeVersion
+    implementation 'com.google.dagger:dagger:' + daggerVersion
+    annotationProcessor 'com.google.dagger:dagger-compiler:' + daggerVersion
 
     testImplementation 'junit:junit:' + junitVersion
+    testImplementation 'org.mockito:mockito-inline:' + mockitoVersion
 
     androidTestImplementation 'junit:junit:' + junitVersion
     androidTestImplementation 'com.android.support.test:runner:' + runnerVersion

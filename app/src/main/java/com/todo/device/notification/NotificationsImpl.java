@@ -13,12 +13,12 @@ public final class NotificationsImpl implements Notifications {
     }
 
     @Override
-    public void showNotification(final int notificationId, final Notification notification) {
+    public void showNotification(final int notificationId, @NonNull final Notification notification) {
         notificationManagerCompat.notify(notificationId, notification);
     }
 
     @Override
-    public void updateNotification(final int notificationId, final Notification notification) {
+    public void updateNotification(final int notificationId, @NonNull final Notification notification) {
         notificationManagerCompat.notify(notificationId, notification);
     }
 

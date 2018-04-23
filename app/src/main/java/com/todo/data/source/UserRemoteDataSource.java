@@ -1,6 +1,10 @@
 package com.todo.data.source;
 
+import android.support.annotation.VisibleForTesting;
+
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -33,17 +37,18 @@ public class UserRemoteDataSource extends RemoteDataSource {
 
     /********* Member Methods  ********/
 
-    public Single<Boolean> isUserLoggedIn() {
-        return Single.just(firebaseAuth.getCurrentUser() != null);
+    public FirebaseUser getCurrentUser() {
+        return firebaseAuth.getCurrentUser();
 
     }
 
-    public Completable login(final String email, final String password) {
-        return Completable.fromSingle(rxFirebaseUtils.getSingle(firebaseAuth.signInWithEmailAndPassword(email, password)));
+    public Single<AuthResult> login(final String email, final String password) {
+        return rxFirebaseUtils.getSingle(firebaseAuth.signInWithEmailAndPassword(email, password));
     }
 
-    public Completable register(final String email, final String password) {
-        return Completable.fromSingle(rxFirebaseUtils.getSingle(firebaseAuth.createUserWithEmailAndPassword(email, password)));
+    public Single<AuthResult> register(final String email, final String password) {
+        return rxFirebaseUtils.getSingle(firebaseAuth.createUserWithEmailAndPassword(email, password));
+
     }
 
     public Single<Task> createTask(Task task) {
@@ -79,8 +84,8 @@ public class UserRemoteDataSource extends RemoteDataSource {
 
     }
 
-
-    private DatabaseReference getChildReference() {
+    @VisibleForTesting
+    DatabaseReference getChildReference() {
         if (this.childReference == null) {
             this.childReference = firebaseDatabase.
                     getReference()
