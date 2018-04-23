@@ -1,6 +1,6 @@
 package com.todo.data.repository;
 
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.data.source.UserRemoteDataSource;
 
 import java.util.List;
@@ -47,22 +47,22 @@ public class TodoRepositoryImpl implements TodoRepository {
 
 
     @Override
-    public Single<Task> createTask(Task task) {
-        return userRemoteDataSource.createTask(task);
+    public Single<TaskModel> createTask(TaskModel taskModel) {
+        return userRemoteDataSource.createTask(taskModel);
     }
 
     @Override
-    public Completable updateTask(Task task) {
-        return userRemoteDataSource.updateTask(task);
+    public Completable updateTask(TaskModel taskModel) {
+        return userRemoteDataSource.updateTask(taskModel);
     }
 
     @Override
-    public Completable deleteTask(Task task) {
-        return userRemoteDataSource.deleteTask(task);
+    public Completable deleteTask(TaskModel taskModel) {
+        return userRemoteDataSource.deleteTask(taskModel);
     }
 
     @Override
-    public Observable<List<Task>> getTasks() {
+    public Observable<List<TaskModel>> getTasks() {
         return userRemoteDataSource.getTasks();
     }
 

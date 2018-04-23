@@ -2,8 +2,8 @@ package com.todo.ui.feature.tasks;
 
 import android.content.res.Resources;
 
-import com.todo.data.model.Task;
-import com.todo.data.model.TaskComparator;
+import com.todo.data.model.TaskModel;
+import com.todo.data.model.TaskModelComparator;
 import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
 
@@ -51,13 +51,13 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
                 .map(tasks -> {
                     switch (tasksSortType) {
                         case BY_DATE:
-                            Collections.sort(tasks, new TaskComparator.ByDateComparator());
+                            Collections.sort(tasks, new TaskModelComparator.ByDateComparator());
                             break;
                         case BY_PRIORITY:
-                            Collections.sort(tasks, new TaskComparator.ByPriorityComparator());
+                            Collections.sort(tasks, new TaskModelComparator.ByPriorityComparator());
                             break;
                         case BY_NAME:
-                            Collections.sort(tasks, new TaskComparator.ByNameComparator());
+                            Collections.sort(tasks, new TaskModelComparator.ByNameComparator());
                             break;
                     }
                     return tasks;
@@ -73,8 +73,8 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
     }
 
     @Override
-    public void deleteTask(int position, Task task) {
-        addDisposable(todoRepository.deleteTask(task)
+    public void deleteTask(int position, TaskModel taskModel) {
+        addDisposable(todoRepository.deleteTask(taskModel)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(this::getTasks
@@ -82,11 +82,11 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
     }
 
     @Override
-    public void updateTask(Task task) {
-        addDisposable(todoRepository.updateTask(task)
+    public void updateTask(TaskModel taskModel) {
+        addDisposable(todoRepository.updateTask(taskModel)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribe(() -> Timber.d("Task updated successfully")
+                .subscribe(() -> Timber.d("TaskModel updated successfully")
                         , throwable -> {
                             getTasks();
                             Timber.e(throwable);

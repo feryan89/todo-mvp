@@ -1,6 +1,6 @@
 package com.todo.ui.feature.tasks;
 
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.ui.base.BaseContract;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public interface TasksContract {
 
         void showAddEditTaskActivity();
 
-        void showTasks(List<Task> tasks);
+        void showTasks(List<TaskModel> taskModels);
 
         void showTasksEmptyView();
 
@@ -28,8 +28,8 @@ public interface TasksContract {
 
         void getTasks();
 
-        void deleteTask(int position,Task task);
+        void deleteTask(int position,TaskModel taskModel);
 
-        void updateTask(Task task);
+        void updateTask(TaskModel taskModel);
     }
 }

@@ -1,6 +1,6 @@
 package com.todo.data.repository;
 
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 
 import java.util.List;
 
@@ -18,14 +18,14 @@ public interface TodoRepository {
     Completable register(String email, String password);
 
 
-    Single<Task> createTask(Task task);
+    Single<TaskModel> createTask(TaskModel taskModel);
 
-    Completable updateTask(Task task);
+    Completable updateTask(TaskModel taskModel);
 
-    Completable deleteTask(Task task);
+    Completable deleteTask(TaskModel taskModel);
 
 
-    Observable<List<Task>> getTasks();
+    Observable<List<TaskModel>> getTasks();
 
 
 }

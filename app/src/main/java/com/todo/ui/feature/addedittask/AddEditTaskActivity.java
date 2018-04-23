@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.todo.R;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.util.CustomDateUtils;
@@ -62,7 +62,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     SwitchCompat switchReminder;
 
     private Calendar calendar;
-    private Task task;
+    private TaskModel taskModel;
 
     /********* Static Methods ********/
 
@@ -72,9 +72,9 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
         context.startActivity(starter);
     }
 
-    public static void startActivity(Context context, Task task) {
+    public static void startActivity(Context context, TaskModel taskModel) {
         Intent starter = new Intent(context, AddEditTaskActivity.class);
-        starter.putExtra(EXTRA_TASK, task);
+        starter.putExtra(EXTRA_TASK, taskModel);
         context.startActivity(starter);
     }
 
@@ -112,7 +112,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
         DatePickerDialog dialog = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
 
             calendar.set(year, monthOfYear, dayOfMonth);
-            task.setDeadline(calendar.getTimeInMillis());
+            taskModel.setDeadline(calendar.getTimeInMillis());
             updateDeadlineTextView(calendar.getTimeInMillis());
 
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -140,7 +140,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
             TimePickerDialog dialog = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
-                task.setReminder(calendar.getTimeInMillis());
+                taskModel.setReminder(calendar.getTimeInMillis());
                 updateReminderTime(calendar.getTimeInMillis());
 
             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
@@ -150,11 +150,11 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
     @OnClick(R.id.add_edit_task_button_done)
     public void buttonDoneClicked() {
-        task.setTitle(textInputEditTextTitle.getText().toString());
-        if (StringUtils.isEmpty(task.getId())) {
-            presenter.createTask(task);
+        taskModel.setTitle(textInputEditTextTitle.getText().toString());
+        if (StringUtils.isEmpty(taskModel.getId())) {
+            presenter.createTask(taskModel);
         } else {
-            presenter.updateTask(task);
+            presenter.updateTask(taskModel);
         }
     }
 
@@ -162,15 +162,15 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
     private void init() {
 
-        task = getIntent().getParcelableExtra(EXTRA_TASK);
+        taskModel = getIntent().getParcelableExtra(EXTRA_TASK);
         calendar = Calendar.getInstance();
 
-        if (task == null) {
-            task = new Task();
-            task.setDeadline(calendar.getTimeInMillis());
-            task.setPriority(Task.PRIORITY_4);
+        if (taskModel == null) {
+            taskModel = new TaskModel();
+            taskModel.setDeadline(calendar.getTimeInMillis());
+            taskModel.setPriority(TaskModel.PRIORITY_4);
         } else {
-            calendar.setTimeInMillis(task.getDeadline());
+            calendar.setTimeInMillis(taskModel.getDeadline());
         }
 
         setReminderDisabled();
@@ -178,10 +178,10 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     }
 
     private void populateViews() {
-        textInputEditTextTitle.setText(task.getTitle());
-        updateDeadlineTextView(task.getDeadline());
-        updatePriorityTextView(task.getPriority());
-        updateReminderTime(task.getDeadline());
+        textInputEditTextTitle.setText(taskModel.getTitle());
+        updateDeadlineTextView(taskModel.getDeadline());
+        updatePriorityTextView(taskModel.getPriority());
+        updateReminderTime(taskModel.getDeadline());
 
     }
 
@@ -191,7 +191,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     }
 
     private void updatePriorityTextView(int priority) {
-        task.setPriority(priority);
+        taskModel.setPriority(priority);
         textViewPriority.setText(UiUtils.getPriorityString(this, priority));
     }
 

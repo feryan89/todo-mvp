@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.todo.R;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 
 public class UiUtils {
 
@@ -12,13 +12,13 @@ public class UiUtils {
 
         switch (priority) {
 
-            case Task.PRIORITY_1:
+            case TaskModel.PRIORITY_1:
                 return R.color.task_priority_crucial;
-            case Task.PRIORITY_2:
+            case TaskModel.PRIORITY_2:
                 return R.color.task_priority_high;
-            case Task.PRIORITY_3:
+            case TaskModel.PRIORITY_3:
                 return R.color.task_priority_normal;
-            case Task.PRIORITY_4:
+            case TaskModel.PRIORITY_4:
                 return R.color.task_priority_low;
             default:
                 return R.color.all_white;
@@ -30,13 +30,13 @@ public class UiUtils {
 
         switch (priority) {
 
-            case Task.PRIORITY_1:
+            case TaskModel.PRIORITY_1:
                 return context.getString(R.string.all_label_priority_crucial);
-            case Task.PRIORITY_2:
+            case TaskModel.PRIORITY_2:
                 return context.getString(R.string.all_label_priority_high);
-            case Task.PRIORITY_3:
+            case TaskModel.PRIORITY_3:
                 return context.getString(R.string.all_label_priority_normal);
-            case Task.PRIORITY_4:
+            case TaskModel.PRIORITY_4:
                 return context.getString(R.string.all_label_priority_low);
             default:
                 return context.getString(R.string.all_label_priority_low);

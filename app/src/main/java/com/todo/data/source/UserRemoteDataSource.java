@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.util.RxFirebaseUtils;
 
 import java.util.ArrayList;
@@ -51,35 +51,35 @@ public class UserRemoteDataSource extends RemoteDataSource {
 
     }
 
-    public Single<Task> createTask(Task task) {
+    public Single<TaskModel> createTask(TaskModel taskModel) {
 
         final String key = getChildReference().push().getKey();
-        task.setId(key);
-        getChildReference().child(key).setValue(task);
+        taskModel.setId(key);
+        getChildReference().child(key).setValue(taskModel);
 
-        return Single.just(task);
+        return Single.just(taskModel);
 
     }
 
-    public Completable updateTask(final Task task) {
-        return rxFirebaseUtils.getCompleteable(getChildReference().child(task.getId()).updateChildren(Task.toHasHMap(task)));
+    public Completable updateTask(final TaskModel taskModel) {
+        return rxFirebaseUtils.getCompleteable(getChildReference().child(taskModel.getId()).updateChildren(TaskModel.toHasHMap(taskModel)));
     }
 
 
-    public Observable<List<Task>> getTasks() {
+    public Observable<List<TaskModel>> getTasks() {
         return rxFirebaseUtils.getObservable(getChildReference())
                 .map(dataSnapshot -> {
-                    List<Task> tasks = new ArrayList<>();
+                    List<TaskModel> taskModels = new ArrayList<>();
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        tasks.add(child.getValue(Task.class));
+                        taskModels.add(child.getValue(TaskModel.class));
                     }
-                    return tasks;
+                    return taskModels;
                 });
     }
 
 
-    public Completable deleteTask(final Task task) {
-        return rxFirebaseUtils.getCompleteable(getChildReference().child(task.getId()).removeValue());
+    public Completable deleteTask(final TaskModel taskModel) {
+        return rxFirebaseUtils.getCompleteable(getChildReference().child(taskModel.getId()).removeValue());
 
 
     }

@@ -10,7 +10,7 @@ import java.util.Map;
  * @author Waleed Sarwar
  * @since Dec 11, 2017
  */
-public final class Task implements Parcelable {
+public final class TaskModel implements Parcelable {
 
     /********* Constants Fields  ********/
 
@@ -18,15 +18,15 @@ public final class Task implements Parcelable {
     public final static int PRIORITY_2 = 2;
     public final static int PRIORITY_3 = 3;
     public final static int PRIORITY_4 = 4;
-    public static final Creator<Task> CREATOR = new Creator<Task>() {
+    public static final Creator<TaskModel> CREATOR = new Creator<TaskModel>() {
         @Override
-        public Task createFromParcel(Parcel source) {
-            return new Task(source);
+        public TaskModel createFromParcel(Parcel source) {
+            return new TaskModel(source);
         }
 
         @Override
-        public Task[] newArray(int size) {
-            return new Task[size];
+        public TaskModel[] newArray(int size) {
+            return new TaskModel[size];
         }
     };
     /********* Member Fields  ********/
@@ -40,22 +40,22 @@ public final class Task implements Parcelable {
 
     /********* Static Methods  ********/
 
-    public static Map<String, Object> toHasHMap(Task task) {
+    public static Map<String, Object> toHasHMap(TaskModel taskModel) {
         Map<String, Object> taskMap = new HashMap<>();
-        taskMap.put("id", task.getId());
-        taskMap.put("title", task.getTitle());
-        taskMap.put("deadline", task.getDeadline());
-        taskMap.put("priority", task.getPriority());
-        taskMap.put("completed", task.isCompleted());
+        taskMap.put("id", taskModel.getId());
+        taskMap.put("title", taskModel.getTitle());
+        taskMap.put("deadline", taskModel.getDeadline());
+        taskMap.put("priority", taskModel.getPriority());
+        taskMap.put("completed", taskModel.isCompleted());
         return taskMap;
     }
 
     /********* Constructors ********/
 
-    public Task() {
+    public TaskModel() {
     }
 
-    public Task(String id, String title, long deadline, int priority, boolean completed) {
+    public TaskModel(String id, String title, long deadline, int priority, boolean completed) {
         this.id = id;
         this.title = title;
         this.deadline = deadline;
@@ -63,7 +63,7 @@ public final class Task implements Parcelable {
         this.completed = completed;
     }
 
-    protected Task(Parcel in) {
+    protected TaskModel(Parcel in) {
         this.id = in.readString();
         this.title = in.readString();
         this.deadline = in.readLong();

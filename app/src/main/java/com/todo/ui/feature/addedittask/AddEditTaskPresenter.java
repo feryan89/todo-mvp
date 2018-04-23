@@ -3,7 +3,7 @@ package com.todo.ui.feature.addedittask;
 import android.content.res.Resources;
 
 import com.todo.R;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.data.repository.TodoRepository;
 import com.todo.device.TaskReminderScheduler;
 import com.todo.ui.base.BasePresenter;
@@ -34,9 +34,9 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
     }
 
     @Override
-    public void createTask(Task task) {
-        if (StringUtils.isNotEmpty(task.getTitle())) {
-            addDisposable(todoRepository.createTask(task).subscribe(this::scheduleReminder));
+    public void createTask(TaskModel taskModel) {
+        if (StringUtils.isNotEmpty(taskModel.getTitle())) {
+            addDisposable(todoRepository.createTask(taskModel).subscribe(this::scheduleReminder));
             getView().finishActivity();
         } else {
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));
@@ -44,18 +44,18 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
     }
 
     @Override
-    public void updateTask(Task task) {
-        if (StringUtils.isNotEmpty(task.getTitle())) {
-            todoRepository.updateTask(task);
+    public void updateTask(TaskModel taskModel) {
+        if (StringUtils.isNotEmpty(taskModel.getTitle())) {
+            todoRepository.updateTask(taskModel);
             getView().finishActivity();
         } else {
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));
         }
     }
 
-    private void scheduleReminder(Task task) {
-        if (task.getReminder() > 0) {
-            taskReminderScheduler.scheduleTaskReminder(task);
+    private void scheduleReminder(TaskModel taskModel) {
+        if (taskModel.getReminder() > 0) {
+            taskReminderScheduler.scheduleTaskReminder(taskModel);
         }
     }
 }

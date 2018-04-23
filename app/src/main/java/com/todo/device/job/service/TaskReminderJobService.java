@@ -2,19 +2,12 @@ package com.todo.device.job.service;
 
 import android.os.Bundle;
 
-import com.firebase.jobdispatcher.Constraint;
-import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
-import com.firebase.jobdispatcher.Lifetime;
-import com.firebase.jobdispatcher.RetryStrategy;
-import com.firebase.jobdispatcher.Trigger;
 import com.todo.TodoApplication;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.device.notification.NotificationFactory;
 import com.todo.device.notification.Notifications;
-
-import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -44,8 +37,8 @@ public final class TaskReminderJobService extends JobService {
     public boolean onStartJob(JobParameters job) {
         Bundle extras = job.getExtras();
         if (extras != null) {
-            Task task = getTask(extras);
-            showTaskReminderNotification(task);
+            TaskModel taskModel = getTask(extras);
+            showTaskReminderNotification(taskModel);
         }
         return false;
     }
@@ -55,15 +48,15 @@ public final class TaskReminderJobService extends JobService {
         return false;
     }
 
-    private Task getTask(Bundle extras) {
-        Task task = new Task();
-        task.setTitle(extras.getString(BUNDLE_TASK_TITLE));
-        task.setPriority(extras.getInt(BUNDLE_TASK_PRIORITY));
-        return task;
+    private TaskModel getTask(Bundle extras) {
+        TaskModel taskModel = new TaskModel();
+        taskModel.setTitle(extras.getString(BUNDLE_TASK_TITLE));
+        taskModel.setPriority(extras.getInt(BUNDLE_TASK_PRIORITY));
+        return taskModel;
     }
 
-    private void showTaskReminderNotification(Task task) {
-        notifications.showNotification(TASK_REMINDER_NOTIFICATION_ID, notificationFactory.createTaskReminderNotification(task));
+    private void showTaskReminderNotification(TaskModel taskModel) {
+        notifications.showNotification(TASK_REMINDER_NOTIFICATION_ID, notificationFactory.createTaskReminderNotification(taskModel));
     }
 }
 

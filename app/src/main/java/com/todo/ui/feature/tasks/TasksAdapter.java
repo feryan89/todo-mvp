@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.todo.R;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.util.UiUtils;
 
 import java.util.List;
@@ -32,15 +32,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
 
     private static final long CLICK_THROTTLE_WINDOW_MILLIS = 300L;
-    private final Subject<Task> onItemClickSubject = PublishSubject.create();
+    private final Subject<TaskModel> onItemClickSubject = PublishSubject.create();
     /********* Member Fields  ********/
 
-    private final List<Task> tasks;
+    private final List<TaskModel> taskModels;
 
     /********* Constructors ********/
 
-    TasksAdapter(List<Task> tasks) {
-        this.tasks = tasks;
+    TasksAdapter(List<TaskModel> taskModels) {
+        this.taskModels = taskModels;
     }
 
     /********* RecyclerView.Adapter Inherited Methods ********/
@@ -54,43 +54,43 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
     @Override
     public void onBindViewHolder(TaskItemViewHolder holder, int position) {
-        holder.setItem(tasks.get(position));
+        holder.setItem(taskModels.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        return taskModels.size();
     }
 
     /********* Member Methods  ********/
 
-    Task getItem(int position) {
-        return tasks.get(position);
+    TaskModel getItem(int position) {
+        return taskModels.get(position);
     }
 
-    void updateTasks(List<Task> tasks) {
-        this.tasks.clear();
-        this.tasks.addAll(tasks);
+    void updateTasks(List<TaskModel> taskModels) {
+        this.taskModels.clear();
+        this.taskModels.addAll(taskModels);
         notifyDataSetChanged();
     }
 
-    public Task deleteTask(Task task) {
-        return removeTask(tasks.indexOf(task));
+    public TaskModel deleteTask(TaskModel taskModel) {
+        return removeTask(taskModels.indexOf(taskModel));
     }
 
-    public Task removeTask(int position) {
-        Task task = tasks.get(position);
-        tasks.remove(position);
+    public TaskModel removeTask(int position) {
+        TaskModel taskModel = taskModels.get(position);
+        taskModels.remove(position);
         notifyItemRemoved(position);
-        return task;
+        return taskModel;
     }
 
-    public void restoreTask(int position, Task task) {
-        tasks.add(position, task);
+    public void restoreTask(int position, TaskModel taskModel) {
+        taskModels.add(position, taskModel);
         notifyItemInserted(position);
     }
 
-    public Observable<Task> onItemClick() {
+    public Observable<TaskModel> onItemClick() {
         return onItemClickSubject.throttleFirst(CLICK_THROTTLE_WINDOW_MILLIS, TimeUnit.MILLISECONDS);
     }
 
@@ -112,27 +112,27 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskItemView
 
         @BindView(R.id.task_textview_deadline)
         TextView textViewDeadline;
-        private final Subject<Task> clickSubject;
-        private Task task;
+        private final Subject<TaskModel> clickSubject;
+        private TaskModel taskModel;
 
-        TaskItemViewHolder(View itemView, Subject<Task> clickSubject) {
+        TaskItemViewHolder(View itemView, Subject<TaskModel> clickSubject) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.clickSubject = clickSubject;
         }
 
-        void setItem(final Task task) {
-            this.task = task;
-            textViewTitle.setText(task.getTitle());
-            textViewDeadline.setText(DateUtils.getRelativeTimeSpanString(task.getDeadline(), System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS));
-            viewPriority.setBackgroundResource(UiUtils.getPriorityColorRes(task.getPriority()));
+        void setItem(final TaskModel taskModel) {
+            this.taskModel = taskModel;
+            textViewTitle.setText(taskModel.getTitle());
+            textViewDeadline.setText(DateUtils.getRelativeTimeSpanString(taskModel.getDeadline(), System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS));
+            viewPriority.setBackgroundResource(UiUtils.getPriorityColorRes(taskModel.getPriority()));
 
         }
 
 
         @OnClick(R.id.task_layout)
         void onTaskClick() {
-            clickSubject.onNext(task);
+            clickSubject.onNext(taskModel);
         }
 
 

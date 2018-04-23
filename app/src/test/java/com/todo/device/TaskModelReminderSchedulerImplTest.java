@@ -4,26 +4,25 @@ import android.os.Bundle;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.Job;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class TaskReminderSchedulerImplTest {
+public class TaskModelReminderSchedulerImplTest {
 
 
     private TaskReminderSchedulerImpl taskReminderSchedulerImpl;
     private FirebaseJobDispatcher jobDispatcher;
     private Job job;
-    private Task task;
+    private TaskModel taskModel;
     private Bundle bundle;
 
     @Before
     public void setUp() throws Exception {
         jobDispatcher = Mockito.mock(FirebaseJobDispatcher.class);
-        task = Mockito.mock(Task.class);
+        taskModel = Mockito.mock(TaskModel.class);
         job = Mockito.mock(Job.class);
         bundle = Mockito.mock(Bundle.class);
         taskReminderSchedulerImpl = new TaskReminderSchedulerImpl(jobDispatcher);

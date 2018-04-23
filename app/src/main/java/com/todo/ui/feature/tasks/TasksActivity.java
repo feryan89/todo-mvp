@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.todo.R;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.di.component.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.addedittask.AddEditTaskActivity;
@@ -121,8 +121,8 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     }
 
     @Override
-    public void showTasks(List<Task> tasks) {
-        tasksAdapter.updateTasks(tasks);
+    public void showTasks(List<TaskModel> taskModels) {
+        tasksAdapter.updateTasks(taskModels);
     }
 
     @Override
@@ -143,14 +143,14 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     @Override
     public void onTaskDeleted(final int position) {
-        final Task removedTask = tasksAdapter.removeTask(position);
+        final TaskModel removedTaskModel = tasksAdapter.removeTask(position);
         addDisposable(showSnackBar(R.string.tasks_message_deleted, R.string.tasks_action_undo)
                 .subscribe(undo -> {
                     if (undo) {
-                        tasksAdapter.restoreTask(position, removedTask);
+                        tasksAdapter.restoreTask(position, removedTaskModel);
                     } else {
                         // remove from backend
-                        presenter.deleteTask(position, removedTask);
+                        presenter.deleteTask(position, removedTaskModel);
                     }
                 }));
     }
@@ -158,14 +158,14 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     @Override
     public void onTaskCompleted(int position) {
         presenter.updateTask(tasksAdapter.getItem(position));
-        final Task completedTask = tasksAdapter.removeTask(position);
+        final TaskModel completedTaskModel = tasksAdapter.removeTask(position);
         addDisposable(showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo)
                 .subscribe(undo -> {
                     if (undo) {
-                        tasksAdapter.restoreTask(position, completedTask);
+                        tasksAdapter.restoreTask(position, completedTaskModel);
                     } else {
-                        completedTask.setCompleted(true);
-                        presenter.updateTask(completedTask);
+                        completedTaskModel.setCompleted(true);
+                        presenter.updateTask(completedTaskModel);
                     }
                 }));
     }
@@ -199,8 +199,8 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     }
 
-    private void onTaskSelected(final Task task) {
-        AddEditTaskActivity.startActivity(this, task);
+    private void onTaskSelected(final TaskModel taskModel) {
+        AddEditTaskActivity.startActivity(this, taskModel);
     }
 
 

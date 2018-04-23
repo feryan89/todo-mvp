@@ -8,7 +8,7 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
-import com.todo.data.model.Task;
+import com.todo.data.model.TaskModel;
 import com.todo.device.job.service.TaskReminderJobService;
 
 import java.util.Calendar;
@@ -25,19 +25,19 @@ public class TaskReminderSchedulerImpl implements TaskReminderScheduler {
     }
 
     @Override
-    public int scheduleTaskReminder(Task task) {
+    public int scheduleTaskReminder(TaskModel taskModel) {
 
-        long reminderMs = task.getReminder();
+        long reminderMs = taskModel.getReminder();
         long nowMs = Calendar.getInstance().getTime().getTime();
         int diffSecs = (int) ((reminderMs - nowMs) / 1000);
 
         Bundle extras = new Bundle();
-        extras.putString(BUNDLE_TASK_TITLE, task.getTitle());
-        extras.putInt(BUNDLE_TASK_PRIORITY, task.getPriority());
+        extras.putString(BUNDLE_TASK_TITLE, taskModel.getTitle());
+        extras.putInt(BUNDLE_TASK_PRIORITY, taskModel.getPriority());
 
         Job job = jobDispatcher.newJobBuilder()
                 .setService(TaskReminderJobService.class)
-                .setTag(task.getId())
+                .setTag(taskModel.getId())
                 .setRecurring(false)
                 .setLifetime(Lifetime.FOREVER)
                 .setTrigger(Trigger.executionWindow(diffSecs, (diffSecs + 60)))

@@ -45,7 +45,7 @@
     <string name="add_edit_task_label_deadline">Deadline</string>
     <string name="add_edit_task_label_today">Today</string>
     <string name="add_edit_task_label_reminder">Reminder</string>
-    <string name="add_edit_task_error_invalid_title">Please, provide a title for the task.</string>
+    <string name="add_edit_task_error_invalid_title">Please, provide a title for the taskModel.</string>
 
 
     <string name="select_priority_title">Priority</string>
