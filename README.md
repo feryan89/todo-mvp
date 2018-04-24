@@ -3,7 +3,7 @@
 ![Android API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat&label=API&maxAge=300)
 
 
-Todo Lite app, shows the **MVP** pattern usage on Android.
+Todo Lite app, is a wokring(production ready) sample that showcases the **MVP Pattern** Implementation.
 
 ## Screenshots:
 <p float="left">
@@ -17,7 +17,7 @@ Todo Lite app, shows the **MVP** pattern usage on Android.
 
 </p>
 
-## App
+## App features
 
 - Login/Register 
 - Add Task
@@ -32,24 +32,56 @@ Todo Lite app, shows the **MVP** pattern usage on Android.
 **ui**: MVP structure, all Activities, Fragments and UI elements in this package.<br />
 **util**: Utility classes.<br />
 
-## Tools/Libraries
+## Libraries Used
+* Authentication
+    * [Firebase Auth SDK](https://firebase.google.com/docs/auth/) SDK is to perform login and registration.
+* Database
+    * [Firebase Realtime Database](https://firebase.google.com/docs/database/) to save data locally and a sync across devices.
+* Schedule Reminder   
+    * [Firebase JobDispatcher](https://github.com/firebase/firebase-jobdispatcher-android) to schedule a task reminder
+* Communication b/w data and Ui layer
+    * [RxJava 2](https://github.com/ReactiveX/RxJava) and [RxAndroid 2](https://github.com/ReactiveX/RxAndroid) for interacting b/w data and UI by wrapping Firebase database callbacks into Observables.
+* Dependency Injection    
+    * [Dagger 2](https://github.com/google/dagger) to manage App, Service, Data, Utils module dependencies.
+* Logging   
+    * [Timber](https://github.com/JakeWharton/timber) to perform logging through out the app.
+* Other   
+    * [RxBindings 2](https://github.com/JakeWharton/RxBinding) and [ButterKnife](https://github.com/JakeWharton/butterknife) to reduce boilerplate code for View and events listener
 
-* [Constraint Layout](https://developer.android.com/training/constraint-layout/index.html)
-* [Firebase Auth](https://firebase.google.com/docs/auth/)
-* [Firebase Database](https://firebase.google.com/docs/database/)
-* [Firebase JobDispatcher](https://github.com/firebase/firebase-jobdispatcher-android)
-* [RxJava 2](https://github.com/ReactiveX/RxJava)
-* [RxAndroid 2](https://github.com/ReactiveX/RxAndroid)
-* [RxBindings 2](https://github.com/JakeWharton/RxBinding)
-* [ButterKnife](https://github.com/JakeWharton/butterknife)
-* [Timber](https://github.com/JakeWharton/timber)
-* [Dagger 2](https://github.com/google/dagger)
 
+## Code quality 
+  
+  * For maintaining code quality `findbugs`, `pmd` and `lint` is integrated. It's important to have these checks. Because later these tools will helps us to maintain less buggy code.. You can perform all of them at once by executing `./gradlew check`
+  * [Circle CI](https://travis-ci.org/) with [Firebase Test Lab](https://firebase.google.com/docs/test-lab/) is used for automating continuous integration and run Android test quickly.
+  * The project aims to maintain high test coverage (in-progress).
+  * Libraries used for testing
+  
+    * Junit
+    * Mockito
+  
 ## Future work
 
 ### Todo
 
-- Update form validatoins code.
+- Update form validations code. Make it more cleaner and reusable.
 - Write Unit and instrumentation tests
 - Convert the project to kotlin.
+
+
+## License
+
+    Copyright 2018 Waleed Sarwar
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
 
