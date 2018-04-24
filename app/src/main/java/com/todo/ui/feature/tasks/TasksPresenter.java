@@ -57,7 +57,7 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
                             Collections.sort(tasks, new TaskModelComparator.ByPriorityComparator());
                             break;
                         case BY_NAME:
-                            Collections.sort(tasks, new TaskModelComparator.ByNameComparator());
+                            Collections.sort(tasks, new TaskModelComparator.ByTitleComparator());
                             break;
                     }
                     return tasks;

@@ -18,6 +18,7 @@ public final class TaskModel implements Parcelable {
     public final static int PRIORITY_2 = 2;
     public final static int PRIORITY_3 = 3;
     public final static int PRIORITY_4 = 4;
+
     public static final Creator<TaskModel> CREATOR = new Creator<TaskModel>() {
         @Override
         public TaskModel createFromParcel(Parcel source) {
@@ -29,6 +30,7 @@ public final class TaskModel implements Parcelable {
             return new TaskModel[size];
         }
     };
+
     /********* Member Fields  ********/
 
     private String id;
@@ -37,18 +39,6 @@ public final class TaskModel implements Parcelable {
     private long reminder;
     private int priority;
     private boolean completed;
-
-    /********* Static Methods  ********/
-
-    public static Map<String, Object> toHasHMap(TaskModel taskModel) {
-        Map<String, Object> taskMap = new HashMap<>();
-        taskMap.put("id", taskModel.getId());
-        taskMap.put("title", taskModel.getTitle());
-        taskMap.put("deadline", taskModel.getDeadline());
-        taskMap.put("priority", taskModel.getPriority());
-        taskMap.put("completed", taskModel.isCompleted());
-        return taskMap;
-    }
 
     /********* Constructors ********/
 
@@ -136,6 +126,18 @@ public final class TaskModel implements Parcelable {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public Map<String, Object> getMap() {
+
+        Map<String, Object> taskMap = new HashMap<>();
+        taskMap.put("id", id);
+        taskMap.put("title", title);
+        taskMap.put("deadline", deadline);
+        taskMap.put("reminder", reminder);
+        taskMap.put("priority", priority);
+        taskMap.put("completed", completed);
+        return taskMap;
     }
 
 

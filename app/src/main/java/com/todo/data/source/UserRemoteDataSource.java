@@ -2,6 +2,7 @@ package com.todo.data.source;
 
 import android.support.annotation.VisibleForTesting;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -13,6 +14,7 @@ import com.todo.util.RxFirebaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -61,10 +63,18 @@ public class UserRemoteDataSource extends RemoteDataSource {
 
     }
 
+
     public Completable updateTask(final TaskModel taskModel) {
-        return rxFirebaseUtils.getCompleteable(getChildReference().child(taskModel.getId()).updateChildren(TaskModel.toHasHMap(taskModel)));
+        DatabaseReference databaseReference = getChildReference().child(taskModel.getId());
+        Task<Void> voidTask = databaseReference.updateChildren(taskModel.getMap());
+        return rxFirebaseUtils.getCompletable(voidTask);
     }
 
+    public Completable deleteTask(final TaskModel taskModel) {
+        return rxFirebaseUtils.getCompletable(getChildReference().child(taskModel.getId()).removeValue());
+
+
+    }
 
     public Observable<List<TaskModel>> getTasks() {
         return rxFirebaseUtils.getObservable(getChildReference())
@@ -77,12 +87,6 @@ public class UserRemoteDataSource extends RemoteDataSource {
                 });
     }
 
-
-    public Completable deleteTask(final TaskModel taskModel) {
-        return rxFirebaseUtils.getCompleteable(getChildReference().child(taskModel.getId()).removeValue());
-
-
-    }
 
     @VisibleForTesting
     DatabaseReference getChildReference() {

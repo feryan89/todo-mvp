@@ -21,7 +21,7 @@ public class TaskModelComparator {
         }
     }
 
-    public static class ByNameComparator implements Comparator<TaskModel>, Serializable {
+    public static class ByTitleComparator implements Comparator<TaskModel>, Serializable {
 
         @Override
         public int compare(TaskModel taskModel1, TaskModel taskModel2) {

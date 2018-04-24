@@ -42,7 +42,7 @@ public class RxFirebaseUtils {
     }
 
     @NonNull
-    public Completable getCompleteable(@NonNull final Task<Void> task) {
+    public Completable getCompletable(@NonNull final Task<Void> task) {
 
         return Completable.create(emitter -> {
             task.addOnSuccessListener(t -> {
