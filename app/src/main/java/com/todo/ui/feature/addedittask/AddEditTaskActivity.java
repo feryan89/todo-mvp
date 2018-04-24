@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 import com.todo.R;
 import com.todo.data.model.TaskModel;
-import com.todo.di.component.ActivityComponent;
+import com.todo.di.activity.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
-import com.todo.util.CustomDateUtils;
+import com.todo.util.CurrentTimeProvider;
+import com.todo.util.DateUtils;
+import com.todo.util.DateUtilsImpl;
 import com.todo.util.StringUtils;
+import com.todo.util.StringUtilsImpl;
 import com.todo.util.UiUtils;
 
 import java.util.Calendar;
@@ -39,6 +42,16 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
     @Inject
     AddEditTaskContract.Presenter presenter;
+
+    @Inject
+    StringUtils stringUtils;
+
+    @Inject
+    DateUtils dateUtils;
+
+    @Inject
+    CurrentTimeProvider currentTimeProvider;
+
 
     /********* Butterknife Binded Fields  ********/
 
@@ -125,7 +138,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     }
 
     @OnCheckedChanged(R.id.add_edit_task_switch_reminder)
-    public void switchRemiderChecked(boolean isChecked) {
+    public void switchReminderChecked(boolean isChecked) {
         if (isChecked) {
             setReminderEnabled();
         } else {
@@ -151,7 +164,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     @OnClick(R.id.add_edit_task_button_done)
     public void buttonDoneClicked() {
         taskModel.setTitle(textInputEditTextTitle.getText().toString());
-        if (StringUtils.isEmpty(taskModel.getId())) {
+        if (stringUtils.isEmpty(taskModel.getId())) {
             presenter.createTask(taskModel);
         } else {
             presenter.updateTask(taskModel);
@@ -164,6 +177,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
         taskModel = getIntent().getParcelableExtra(EXTRA_TASK);
         calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(currentTimeProvider.getCurrentTimeMillis());
 
         if (taskModel == null) {
             taskModel = new TaskModel();
@@ -187,7 +201,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
 
 
     private void updateDeadlineTextView(long deadline) {
-        textViewDeadline.setText(CustomDateUtils.getDisplayDate(deadline));
+        textViewDeadline.setText(dateUtils.getDisplayDate(deadline));
     }
 
     private void updatePriorityTextView(int priority) {
@@ -196,7 +210,7 @@ public final class AddEditTaskActivity extends BaseActivity implements AddEditTa
     }
 
     private void updateReminderTime(long deadline) {
-        textViewReminderTime.setText(CustomDateUtils.getDisplayTime(deadline));
+        textViewReminderTime.setText(dateUtils.getDisplayTime(deadline));
     }
 
 

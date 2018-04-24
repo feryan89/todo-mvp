@@ -1,4 +1,4 @@
-package com.todo.di.module;
+package com.todo.di.application.module;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;

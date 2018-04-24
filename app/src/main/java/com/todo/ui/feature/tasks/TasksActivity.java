@@ -16,9 +16,10 @@ import android.widget.LinearLayout;
 
 import com.todo.R;
 import com.todo.data.model.TaskModel;
-import com.todo.di.component.ActivityComponent;
+import com.todo.di.activity.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.addedittask.AddEditTaskActivity;
+import com.todo.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,9 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     @Inject
     TasksContract.Presenter presenter;
+
+    @Inject
+    DateUtils dateUtils;
 
     /********* Butterknife View Binding Fields  ********/
 
@@ -122,7 +126,8 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     @Override
     public void showTasks(List<TaskModel> taskModels) {
-        tasksAdapter.updateTasks(taskModels);
+        tasksAdapter.clear();
+        tasksAdapter.addAll(taskModels);
     }
 
     @Override
@@ -143,11 +148,11 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     @Override
     public void onTaskDeleted(final int position) {
-        final TaskModel removedTaskModel = tasksAdapter.removeTask(position);
+        final TaskModel removedTaskModel = tasksAdapter.remove(position);
         addDisposable(showSnackBar(R.string.tasks_message_deleted, R.string.tasks_action_undo)
                 .subscribe(undo -> {
                     if (undo) {
-                        tasksAdapter.restoreTask(position, removedTaskModel);
+                        tasksAdapter.add(position, removedTaskModel);
                     } else {
                         // remove from backend
                         presenter.deleteTask(position, removedTaskModel);
@@ -157,12 +162,12 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     @Override
     public void onTaskCompleted(int position) {
-        presenter.updateTask(tasksAdapter.getItem(position));
-        final TaskModel completedTaskModel = tasksAdapter.removeTask(position);
+        presenter.updateTask(tasksAdapter.get(position));
+        final TaskModel completedTaskModel = tasksAdapter.remove(position);
         addDisposable(showSnackBar(R.string.tasks_message_completed, R.string.tasks_action_undo)
                 .subscribe(undo -> {
                     if (undo) {
-                        tasksAdapter.restoreTask(position, completedTaskModel);
+                        tasksAdapter.add(position, completedTaskModel);
                     } else {
                         completedTaskModel.setCompleted(true);
                         presenter.updateTask(completedTaskModel);
@@ -186,7 +191,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
 
     private void initializeRecyclerView() {
 
-        tasksAdapter = new TasksAdapter(new ArrayList<>());
+        tasksAdapter = new TasksAdapter(dateUtils, new ArrayList<>());
         recyclerViewTasks.setAdapter(tasksAdapter);
         addDisposable(tasksAdapter.onItemClick().subscribe(this::onTaskSelected));
 

@@ -1,4 +1,4 @@
-package com.todo.di.component;
+package com.todo.di.application;
 
 import com.todo.TodoApplication;
 import com.todo.device.job.service.TaskReminderJobService;

@@ -1,9 +1,9 @@
-package com.todo.di.module;
+package com.todo.di.activity.module;
 
 import android.app.Activity;
 
-import com.todo.di.DaggerActivity;
-import com.todo.di.scope.ActivityScope;
+import com.todo.di.activity.DaggerActivity;
+import com.todo.di.activity.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;

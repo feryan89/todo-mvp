@@ -40,7 +40,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".ui.feature.taskModels.TasksActivity"
+            android:name=".ui.feature.tasks.TasksActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />

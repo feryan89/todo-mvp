@@ -1,4 +1,4 @@
-package com.todo.di.module;
+package com.todo.di.application.module;
 
 import android.content.res.Resources;
 

@@ -1,9 +1,8 @@
-package com.todo.di.component;
+package com.todo.di.activity;
 
-import com.todo.di.DaggerActivity;
-import com.todo.di.module.ActivityModule;
-import com.todo.di.module.ActivityPresenterModule;
-import com.todo.di.scope.ActivityScope;
+import com.todo.di.application.ApplicationComponent;
+import com.todo.di.activity.module.ActivityModule;
+import com.todo.di.activity.module.ActivityPresenterModule;
 
 import dagger.Component;
 

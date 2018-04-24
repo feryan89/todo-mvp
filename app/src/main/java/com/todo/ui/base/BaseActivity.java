@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.todo.R;
-import com.todo.di.DaggerActivity;
+import com.todo.di.activity.DaggerActivity;
 
 import butterknife.Unbinder;
 import io.reactivex.Single;

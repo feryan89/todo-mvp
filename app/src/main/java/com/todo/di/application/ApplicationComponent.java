@@ -1,10 +1,10 @@
-package com.todo.di.component;
+package com.todo.di.application;
 
 import com.todo.TodoApplication;
-import com.todo.di.module.ApplicationModule;
-import com.todo.di.module.DataModule;
-import com.todo.di.module.ServiceModule;
-import com.todo.di.module.UtilsModule;
+import com.todo.di.application.module.ApplicationModule;
+import com.todo.di.application.module.DataModule;
+import com.todo.di.application.module.ServiceModule;
+import com.todo.di.application.module.UtilsModule;
 
 import javax.inject.Singleton;
 

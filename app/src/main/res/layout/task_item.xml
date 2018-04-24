@@ -34,7 +34,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
+            android:layout_gravity="center|start"
             android:layout_marginStart="@dimen/margin_medium"
             android:src="@drawable/all_vector_check_white"
             tools:ignore="ContentDescription" />
@@ -46,7 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/all_white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <View
             android:id="@+id/task_view_priority"

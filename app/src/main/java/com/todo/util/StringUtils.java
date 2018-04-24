@@ -1,20 +1,9 @@
 package com.todo.util;
 
-public class StringUtils {
+public interface StringUtils {
 
-    public static final String SPACE = " ";
-    public static final String EMPTY = "";
+    boolean isEmpty(final String string);
 
-    public static boolean isEmpty(final CharSequence cs) {
-        return cs == null || cs.length() == 0;
-    }
-
-    public static boolean isNotEmpty(final CharSequence cs) {
-        return !isEmpty(cs);
-    }
-
-    private StringUtils() {
-    }
-
+    boolean isNotEmpty(final String string);
 
 }

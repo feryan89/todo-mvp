@@ -1,8 +1,8 @@
-package com.todo.di.module;
+package com.todo.di.activity.module;
 
-import com.todo.di.DaggerActivity;
-import com.todo.di.component.ActivityComponent;
-import com.todo.di.scope.ActivityScope;
+import com.todo.di.activity.DaggerActivity;
+import com.todo.di.activity.ActivityComponent;
+import com.todo.di.activity.ActivityScope;
 import com.todo.ui.feature.addedittask.AddEditTaskContract;
 import com.todo.ui.feature.addedittask.AddEditTaskPresenter;
 import com.todo.ui.feature.launcher.LauncherContract;

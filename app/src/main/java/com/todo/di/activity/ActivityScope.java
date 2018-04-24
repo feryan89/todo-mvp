@@ -1,4 +1,4 @@
-package com.todo.di.scope;
+package com.todo.di.activity;
 
 import javax.inject.Scope;
 

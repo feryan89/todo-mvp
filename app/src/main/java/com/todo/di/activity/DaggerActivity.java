@@ -1,11 +1,12 @@
-package com.todo.di;
+package com.todo.di.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.todo.TodoApplication;
-import com.todo.di.component.ActivityComponent;
+import com.todo.di.ComponentFactory;
+import com.todo.di.activity.ActivityComponent;
 
 public abstract class DaggerActivity extends AppCompatActivity {
 

@@ -1,6 +1,6 @@
 package com.todo.ui.base;
 
-import com.todo.util.scheduler.SchedulerProvider;
+import com.todo.util.SchedulerProvider;
 
 import java.lang.ref.WeakReference;
 

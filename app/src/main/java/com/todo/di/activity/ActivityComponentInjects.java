@@ -1,4 +1,4 @@
-package com.todo.di.component;
+package com.todo.di.activity;
 
 import com.todo.ui.feature.addedittask.AddEditTaskActivity;
 import com.todo.ui.feature.addedittask.AddEditTaskPresenter;

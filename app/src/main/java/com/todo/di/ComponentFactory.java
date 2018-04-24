@@ -1,8 +1,9 @@
 package com.todo.di;
 
 import com.todo.TodoApplication;
-import com.todo.di.component.ActivityComponent;
-import com.todo.di.component.ApplicationComponent;
+import com.todo.di.activity.ActivityComponent;
+import com.todo.di.activity.DaggerActivity;
+import com.todo.di.application.ApplicationComponent;
 
 public final class ComponentFactory {
 

@@ -2,7 +2,7 @@ package com.todo.ui.feature.launcher;
 
 import android.os.Bundle;
 
-import com.todo.di.component.ActivityComponent;
+import com.todo.di.activity.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.login.LoginActivity;
 import com.todo.ui.feature.tasks.TasksActivity;

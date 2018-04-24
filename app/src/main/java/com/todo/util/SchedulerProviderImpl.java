@@ -1,4 +1,4 @@
-package com.todo.util.scheduler;
+package com.todo.util;
 
 import android.support.annotation.NonNull;
 

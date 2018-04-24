@@ -8,6 +8,7 @@ import com.todo.data.repository.TodoRepository;
 import com.todo.device.TaskReminderScheduler;
 import com.todo.ui.base.BasePresenter;
 import com.todo.util.StringUtils;
+import com.todo.util.StringUtilsImpl;
 
 import javax.inject.Inject;
 
@@ -20,6 +21,9 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
 
     @Inject
     TaskReminderScheduler taskReminderScheduler;
+
+    @Inject
+    StringUtils stringUtils;
 
     @Inject
     Resources resources;
@@ -35,7 +39,7 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
 
     @Override
     public void createTask(TaskModel taskModel) {
-        if (StringUtils.isNotEmpty(taskModel.getTitle())) {
+        if (stringUtils.isNotEmpty(taskModel.getTitle())) {
             addDisposable(todoRepository.createTask(taskModel).subscribe(this::scheduleReminder));
             getView().finishActivity();
         } else {
@@ -45,7 +49,7 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
 
     @Override
     public void updateTask(TaskModel taskModel) {
-        if (StringUtils.isNotEmpty(taskModel.getTitle())) {
+        if (stringUtils.isNotEmpty(taskModel.getTitle())) {
             todoRepository.updateTask(taskModel);
             getView().finishActivity();
         } else {

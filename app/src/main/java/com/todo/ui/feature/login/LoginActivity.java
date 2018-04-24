@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.todo.R;
-import com.todo.di.component.ActivityComponent;
+import com.todo.di.activity.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.register.RegisterActivity;
 import com.todo.ui.feature.tasks.TasksActivity;

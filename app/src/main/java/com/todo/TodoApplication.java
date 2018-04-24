@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.todo.di.ComponentFactory;
-import com.todo.di.component.ApplicationComponent;
+import com.todo.di.application.ApplicationComponent;
 
 public class TodoApplication extends Application {
 
