@@ -51,7 +51,7 @@ Todo Lite app, is a wokring(production ready) sample that showcases the **MVP Pa
 
 ## Code quality 
   
-  * For maintaining code quality `findbugs`, `pmd` and `lint` is integrated. It's important to have these checks. Because later these tools will helps us to maintain less buggy code.. You can perform all of them at once by executing `./gradlew check`
+  * For maintaining code quality `findbugs`, `pmd` and `lint` is integrated. It's important to have these checks. Because later these tools will helps us to maintain less buggy code. You can perform all of them at once by executing `./gradlew check`
   * [Circle CI](https://travis-ci.org/) with [Firebase Test Lab](https://firebase.google.com/docs/test-lab/) is used for automating continuous integration and run Android test quickly.
   * The project aims to maintain high test coverage (in-progress).
   * Libraries used for testing
