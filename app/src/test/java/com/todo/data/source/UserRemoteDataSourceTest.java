@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.todo.data.model.TaskModel;
 import com.todo.util.RxFirebaseUtils;
+import com.todo.util.RxFirebaseUtilsImpl;
 
 import junit.framework.Assert;
 
@@ -66,7 +67,7 @@ public class UserRemoteDataSourceTest {
         setupTask(mockVoidTask);
         setupTask(mockAuthResultTask);
         fakeTaskModel = new TaskModel("id", "title", 0, 1, false);
-        rxFirebaseUtils = new RxFirebaseUtils();
+        rxFirebaseUtils = new RxFirebaseUtilsImpl();
         userRemoteDataSource = Mockito.spy(new UserRemoteDataSource(mockFirebaseDatabase, mockFirebaseAuth, rxFirebaseUtils));
         doReturn(mockChildReference).when(userRemoteDataSource).getChildReference();
 
