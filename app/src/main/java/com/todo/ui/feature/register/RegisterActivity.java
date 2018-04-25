@@ -72,7 +72,7 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
         setUnbinder(ButterKnife.bind(this));
         initializeToolbar();
         presenter.attachView(this);
-        presenter.bindRegisterFormObservables(getEmailObservable(), getPasswordObservable());
+        presenter.onRegisterFormChanges(getEmailObservable(), getPasswordObservable());
     }
 
     @Override

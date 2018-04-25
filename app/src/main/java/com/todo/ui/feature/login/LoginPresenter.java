@@ -7,8 +7,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.todo.R;
 import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
-import com.todo.ui.model.ValidationResultViewModel;
-import com.todo.ui.validator.EmailValidator;
+import com.todo.util.StringUtils;
+import com.todo.util.validation.validator.RulesFactory;
+import com.todo.util.validation.validator.RulesValidator;
 
 import javax.inject.Inject;
 
@@ -26,12 +27,19 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
     Resources resources;
 
     @Inject
-    EmailValidator emailValidator;
+    StringUtils stringUtils;
+
+    @Inject
+    RulesValidator rulesValidator;
+
+    @Inject
+    RulesFactory rulesFactory;
 
     /********* Constructors ********/
 
     public LoginPresenter() {
         super();
+
     }
 
     /********* BaseContract.Presenter Inherited Methods ********/
@@ -50,30 +58,32 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
     /********* LoginContract.Presenter Inherited Methods ********/
 
     @Override
-    public void bindLoginFormObservables(Observable<String> emailObservable, Observable<String> passwordObservable) {
+    public void onLoginFormChanges(Observable<String> emailObservable, Observable<String> passwordObservable) {
 
-        Observable<ValidationResultViewModel> emailValidObservable = emailObservable.map(s -> emailValidator.validate(s));
-        Observable<ValidationResultViewModel> passwordValidObservable = passwordObservable.map(this::isPasswordValid);
+        Observable<Boolean> emailValidObservable = rulesValidator.validate(emailObservable, rulesFactory.createEmailFieldRules())
+                .compose(applySchedulersToObservable())
+                .doOnNext(errorMessage -> {
+                    if (stringUtils.isEmpty(errorMessage)) {
+                        getView().hideEmailError();
+                    } else {
+                        getView().showEmailError(errorMessage);
+                    }
+                })
+                .map(String::isEmpty);
 
-        addDisposable(emailValidObservable.subscribe(validationResultViewModel -> {
-            if (validationResultViewModel.isValid()) {
-                getView().hideEmailError();
-            } else {
-                getView().showEmailError(validationResultViewModel.getErrorMessage());
-            }
-        }));
-
-        addDisposable(passwordValidObservable.subscribe(validationResultViewModel -> {
-            if (validationResultViewModel.isValid()) {
-                getView().hidePasswordError();
-            } else {
-                getView().showPasswordError(validationResultViewModel.getErrorMessage());
-            }
-        }));
+        Observable<Boolean> passwordValidObservable = rulesValidator.validate(passwordObservable, rulesFactory.createPasswordFieldRules())
+                .compose(applySchedulersToObservable())
+                .doOnNext(errorMessage -> {
+                    if (stringUtils.isEmpty(errorMessage)) {
+                        getView().hidePasswordError();
+                    } else {
+                        getView().showPasswordError(errorMessage);
+                    }
+                }).map(String::isEmpty);
 
         addDisposable(Observable.combineLatest(emailValidObservable, passwordValidObservable,
-                (emailValidResult, passwordValidResult)
-                        -> emailValidResult.isValid() && passwordValidResult.isValid())
+                (emailValid, passwordValid)
+                        -> emailValid && passwordValid)
                 .subscribe(isValid -> {
                     if (isValid) {
                         getView().enableLoginButton();
@@ -86,8 +96,10 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
 
     @Override
     public void login(final String email, final String password) {
+
         getView().hideKeyboard();
         getView().showLoading();
+
         addDisposable(todoRepository.login(email, password)
                 .subscribe(() -> getView().showTasksActivity(), throwable -> {
                     Timber.e(throwable);
@@ -105,15 +117,5 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
         getView().showRegisterActivity();
     }
 
-    /********* Member Methods Implementation ********/
-
-    private ValidationResultViewModel isPasswordValid(String password) {
-
-        if (password.isEmpty()) {
-            return ValidationResultViewModel.failure(resources.getString(R.string.all_error_password_required));
-        } else {
-            return ValidationResultViewModel.success();
-        }
-    }
 
 }

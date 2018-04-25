@@ -6,8 +6,15 @@ import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
+import io.reactivex.CompletableTransformer;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 
 public abstract class BasePresenter<V extends BaseContract.View> implements BaseContract.Presenter<V> {
@@ -50,11 +57,24 @@ public abstract class BasePresenter<V extends BaseContract.View> implements Base
         return viewReference.get();
     }
 
+
     protected void addDisposable(final Disposable disposable) {
         if (compositeDisposable == null || compositeDisposable.isDisposed()) {
             compositeDisposable = new CompositeDisposable();
         }
         compositeDisposable.add(disposable);
+    }
+
+    protected CompletableTransformer applySchedulersToCompletable() {
+        return it -> it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui());
+    }
+
+    protected <T> SingleTransformer<T, T> applySchedulersToSingle() {
+        return it -> it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui());
+    }
+
+    protected <T> ObservableTransformer<T, T> applySchedulersToObservable() {
+        return it -> it.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui());
     }
 
 }

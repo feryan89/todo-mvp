@@ -46,8 +46,7 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
     @Override
     public void getTasks() {
         addDisposable(todoRepository.getTasks()
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+                .compose(applySchedulersToObservable())
                 .map(tasks -> {
                     switch (tasksSortType) {
                         case BY_DATE:
@@ -75,17 +74,14 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
     @Override
     public void deleteTask(int position, TaskModel taskModel) {
         addDisposable(todoRepository.deleteTask(taskModel)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe(this::getTasks
-                        , Timber::e));
+                .compose(applySchedulersToCompletable())
+                .subscribe(this::getTasks, Timber::e));
     }
 
     @Override
     public void updateTask(TaskModel taskModel) {
         addDisposable(todoRepository.updateTask(taskModel)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+                .compose(applySchedulersToCompletable())
                 .subscribe(() -> Timber.d("TaskModel updated successfully")
                         , throwable -> {
                             getTasks();

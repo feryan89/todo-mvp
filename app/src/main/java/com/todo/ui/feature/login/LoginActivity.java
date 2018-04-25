@@ -73,7 +73,7 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
         setUnbinder(ButterKnife.bind(this));
         initializeToolbar();
         presenter.attachView(this);
-        presenter.bindLoginFormObservables(getEmailObservable(), getPasswordObservable());
+        presenter.onLoginFormChanges(getEmailObservable(), getPasswordObservable());
     }
 
     /********* BaseActivity Inherited Methods ********/

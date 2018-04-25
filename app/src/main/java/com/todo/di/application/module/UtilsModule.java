@@ -1,5 +1,6 @@
 package com.todo.di.application.module;
 
+import android.content.res.Resources;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.todo.TodoApplication;
@@ -15,6 +16,10 @@ import com.todo.util.SchedulerProvider;
 import com.todo.util.SchedulerProviderImpl;
 import com.todo.util.StringUtils;
 import com.todo.util.StringUtilsImpl;
+import com.todo.util.validation.validator.RulesFactory;
+import com.todo.util.validation.validator.RulesFactoryImpl;
+import com.todo.util.validation.validator.RulesValidator;
+import com.todo.util.validation.validator.RulesValidatorImpl;
 
 import javax.inject.Singleton;
 
@@ -68,6 +73,18 @@ public final class UtilsModule {
         return NotificationManagerCompat.from(application.getApplicationContext());
     }
 
+    @Provides
+    @Singleton
+    RulesValidator provideRulesValidator(StringUtils stringUtils) {
+        return new RulesValidatorImpl(stringUtils);
+    }
+
+    @Provides
+    @Singleton
+    RulesFactory provideRulesFactory(Resources resources) {
+        return new RulesFactoryImpl(resources);
+    }
+
 
     public interface Exposes {
 
@@ -82,6 +99,10 @@ public final class UtilsModule {
         StringUtils stringUtils();
 
         Notifications notificationUtils();
+
+        RulesValidator rulesValidator();
+
+        RulesFactory rulesFactory();
 
     }
 }

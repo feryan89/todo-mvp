@@ -30,7 +30,7 @@ public interface RegisterContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void bindRegisterFormObservables(Observable<String> emailObservable, Observable<String> passwordObservable);
+        void onRegisterFormChanges(Observable<String> emailObservable, Observable<String> passwordObservable);
 
         void register(String email,String password);
 
