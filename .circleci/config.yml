@@ -206,31 +206,31 @@ jobs:
 
   ## Run instrumented tests
 
-    test_instrumented:
-      <<: *gcloud_config
-      steps:
-        - *attach_debug_workspace
-        - *export_gcloud_service
-        - *decode_gcloud_service
-        - run:
-            name: Set Google Cloud target project
-            command: gcloud config set project todoapp-50623
-        - run:
-            name: Authenticate with Google Cloud
-            command: gcloud auth activate-service-account circleci@todoapp-50623.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
-        - run:
-            name: Run instrumented test on Firebase Test Lab
-            command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
-        - run:
-            name: Create directory to store test results
-            command: mkdir firebase
-        - run:
-            name: Download instrumented test results from Firebase Test Lab
-            command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-3udbiqpdyp0d0-miwcp7d69v80m | tail -1`*" /root/workspace/firebase/
-        - *persist_firebase_workspace
-        - store_artifacts:
-            path: firebase/
-            destination: /firebase/
+  test_instrumented:
+    <<: *gcloud_config
+    steps:
+      - *attach_debug_workspace
+      - *export_gcloud_service
+      - *decode_gcloud_service
+      - run:
+          name: Set Google Cloud target project
+          command: gcloud config set project todoapp-50623
+      - run:
+          name: Authenticate with Google Cloud
+          command: gcloud auth activate-service-account circleci@todoapp-50623.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
+      - run:
+          name: Run instrumented test on Firebase Test Lab
+          command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
+      - run:
+          name: Create directory to store test results
+          command: mkdir firebase
+      - run:
+          name: Download instrumented test results from Firebase Test Lab
+          command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-3udbiqpdyp0d0-miwcp7d69v80m | tail -1`*" /root/workspace/firebase/
+      - *persist_firebase_workspace
+      - store_artifacts:
+          path: firebase/
+          destination: /firebase/
 
 
 workflows:
