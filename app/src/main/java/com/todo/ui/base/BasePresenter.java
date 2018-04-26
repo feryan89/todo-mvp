@@ -43,8 +43,10 @@ public abstract class BasePresenter<V extends BaseContract.View> implements Base
 
     @Override
     public void detachView() {
-        this.viewReference = null;
-        this.compositeDisposable.clear();
+        viewReference = null;
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 
     /********* Member Methods ********/

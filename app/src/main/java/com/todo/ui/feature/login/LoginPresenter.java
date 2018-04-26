@@ -82,8 +82,7 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
                 }).map(String::isEmpty);
 
         addDisposable(Observable.combineLatest(emailValidObservable, passwordValidObservable,
-                (emailValid, passwordValid)
-                        -> emailValid && passwordValid)
+                (emailValid, passwordValid) -> emailValid && passwordValid)
                 .subscribe(isValid -> {
                     if (isValid) {
                         getView().enableLoginButton();
@@ -102,12 +101,12 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
 
         addDisposable(todoRepository.login(email, password)
                 .subscribe(() -> getView().showTasksActivity(), throwable -> {
+                    getView().hideLoading();
                     Timber.e(throwable);
                     if (throwable instanceof FirebaseAuthInvalidUserException
                             || throwable instanceof FirebaseAuthInvalidCredentialsException) {
                         getView().showSnackBar(resources.getString(R.string.login_error_invalid_credentials));
                     }
-                    getView().hideLoading();
                 }));
 
     }
