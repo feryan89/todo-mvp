@@ -20,6 +20,7 @@ public class TodoApplication extends Application {
 
     /********* Lifecycle Methods ********/
 
+
     @Override
     public void onCreate() {
         super.onCreate();

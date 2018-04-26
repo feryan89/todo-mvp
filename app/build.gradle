@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.getkeepsafe.dexcount'
 apply from: "$project.rootDir/code_quality_tools/script-findbugs.gradle"
 apply from: "$project.rootDir/code_quality_tools/script-pmd.gradle"
 apply from: "$project.rootDir/code_quality_tools/script-lint.gradle"
@@ -17,6 +19,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [fabric_api_key: project.property('fabric.api.key')]
     }
 
     signingConfigs {
@@ -36,13 +40,13 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), "$project.rootDir/progurard/rules-proguard-debug.pro"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), "$project.rootDir/proguard/rules-proguard.pro"
             signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), "$project.rootDir/progurard/rules-proguard.pro"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), "$project.rootDir/proguard/rules-proguard.pro"
             signingConfig signingConfigs.release
         }
 
@@ -66,9 +70,10 @@ def timberVersion = "4.7.0"
 def butterKnifeVersion = "8.8.1"
 def daggerVersion = "2.15"
 def junitVersion = "4.12"
-def runnerVersion = "1.0.1"
-def rulesVersion = "1.0.1"
+def runnerVersion = "1.0.2"
+def rulesVersion = "1.0.2"
 def mockitoVersion = "2.18.3"
+def crashlyticsVersion = "2.9.2"
 
 
 dependencies {
@@ -91,6 +96,11 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + butterKnifeVersion
     implementation 'com.google.dagger:dagger:' + daggerVersion
     annotationProcessor 'com.google.dagger:dagger-compiler:' + daggerVersion
+
+    implementation('com.crashlytics.sdk.android:crashlytics:' + crashlyticsVersion + '@aar') {
+        transitive = true
+    }
+
 
     testImplementation 'junit:junit:' + junitVersion
     testImplementation 'org.mockito:mockito-inline:' + mockitoVersion

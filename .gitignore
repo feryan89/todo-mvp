@@ -13,10 +13,10 @@
 build/
 
 # Secret files
+.circleci/test.yml
 app/google-services.json
 keystore/release.jks
 gradle.properties
-.circleci/test.yml
 
 # Local configuration file (sdk path, etc)
 local.properties
