@@ -111,6 +111,7 @@ dependencies {
     androidTestImplementation 'junit:junit:' + junitVersion
     androidTestImplementation 'com.android.support.test:runner:' + runnerVersion
     androidTestImplementation 'com.android.support.test:rules:' + rulesVersion
+    androidTestImplementation 'com.android.support:support-annotations:' + supportLibVersion
 
     // Resolve conflicts between main and test APK:
 
