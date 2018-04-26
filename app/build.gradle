@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.getkeepsafe.dexcount'
 apply from: "$project.rootDir/code_quality_tools/script-findbugs.gradle"
 apply from: "$project.rootDir/code_quality_tools/script-pmd.gradle"
 apply from: "$project.rootDir/code_quality_tools/script-lint.gradle"
+apply from: "$project.rootDir/code_quality_tools/script-jacoco.gradle"
 
 check.dependsOn 'findbugs', 'pmd', 'lint'
 android {
