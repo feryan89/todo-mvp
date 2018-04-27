@@ -240,12 +240,12 @@ jobs:
       - checkout
       - *export_gcloud_service
       - *decode_gcloud_service
+      - *attach_debug_workspace
+      - *attach_firebase_workspace
       - *restore_cache
       - run:
           name: Download dependencies
           command: ./gradlew androidDependencies
-      - *attach_debug_workspace
-      - *attach_firebase_workspace
       - run:
           name: Move Firebase coverage report
           command: mkdir -p app/build/outputs/code-coverage/connected && cp app/sailfish-26-en_US-portrait/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
