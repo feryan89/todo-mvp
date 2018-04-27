@@ -36,7 +36,7 @@ Todo Lite app, is a wokring(production ready) sample that showcases the **MVP Pa
 * Authentication
     * [Firebase Auth SDK](https://firebase.google.com/docs/auth/) SDK is to perform login and registration.
 * Database
-    * [Firebase Realtime Database](https://firebase.google.com/docs/database/) to save data locally and a sync across devices.
+    * [Firebase Real Time Database](https://firebase.google.com/docs/database/) to save data locally and a sync across devices.
 * Schedule Reminder   
     * [Firebase JobDispatcher](https://github.com/firebase/firebase-jobdispatcher-android) to schedule a task reminder
 * Communication b/w data and Ui layer
@@ -62,8 +62,6 @@ Todo Lite app, is a wokring(production ready) sample that showcases the **MVP Pa
 ## Future work
 
 ### Todo
-
-- Update form validations code. Make it more cleaner and reusable.
 - Write Unit and instrumentation tests
 - Convert the project to kotlin.
 
