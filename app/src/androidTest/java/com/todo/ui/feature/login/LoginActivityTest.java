@@ -1,13 +1,12 @@
 package com.todo.ui.feature.login;
 
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.todo.R;
 import com.todo.ui.feature.register.RegisterActivity;
-import com.todo.ui.feature.tasks.TasksActivity;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +25,7 @@ import static com.todo.testutils.EspressoTextInputLayoutUtils.onErrorViewWithinT
 import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
+@LargeTest
 public class LoginActivityTest {
 
     public static final String INVALID_EMAIL = "invalid_email";
@@ -35,9 +35,6 @@ public class LoginActivityTest {
     @Rule
     public IntentsTestRule<LoginActivity> loginActivityIntentsTestRule = new IntentsTestRule<>(LoginActivity.class);
 
-    @Before
-    public void setUp() {
-    }
 
     @Test
     public void loginForm_invalidEmailAddress_shouldShowEmailError() {
