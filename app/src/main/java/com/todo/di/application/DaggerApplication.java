@@ -1,12 +1,11 @@
-package com.todo;
+package com.todo.di.application;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.todo.di.ComponentFactory;
-import com.todo.di.application.ApplicationComponent;
 
-public class TodoApplication extends Application {
+public abstract class DaggerApplication extends Application {
 
     /********* Member Fields  ********/
 
@@ -14,8 +13,8 @@ public class TodoApplication extends Application {
 
     /********* Static Methods  ********/
 
-    public static TodoApplication from(final Context context) {
-        return (TodoApplication) context.getApplicationContext();
+    public static DaggerApplication from(final Context context) {
+        return (DaggerApplication) context.getApplicationContext();
     }
 
     /********* Lifecycle Methods ********/

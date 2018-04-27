@@ -2,7 +2,7 @@ package com.todo.di.application.module;
 
 import android.content.res.Resources;
 
-import com.todo.TodoApplication;
+import com.todo.di.application.DaggerApplication;
 
 import javax.inject.Singleton;
 
@@ -13,28 +13,28 @@ import dagger.Provides;
 public final class ApplicationModule {
 
 
-    private final TodoApplication todoApplication;
+    private final DaggerApplication daggerApplication;
 
-    public ApplicationModule(final TodoApplication todoApplication) {
-        this.todoApplication = todoApplication;
+    public ApplicationModule(final DaggerApplication daggerApplication) {
+        this.daggerApplication = daggerApplication;
     }
 
     @Provides
     @Singleton
-    TodoApplication provideTodoApplication() {
-        return todoApplication;
+    DaggerApplication provideTodoApplication() {
+        return daggerApplication;
     }
 
     @Provides
     @Singleton
     Resources provideResources() {
-        return todoApplication.getResources();
+        return daggerApplication.getResources();
     }
 
 
     public interface Exposes {
 
-        TodoApplication todoApplication();
+        DaggerApplication todoApplication();
 
         Resources resources();
     }

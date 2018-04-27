@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
-import com.todo.TodoApplication;
+import com.todo.di.application.DaggerApplication;
 import com.todo.data.model.TaskModel;
 import com.todo.device.notification.NotificationFactory;
 import com.todo.device.notification.Notifications;
@@ -30,7 +30,7 @@ public final class TaskReminderJobService extends JobService {
     @Override
     public void onCreate() {
         super.onCreate();
-        TodoApplication.from(getApplication()).getApplicationComponent().inject(this);
+        DaggerApplication.from(getApplication()).getApplicationComponent().inject(this);
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
 
-public final class TodoReleaseApplication extends TodoApplication {
+public class TodoApplication extends BaseApplication {
 
 
     /********* Lifecycle Methods ********/

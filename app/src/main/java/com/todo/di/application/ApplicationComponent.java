@@ -1,6 +1,5 @@
 package com.todo.di.application;
 
-import com.todo.TodoApplication;
 import com.todo.di.application.module.ApplicationModule;
 import com.todo.di.application.module.DataModule;
 import com.todo.di.application.module.ServiceModule;
@@ -16,9 +15,9 @@ public interface ApplicationComponent extends ApplicationComponentInjects, Appli
 
     final class Initializer {
 
-        public static ApplicationComponent init(final TodoApplication todoApplication) {
+        public static ApplicationComponent init(final DaggerApplication daggerApplication) {
             return DaggerApplicationComponent.builder()
-                    .applicationModule(new ApplicationModule(todoApplication))
+                    .applicationModule(new ApplicationModule(daggerApplication))
                     .utilsModule(new UtilsModule())
                     .dataModule(new DataModule())
                     .serviceModule(new ServiceModule())

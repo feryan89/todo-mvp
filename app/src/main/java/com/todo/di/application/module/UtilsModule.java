@@ -3,7 +3,7 @@ package com.todo.di.application.module;
 import android.content.res.Resources;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.todo.TodoApplication;
+import com.todo.di.application.DaggerApplication;
 import com.todo.device.notification.Notifications;
 import com.todo.device.notification.NotificationsImpl;
 import com.todo.util.CurrentTimeProvider;
@@ -69,7 +69,7 @@ public final class UtilsModule {
 
     @Provides
     @Singleton
-    NotificationManagerCompat provideNotificationManagerCompat(final TodoApplication application) {
+    NotificationManagerCompat provideNotificationManagerCompat(final DaggerApplication application) {
         return NotificationManagerCompat.from(application.getApplicationContext());
     }
 

@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.todo.TodoApplication;
+import com.todo.di.application.DaggerApplication;
 import com.todo.di.ComponentFactory;
-import com.todo.di.activity.ActivityComponent;
 
 public abstract class DaggerActivity extends AppCompatActivity {
 
@@ -30,13 +29,13 @@ public abstract class DaggerActivity extends AppCompatActivity {
 
     public ActivityComponent getActivityComponent() {
         if (activityComponent == null) {
-            activityComponent = ComponentFactory.createActivityComponent(this, getTodoApplication());
+            activityComponent = ComponentFactory.createActivityComponent(this, getDaggerApplication());
         }
         return activityComponent;
     }
 
-    private TodoApplication getTodoApplication() {
-        return ((TodoApplication) getApplication());
+    private DaggerApplication getDaggerApplication() {
+        return ((DaggerApplication) getApplication());
     }
 
 }
