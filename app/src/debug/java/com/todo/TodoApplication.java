@@ -2,9 +2,11 @@ package com.todo;
 
 import android.os.StrictMode;
 
+import com.todo.di.application.DaggerApplication;
+
 import timber.log.Timber;
 
-public final class TodoDebugApplication extends TodoApplication {
+public class TodoApplication extends BaseApplication {
 
 
     /********* Lifecycle Methods ********/

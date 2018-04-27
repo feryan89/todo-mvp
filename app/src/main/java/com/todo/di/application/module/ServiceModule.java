@@ -4,7 +4,7 @@ import android.content.ComponentName;
 
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
-import com.todo.TodoApplication;
+import com.todo.di.application.DaggerApplication;
 import com.todo.device.TaskReminderScheduler;
 import com.todo.device.TaskReminderSchedulerImpl;
 import com.todo.device.job.service.TaskReminderJobService;
@@ -22,8 +22,8 @@ public final class ServiceModule {
 
     @Provides
     @Singleton
-    FirebaseJobDispatcher provideFirebaseJobDispatcher(final TodoApplication todoApplication) {
-        return new FirebaseJobDispatcher(new GooglePlayDriver(todoApplication));
+    FirebaseJobDispatcher provideFirebaseJobDispatcher(final DaggerApplication daggerApplication) {
+        return new FirebaseJobDispatcher(new GooglePlayDriver(daggerApplication));
     }
 
     @Provides
@@ -34,13 +34,13 @@ public final class ServiceModule {
 
     @Provides
     @Singleton
-    NotificationFactory provideNotificationFactory(final TodoApplication application) {
+    NotificationFactory provideNotificationFactory(final DaggerApplication application) {
         return new NotificationFactoryImpl(application.getApplicationContext());
     }
 
     @Provides
     @Singleton
-    ComponentName provideTaskReminderJobService(final TodoApplication application) {
+    ComponentName provideTaskReminderJobService(final DaggerApplication application) {
         return new ComponentName(application.getApplicationContext(), TaskReminderJobService.class);
     }
 
