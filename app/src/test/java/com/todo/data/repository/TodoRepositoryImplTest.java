@@ -20,7 +20,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 
