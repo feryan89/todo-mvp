@@ -1,9 +1,38 @@
 apply plugin: 'jacoco'
-def coverageSourceDirs = [
-        'src/main/java',
-        'src/debug/java'
-]
-task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+jacoco {
+    toolVersion = '0.8.1'
+}
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      '**/*_MembersInjector.*',
+    ]
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
+
+}
+
+task generateReportCoverage(type: JacocoReport) {
     description = 'Generate JaCoCo coverage reports'
     group = 'Reporting'
 
@@ -12,31 +41,22 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
         html.enabled = true
     }
 
-    classDirectories = fileTree(
-            dir: 'build/intermediates/classes/debug',
-            excludes: ['**/R.class',
-                       '**/R$*.class',
-                       '**/*_MembersInjector.*',
-                       '**/*_ViewBinding*.*',
-                       '**/BuildConfig.*',
-                       '**/Manifest*.*',
-                       '*/*$Lambda$*.class',
-                       '**/*.class#lamda*',
-                       'com/todo/di/**',
-            ]
-    )
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      '**/*_MembersInjector.*',
+    ]
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/java"
 
-    sourceDirectories = files(coverageSourceDirs)
-    executionData = fileTree(
-            dir: "$buildDir",
-            include: ['jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec']
-    )
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
 
-    doFirst {
-        files('build/intermediates/classes/debug').getFiles().each { file ->
-            if (file.name.contains('$$')) {
-                file.renameTo(file.path.replace('$$', '$'))
-            }
-        }
-    }
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
+
 }

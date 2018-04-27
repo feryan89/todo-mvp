@@ -251,7 +251,7 @@ jobs:
           command: mkdir -p app/build/outputs/code-coverage/connected && cp app/sailfish-26-en_US-portrait/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
       - run:
           name: Generate JaCoCo report
-          command: ./gradlew -PciBuild=true :mobile:jacocoTestReport
+          command: ./gradlew -PciBuild=true :app:generateReportCoverage
       - store_artifacts:
           path: app/build/reports/
           destination: /reports/
