@@ -30,9 +30,13 @@ public interface RegisterContract {
 
     interface Presenter extends BaseContract.Presenter<View> {
 
-        void onRegisterFormChanges(Observable<String> emailObservable, Observable<String> passwordObservable);
+        Observable<Boolean> validateEmail(Observable<String> emailObservable);
 
-        void register(String email,String password);
+        Observable<Boolean> validatePassword(Observable<String> passwordObservable);
+
+        void enableOrDisableRegisterButton(Observable<Boolean> validateEmailObservable, Observable<Boolean> validatePasswordObservable);
+
+        void register(String email, String password);
 
     }
 }

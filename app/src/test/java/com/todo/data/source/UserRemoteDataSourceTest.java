@@ -61,7 +61,7 @@ public class UserRemoteDataSourceTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         setupTask(mockVoidTask);
         setupTask(mockAuthResultTask);
         fakeTaskModel = new TaskModel("id", "title", 0, 1, false);
@@ -81,11 +81,14 @@ public class UserRemoteDataSourceTest {
     @Test
     public void getCurrentUser_shouldReturnNotNull() {
 
+        // Setup conditions of the test
         FirebaseUser fakeLoggedInUser = Mockito.mock(FirebaseUser.class);
         when(mockFirebaseAuth.getCurrentUser()).thenReturn(fakeLoggedInUser);
 
+        // Execute the code under test
         FirebaseUser firebaseUser = userRemoteDataSource.getCurrentUser();
 
+        // Make assertions on the results
         Assert.assertNotNull(firebaseUser);
 
     }
@@ -93,10 +96,13 @@ public class UserRemoteDataSourceTest {
     @Test
     public void getCurrentUser_shouldReturnNull() {
 
+        // Setup conditions of the test
         when(mockFirebaseAuth.getCurrentUser()).thenReturn(null);
 
+        // Execute the code under test
         FirebaseUser firebaseUser = userRemoteDataSource.getCurrentUser();
 
+        // Make assertions on the results
         Assert.assertNull(firebaseUser);
 
     }
@@ -105,14 +111,18 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void login_shouldCaptureOnSuccessListener() {
 
+        // Setup conditions of the test
         when(mockFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString())).thenReturn(mockAuthResultTask);
 
+        // Execute the code under test
         TestObserver<AuthResult> testObserver = userRemoteDataSource.login(anyString(), anyString()).test();
-
         verify(mockAuthResultTask).addOnSuccessListener(testOnSuccessListener.capture());
         testOnSuccessListener.getValue().onSuccess(mockAuthResult);
 
-        testObserver.assertNoErrors().assertComplete().assertValue(mockAuthResult);
+        // Make assertions on the results
+        testObserver.assertNoErrors();
+        testObserver.assertComplete();
+        testObserver.assertValue(mockAuthResult);
         testObserver.dispose();
     }
 
@@ -120,14 +130,16 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void login_shouldCaptureOnFailureListener() {
 
+        // Setup conditions of the test
         Exception exception = new Exception("Invalid Credentials");
         when(mockFirebaseAuth.signInWithEmailAndPassword(anyString(), anyString())).thenReturn(mockAuthResultTask);
 
+        // Execute the code under test
         TestObserver<AuthResult> testObserver = userRemoteDataSource.login(anyString(), anyString()).test();
-
         verify(mockAuthResultTask).addOnFailureListener(testOnFailureListener.capture());
         testOnFailureListener.getValue().onFailure(exception);
 
+        // Make assertions on the results
         testObserver.assertError(exception);
         testObserver.dispose();
 
@@ -138,13 +150,16 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void registerUser_shouldCaptureOnSuccessListener() {
 
+        // Setup conditions of the test
         when(mockFirebaseAuth.createUserWithEmailAndPassword(anyString(), anyString())).thenReturn(mockAuthResultTask);
 
+        // Execute the code under test
         TestObserver<AuthResult> testObserver = userRemoteDataSource.register(anyString(), anyString()).test();
-
         verify(mockAuthResultTask).addOnSuccessListener(testOnSuccessListener.capture());
         testOnSuccessListener.getValue().onSuccess(mockAuthResult);
 
+
+        // Make assertions on the results
         testObserver.assertNoErrors();
         testObserver.assertComplete();
         testObserver.assertValue(mockAuthResult);
@@ -157,14 +172,16 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void registerUser_shouldCaptureOnFailureListener() {
 
+        // Setup conditions of the test
         Exception exception = new Exception("Invalid Credentials");
         when(mockFirebaseAuth.createUserWithEmailAndPassword(anyString(), anyString())).thenReturn(mockAuthResultTask);
 
+        // Execute the code under test
         TestObserver<AuthResult> testObserver = userRemoteDataSource.register(anyString(), anyString()).test();
-
         verify(mockAuthResultTask).addOnFailureListener(testOnFailureListener.capture());
         testOnFailureListener.getValue().onFailure(exception);
 
+        // Make assertions on the results
         testObserver.assertError(exception);
         testObserver.dispose();
 
@@ -174,13 +191,17 @@ public class UserRemoteDataSourceTest {
     @Test
     public void createTask_shouldReturnCreatedTask() {
 
+        // Setup conditions of the test
         when(mockChildReference.push()).thenReturn(mockChildReference);
         when(mockChildReference.getKey()).thenReturn(fakeTaskModel.getId());
         when(mockChildReference.child(fakeTaskModel.getId())).thenReturn(mockChildReference);
         when(mockChildReference.setValue(fakeTaskModel)).thenReturn(mockVoidTask);
 
+        // Execute the code under test
         TestObserver<TaskModel> testObserver = userRemoteDataSource.createTask(fakeTaskModel).test();
 
+
+        // Make assertions on the results
         testObserver.assertNoErrors();
         testObserver.assertValue(fakeTaskModel);
         testObserver.dispose();
@@ -191,14 +212,17 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void updateTask_shouldCaptureOnSuccessListener() {
 
+
+        // Setup conditions of the test
         when(mockChildReference.child(fakeTaskModel.getId())).thenReturn(mockChildReference);
         when(mockChildReference.updateChildren(anyMap())).thenReturn(mockVoidTask);
 
+        // Execute the code under test
         TestObserver testObserver = userRemoteDataSource.updateTask(fakeTaskModel).test();
-
         verify(mockVoidTask).addOnSuccessListener(testOnSuccessListener.capture());
         testOnSuccessListener.getValue().onSuccess(mockVoidTask.getResult());
 
+        // Make assertions on the results
         testObserver.assertNoErrors();
         testObserver.assertComplete();
         testObserver.dispose();
@@ -208,15 +232,17 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void updateTask_shouldCaptureOnFailureListener() {
 
+        // Setup conditions of the test
         Exception exception = new Exception();
         when(mockChildReference.child(fakeTaskModel.getId())).thenReturn(mockChildReference);
         when(mockChildReference.updateChildren(anyMap())).thenReturn(mockVoidTask);
 
+        // Execute the code under test
         TestObserver testObserver = userRemoteDataSource.updateTask(fakeTaskModel).test();
-
         verify(mockVoidTask).addOnFailureListener(testOnFailureListener.capture());
         testOnFailureListener.getValue().onFailure(exception);
 
+        // Execute the code under test
         testObserver.assertError(exception);
         testObserver.dispose();
 
@@ -226,14 +252,16 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void delete_shouldCaptureOnSuccessListener() {
 
+        // Setup conditions of the test
         when(mockChildReference.child(fakeTaskModel.getId())).thenReturn(mockChildReference);
         when(mockChildReference.removeValue()).thenReturn(mockVoidTask);
 
+        // Execute the code under test
         TestObserver testObserver = userRemoteDataSource.deleteTask(fakeTaskModel).test();
-
         verify(mockVoidTask).addOnSuccessListener(testOnSuccessListener.capture());
         testOnSuccessListener.getValue().onSuccess(mockVoidTask.getResult());
 
+        // Execute the code under test
         testObserver.assertNoErrors();
         testObserver.assertComplete();
         testObserver.dispose();
@@ -244,15 +272,17 @@ public class UserRemoteDataSourceTest {
     @SuppressWarnings("unchecked")
     public void deleteTask_shouldCaptureOnFailureListener() {
 
+        // Setup conditions of the test
         Exception exception = new Exception();
         when(mockChildReference.child(fakeTaskModel.getId())).thenReturn(mockChildReference);
         when(mockChildReference.removeValue()).thenReturn(mockVoidTask);
 
+        // Execute the code under test
         TestObserver testObserver = userRemoteDataSource.deleteTask(fakeTaskModel).test();
-
         verify(mockVoidTask).addOnFailureListener(testOnFailureListener.capture());
         testOnFailureListener.getValue().onFailure(exception);
 
+        // Execute the code under test
         testObserver.assertError(exception);
         testObserver.dispose();
 

@@ -72,7 +72,7 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
         setUnbinder(ButterKnife.bind(this));
         initializeToolbar();
         presenter.attachView(this);
-        presenter.onRegisterFormChanges(getEmailObservable(), getPasswordObservable());
+        setupFormValidations();
     }
 
     @Override
@@ -172,6 +172,13 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
         }
     }
 
+    private void setupFormValidations() {
+        Observable<Boolean> validateEmailObservable = presenter.validateEmail(getEmailObservable());
+        Observable<Boolean> validatePasswordObservable = presenter.validatePassword(getPasswordObservable());
+        presenter.enableOrDisableRegisterButton(validateEmailObservable, validatePasswordObservable);
+
+    }
+
     private Observable<String> getEmailObservable() {
         return RxTextView.textChanges(inputEditTextEmail).skip(1).map(CharSequence::toString);
     }
@@ -179,5 +186,6 @@ public final class RegisterActivity extends BaseActivity implements RegisterCont
     private Observable<String> getPasswordObservable() {
         return RxTextView.textChanges(inputEditTextPassword).skip(1).map(CharSequence::toString);
     }
+
 
 }

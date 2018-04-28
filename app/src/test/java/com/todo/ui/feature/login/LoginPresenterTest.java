@@ -123,6 +123,7 @@ public class LoginPresenterTest {
 
     @Test
     public void login_invalidCredentials_showSnackBarWithError() {
+
         Exception invalidCredentials = Mockito.mock(FirebaseAuthInvalidCredentialsException.class);
         Mockito.when(todoRepository.login(Mockito.anyString(), Mockito.anyString())).thenReturn(Completable.error(invalidCredentials));
         Mockito.when(resources.getString(Mockito.anyInt())).thenReturn(FAKE_INVALID_CREDENTIALS_ERROR);

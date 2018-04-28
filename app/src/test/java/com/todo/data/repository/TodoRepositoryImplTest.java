@@ -36,7 +36,7 @@ public class TodoRepositoryImplTest {
     private TodoRepositoryImpl todoRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         fakeTaskModel = new TaskModel("id", "title", 0, 1, false);
         todoRepository = new TodoRepositoryImpl(userRemoteDataSource);

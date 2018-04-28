@@ -28,7 +28,7 @@ public interface TasksContract {
 
         void getTasks();
 
-        void deleteTask(int position,TaskModel taskModel);
+        void deleteTask(TaskModel taskModel);
 
         void updateTask(TaskModel taskModel);
     }

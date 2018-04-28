@@ -38,9 +38,8 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
     /********* RegisterContract.Presenter Inherited Methods ********/
 
     @Override
-    public void onRegisterFormChanges(Observable<String> emailObservable, Observable<String> passwordObservable) {
-
-        Observable<Boolean> emailValidObservable = rulesValidator.
+    public Observable<Boolean> validateEmail(Observable<String> emailObservable) {
+        return rulesValidator.
                 validate(emailObservable, rulesFactory.createEmailFieldRules())
                 .compose(applySchedulersToObservable())
                 .doOnNext(errorMessage -> {
@@ -51,8 +50,11 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
                     }
                 })
                 .map(String::isEmpty);
+    }
 
-        Observable<Boolean> passwordValidObservable = rulesValidator
+    @Override
+    public Observable<Boolean> validatePassword(Observable<String> passwordObservable) {
+        return rulesValidator
                 .validate(passwordObservable, rulesFactory.createPasswordFieldRules())
                 .compose(applySchedulersToObservable())
                 .doOnNext(errorMessage -> {
@@ -62,8 +64,12 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
                         getView().showPasswordError(errorMessage);
                     }
                 }).map(String::isEmpty);
+    }
 
-        addDisposable(Observable.combineLatest(emailValidObservable, passwordValidObservable,
+    @Override
+    public void enableOrDisableRegisterButton(Observable<Boolean> validateEmailObservable, Observable<Boolean> validatePasswordObservable) {
+
+        addDisposable(Observable.combineLatest(validateEmailObservable, validatePasswordObservable,
                 (emailValid, passwordValid)
                         -> emailValid && passwordValid)
                 .subscribe(isValid -> {
@@ -73,7 +79,6 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
                         getView().disableRegisterButton();
                     }
                 }));
-
     }
 
     @Override
@@ -89,7 +94,6 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
                     Timber.e(throwable);
                     getView().hideLoading();
                     if (throwable instanceof FirebaseAuthUserCollisionException) {
-                        getView().hideLoading();
                         getView().showSnackBar(resources.getString(R.string.register_error_email_already_exist));
                     }
                 }));

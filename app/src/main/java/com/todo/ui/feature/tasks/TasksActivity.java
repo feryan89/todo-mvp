@@ -103,7 +103,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
                 presenter.getTasks();
                 return true;
             case R.id.tasks_menu_item_by_name:
-                presenter.setTasksSortType(TasksSortType.BY_NAME);
+                presenter.setTasksSortType(TasksSortType.BY_TITLE);
                 presenter.getTasks();
                 return true;
             default:
@@ -155,7 +155,7 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
                         tasksAdapter.add(position, removedTaskModel);
                     } else {
                         // remove from backend
-                        presenter.deleteTask(position, removedTaskModel);
+                        presenter.deleteTask(removedTaskModel);
                     }
                 }));
     }

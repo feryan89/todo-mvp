@@ -29,6 +29,7 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
 
     public TasksPresenter() {
         super();
+        tasksSortType = TasksSortType.BY_DATE;
     }
 
     @Override
@@ -49,14 +50,15 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
                 .compose(applySchedulersToObservable())
                 .map(tasks -> {
                     switch (tasksSortType) {
-                        case BY_DATE:
-                            Collections.sort(tasks, new TaskModelComparator.ByDateComparator());
-                            break;
                         case BY_PRIORITY:
                             Collections.sort(tasks, new TaskModelComparator.ByPriorityComparator());
                             break;
-                        case BY_NAME:
+                        case BY_TITLE:
                             Collections.sort(tasks, new TaskModelComparator.ByTitleComparator());
+                            break;
+                        case BY_DATE:
+                        default:
+                            Collections.sort(tasks, new TaskModelComparator.ByDateComparator());
                             break;
                     }
                     return tasks;
@@ -72,7 +74,7 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
     }
 
     @Override
-    public void deleteTask(int position, TaskModel taskModel) {
+    public void deleteTask(TaskModel taskModel) {
         addDisposable(todoRepository.deleteTask(taskModel)
                 .compose(applySchedulersToCompletable())
                 .subscribe(this::getTasks, Timber::e));
