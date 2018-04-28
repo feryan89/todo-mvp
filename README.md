@@ -1,6 +1,7 @@
 # ToDo Lite Android MVP example
 [![Build Status](https://circleci.com/gh/waleedsarwar86/todo-mvp.svg?style=shield)](https://circleci.com/gh/waleedsarwar86/todo-mvp)
 ![Android API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat&label=API&maxAge=300)
+[![Code Coverage](https://codecov.io/gh/waleedsarwar86/todo-mvp/branch/master/graph/badge.svg)](https://codecov.io/gh/waleedsarwar86/todo-mvp/)
 
 
 Todo Lite app, is a wokring(production ready) sample that showcases the **MVP Pattern** Implementation.
