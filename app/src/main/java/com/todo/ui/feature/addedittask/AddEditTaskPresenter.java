@@ -1,6 +1,7 @@
 package com.todo.ui.feature.addedittask;
 
 import android.content.res.Resources;
+import android.support.annotation.VisibleForTesting;
 
 import com.todo.R;
 import com.todo.data.model.TaskModel;
@@ -56,8 +57,8 @@ public final class AddEditTaskPresenter extends BasePresenter<AddEditTaskContrac
             getView().showSnackBar(resources.getString(R.string.add_edit_task_error_invalid_title));
         }
     }
-
-    private void scheduleReminder(TaskModel taskModel) {
+    @VisibleForTesting
+    protected void scheduleReminder(TaskModel taskModel) {
         if (taskModel.getReminder() > 0) {
             taskReminderScheduler.scheduleTaskReminder(taskModel);
         }

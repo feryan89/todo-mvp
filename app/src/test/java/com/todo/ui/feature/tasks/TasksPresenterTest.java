@@ -28,8 +28,8 @@ import static org.mockito.Mockito.when;
 public class TasksPresenterTest {
 
 
-    private static TaskModel fakeTask;
-    private static List<TaskModel> fakeTasks;
+    private TaskModel fakeTask;
+    private List<TaskModel> fakeTasks;
 
     @Spy
     private SchedulerProvider schedulerProvider = new SchedulerProviderTestImpl();
