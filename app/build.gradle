@@ -125,7 +125,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:' + rulesVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + espressoVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:' + espressoVersion
-    androidTestImplementation 'com.squareup.rx.idler:rx2-idler:0.9.0'
 
     // Resolve conflicts between main and test APK:
 

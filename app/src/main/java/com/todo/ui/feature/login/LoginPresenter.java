@@ -15,7 +15,6 @@ import com.todo.util.validation.validator.RulesValidator;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Action;
 import timber.log.Timber;
 
 public final class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter {

@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -63,8 +64,9 @@ public class LoginActivityTest {
 
         onView(withId(R.id.login_input_edit_text_email)).perform(typeText("waleed_sarwar@hotmail.com"));
         onView(withId(R.id.login_input_edit_text_password)).perform(typeText("3344004"));
+
         onView(withId(R.id.login_button_login)).check(matches(isEnabled()));
-        onView(withId(R.id.login_button_login)).perform(click());
+        onView(withId(R.id.login_button_login)).perform(scrollTo(), click());
 
         intended(hasComponent(TasksActivity.class.getName()));
 
