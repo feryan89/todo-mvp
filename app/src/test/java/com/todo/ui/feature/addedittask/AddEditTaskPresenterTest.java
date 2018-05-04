@@ -6,12 +6,10 @@ import com.todo.R;
 import com.todo.data.model.TaskModel;
 import com.todo.data.repository.TodoRepository;
 import com.todo.device.TaskReminderScheduler;
-import com.todo.ui.feature.tasks.TasksContract;
-import com.todo.ui.feature.tasks.TasksPresenter;
-import com.todo.util.SchedulerProvider;
-import com.todo.util.SchedulerProviderTestImpl;
 import com.todo.util.StringUtils;
 import com.todo.util.StringUtilsImpl;
+import com.todo.util.UiSchedulersTransformer;
+import com.todo.util.UiSchedulersTransformerTestImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,13 +19,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-import javax.inject.Inject;
-
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -40,7 +34,7 @@ public class AddEditTaskPresenterTest {
     private TaskModel fakeTask;
 
     @Spy
-    private SchedulerProvider schedulerProvider = new SchedulerProviderTestImpl();
+    private UiSchedulersTransformer uiSchedulersTransformer = new UiSchedulersTransformerTestImpl();
 
     @Mock
     private TodoRepository todoRepository;
@@ -61,7 +55,7 @@ public class AddEditTaskPresenterTest {
     private AddEditTaskContract.View view;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         view = Mockito.mock(AddEditTaskContract.View.class);
         addEditTaskPresenter = Mockito.spy(new AddEditTaskPresenter());

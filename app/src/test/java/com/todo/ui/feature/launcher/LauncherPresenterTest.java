@@ -1,8 +1,8 @@
 package com.todo.ui.feature.launcher;
 
 import com.todo.data.repository.TodoRepository;
-import com.todo.util.SchedulerProvider;
-import com.todo.util.SchedulerProviderTestImpl;
+import com.todo.util.UiSchedulersTransformer;
+import com.todo.util.UiSchedulersTransformerTestImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-
-import java.util.Observable;
 
 import io.reactivex.Single;
 
@@ -24,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class LauncherPresenterTest {
 
     @Spy
-    private SchedulerProvider schedulerProvider = new SchedulerProviderTestImpl();
+    private UiSchedulersTransformer uiSchedulersTransformer = new UiSchedulersTransformerTestImpl();
 
     @Mock
     private TodoRepository todoRepository;

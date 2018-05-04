@@ -41,7 +41,7 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
     public Observable<Boolean> validateEmail(Observable<String> emailObservable) {
         return rulesValidator.
                 validate(emailObservable, rulesFactory.createEmailFieldRules())
-                .compose(applySchedulersToObservable())
+                .compose(uiSchedulersTransformer.applyObserveOnSchedulersToObservable())
                 .doOnNext(errorMessage -> {
                     if (stringUtils.isEmpty(errorMessage)) {
                         getView().hideEmailError();
@@ -56,7 +56,7 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
     public Observable<Boolean> validatePassword(Observable<String> passwordObservable) {
         return rulesValidator
                 .validate(passwordObservable, rulesFactory.createPasswordFieldRules())
-                .compose(applySchedulersToObservable())
+                .compose(uiSchedulersTransformer.applyObserveOnSchedulersToObservable())
                 .doOnNext(errorMessage -> {
                     if (stringUtils.isEmpty(errorMessage)) {
                         getView().hidePasswordError();
@@ -86,7 +86,7 @@ public final class RegisterPresenter extends BasePresenter<RegisterContract.View
         getView().hideKeyboard();
         getView().showLoading();
         addDisposable(todoRepository.register(email, password)
-                .compose(applySchedulersToCompletable())
+                .compose(uiSchedulersTransformer.applySchedulersToCompletable())
                 .subscribe(() -> {
                     getView().hideLoading();
                     getView().showTasksActivity();

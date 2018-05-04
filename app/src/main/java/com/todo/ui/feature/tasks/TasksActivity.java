@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public final class TasksActivity extends BaseActivity implements TasksContract.View, TaskItemTouchHelper.TaskItemTouchHelperCallback {
 

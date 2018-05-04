@@ -25,7 +25,7 @@ public final class LauncherPresenter extends BasePresenter<LauncherContract.View
     @Override
     public void showNextActivity() {
         addDisposable(todoRepository.isUserLoggedIn()
-                .compose(applySchedulersToSingle())
+                .compose(uiSchedulersTransformer.applySchedulersToSingle())
                 .subscribe(isUserLoggedIn -> {
                     if (isUserLoggedIn) {
                         getView().showTasksActivity();

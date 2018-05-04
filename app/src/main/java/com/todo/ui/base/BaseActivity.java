@@ -77,7 +77,7 @@ public abstract class BaseActivity extends DaggerActivity implements BaseContrac
 
         return Single.create(new SingleOnSubscribe<Boolean>() {
             @Override
-            public void subscribe(SingleEmitter<Boolean> emitter) throws Exception {
+            public void subscribe(SingleEmitter<Boolean> emitter) {
                 if (snackbar != null) {
                     snackbar.setText(message);
                     snackbar.setDuration(Snackbar.LENGTH_LONG);

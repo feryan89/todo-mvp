@@ -14,7 +14,7 @@ public class TaskModelComparatorTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         byDateComparator = new TaskModelComparator.ByDateComparator();
         byTitleComparator = new TaskModelComparator.ByTitleComparator();
         byPriorityComparator = new TaskModelComparator.ByPriorityComparator();

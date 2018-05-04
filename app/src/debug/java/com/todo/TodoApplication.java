@@ -3,6 +3,7 @@ package com.todo;
 import android.os.StrictMode;
 
 import com.todo.di.application.DaggerApplication;
+import com.todo.util.LinkingDebugTree;
 
 import timber.log.Timber;
 
@@ -15,7 +16,8 @@ public class TodoApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
-        Timber.plant(new Timber.DebugTree());
+        Timber.plant(new LinkingDebugTree());
+
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
                 .detectDiskWrites()

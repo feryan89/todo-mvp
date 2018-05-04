@@ -18,7 +18,7 @@ android {
         targetSdkVersion project.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.todo.runner.UnlockDeviceAndroidJUnitRunner"
 
         manifestPlaceholders = [fabric_api_key: project.property('fabric.api.key')]
     }
@@ -114,13 +114,14 @@ dependencies {
     testImplementation 'junit:junit:' + junitVersion
     testImplementation 'org.mockito:mockito-inline:' + mockitoVersion
 
-    // Dependencies for Android unit tests
+    // Dependencies for Android tests
 
     androidTestImplementation 'junit:junit:' + junitVersion
     androidTestImplementation 'com.android.support.test:runner:' + runnerVersion
     androidTestImplementation 'com.android.support.test:rules:' + rulesVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + espressoVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:' + espressoVersion
+    androidTestImplementation 'com.squareup.rx.idler:rx2-idler:0.9.0'
 
     // Resolve conflicts between main and test APK:
 

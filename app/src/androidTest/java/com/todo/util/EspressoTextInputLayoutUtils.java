@@ -1,4 +1,4 @@
-package com.todo.testutils;
+package com.todo.util;
 
 import android.support.annotation.IdRes;
 import android.support.test.espresso.ViewInteraction;

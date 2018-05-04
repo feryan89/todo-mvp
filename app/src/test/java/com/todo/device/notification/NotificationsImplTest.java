@@ -16,7 +16,7 @@ public class NotificationsImplTest {
     private Notification notification;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         notification = Mockito.mock(Notification.class);
         notificationManagerCompat = Mockito.mock(NotificationManagerCompat.class);
         notificationsImpl = new NotificationsImpl(notificationManagerCompat);
@@ -24,7 +24,7 @@ public class NotificationsImplTest {
 
 
     @Test
-    public void shouldShowNewNotification() throws Exception {
+    public void shouldShowNewNotification() {
 
         notificationsImpl.showNotification(TEST_NOTIFICATION_ID, notification);
 
@@ -34,7 +34,7 @@ public class NotificationsImplTest {
     }
 
     @Test
-    public void shouldUpdateExistingNotification() throws Exception {
+    public void shouldUpdateExistingNotification() {
 
         notificationsImpl.updateNotification(TEST_NOTIFICATION_ID, notification);
 
@@ -43,7 +43,7 @@ public class NotificationsImplTest {
     }
 
     @Test
-    public void shouldHideExistingNotification() throws Exception {
+    public void shouldHideExistingNotification() {
         notificationsImpl.hideNotification(TEST_NOTIFICATION_ID);
 
         Mockito.verify(notificationManagerCompat, Mockito.times(1)).cancel(TEST_NOTIFICATION_ID);
@@ -51,7 +51,7 @@ public class NotificationsImplTest {
     }
 
     @Test
-    public void shouldHideAllNotifications() throws Exception {
+    public void shouldHideAllNotifications() {
         notificationsImpl.hideNotifications();
 
         Mockito.verify(notificationManagerCompat, Mockito.times(1)).cancelAll();

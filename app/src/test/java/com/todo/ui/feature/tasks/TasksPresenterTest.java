@@ -3,8 +3,8 @@ package com.todo.ui.feature.tasks;
 import com.todo.data.model.TaskModel;
 import com.todo.data.model.TaskModelComparator;
 import com.todo.data.repository.TodoRepository;
-import com.todo.util.SchedulerProvider;
-import com.todo.util.SchedulerProviderTestImpl;
+import com.todo.util.UiSchedulersTransformer;
+import com.todo.util.UiSchedulersTransformerTestImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +31,7 @@ public class TasksPresenterTest {
     private List<TaskModel> fakeTasks;
 
     @Spy
-    private SchedulerProvider schedulerProvider = new SchedulerProviderTestImpl();
+    private UiSchedulersTransformer uiSchedulersTransformer = new UiSchedulersTransformerTestImpl();
 
     @Mock
     private TodoRepository todoRepository;

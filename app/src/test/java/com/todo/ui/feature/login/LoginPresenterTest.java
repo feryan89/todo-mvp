@@ -4,10 +4,10 @@ import android.content.res.Resources;
 
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.todo.data.repository.TodoRepository;
-import com.todo.util.SchedulerProviderTestImpl;
-import com.todo.util.SchedulerProvider;
 import com.todo.util.StringUtils;
 import com.todo.util.StringUtilsImpl;
+import com.todo.util.UiSchedulersTransformer;
+import com.todo.util.UiSchedulersTransformerTestImpl;
 import com.todo.util.validation.validator.RulesFactory;
 import com.todo.util.validation.validator.RulesValidator;
 
@@ -37,7 +37,7 @@ public class LoginPresenterTest {
     private Observable<String> fakePasswordObservable;
 
     @Spy
-    private SchedulerProvider schedulerProvider = new SchedulerProviderTestImpl();
+    private UiSchedulersTransformer uiSchedulersTransformer = new UiSchedulersTransformerTestImpl();
 
     @Mock
     private TodoRepository todoRepository;

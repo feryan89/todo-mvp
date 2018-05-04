@@ -20,7 +20,7 @@ public class TaskModelReminderSchedulerImplTest {
     private Bundle bundle;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         jobDispatcher = Mockito.mock(FirebaseJobDispatcher.class);
         taskModel = Mockito.mock(TaskModel.class);
         job = Mockito.mock(Job.class);
@@ -30,7 +30,7 @@ public class TaskModelReminderSchedulerImplTest {
 
     // TODO: 23/04/2018
     @Test
-    public void scheduleTaskReminder_shouldReturnSuccess() throws Exception {
+    public void scheduleTaskReminder_shouldReturnSuccess() {
 
     }
 

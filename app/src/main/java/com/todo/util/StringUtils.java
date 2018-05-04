@@ -2,7 +2,7 @@ package com.todo.util;
 
 public interface StringUtils {
 
-    static final String EMPTY = "";
+    String EMPTY = "";
 
     boolean isEmpty(final String string);
 

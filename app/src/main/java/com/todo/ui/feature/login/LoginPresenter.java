@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.todo.R;
 import com.todo.data.repository.TodoRepository;
 import com.todo.ui.base.BasePresenter;
+import com.todo.util.RxIdlingResource;
 import com.todo.util.StringUtils;
 import com.todo.util.validation.validator.RulesFactory;
 import com.todo.util.validation.validator.RulesValidator;
@@ -14,6 +15,7 @@ import com.todo.util.validation.validator.RulesValidator;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Action;
 import timber.log.Timber;
 
 public final class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter {
@@ -61,7 +63,7 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
     public void onLoginFormChanges(Observable<String> emailObservable, Observable<String> passwordObservable) {
 
         Observable<Boolean> emailValidObservable = rulesValidator.validate(emailObservable, rulesFactory.createEmailFieldRules())
-                .compose(applySchedulersToObservable())
+                .compose(uiSchedulersTransformer.applyObserveOnSchedulersToObservable())
                 .doOnNext(errorMessage -> {
                     if (stringUtils.isEmpty(errorMessage)) {
                         getView().hideEmailError();
@@ -72,7 +74,7 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
                 .map(String::isEmpty);
 
         Observable<Boolean> passwordValidObservable = rulesValidator.validate(passwordObservable, rulesFactory.createPasswordFieldRules())
-                .compose(applySchedulersToObservable())
+                .compose(uiSchedulersTransformer.applyObserveOnSchedulersToObservable())
                 .doOnNext(errorMessage -> {
                     if (stringUtils.isEmpty(errorMessage)) {
                         getView().hidePasswordError();
@@ -96,10 +98,14 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
     @Override
     public void login(final String email, final String password) {
 
+        // ideally your testing related code should not be here
+        RxIdlingResource.increment();
         getView().hideKeyboard();
         getView().showLoading();
 
         addDisposable(todoRepository.login(email, password)
+                .compose(uiSchedulersTransformer.applySchedulersToCompletable())
+                .doAfterTerminate(RxIdlingResource::decrement)
                 .subscribe(() -> getView().showTasksActivity(), throwable -> {
                     getView().hideLoading();
                     Timber.e(throwable);

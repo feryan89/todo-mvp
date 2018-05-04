@@ -6,6 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.todo.R;
 import com.todo.ui.feature.register.RegisterActivity;
+import com.todo.ui.feature.tasks.TasksActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +22,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.todo.testutils.EspressoTextInputLayoutUtils.onErrorViewWithinTilWithId;
+import static com.todo.util.EspressoTextInputLayoutUtils.onErrorViewWithinTilWithId;
 import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -57,7 +58,22 @@ public class LoginActivityTest {
     }
 
     @Test
+    public void loginForm_validEmailAndPassword_shouldShowTasksActivity() {
+
+
+        onView(withId(R.id.login_input_edit_text_email)).perform(typeText("waleed_sarwar@hotmail.com"));
+        onView(withId(R.id.login_input_edit_text_password)).perform(typeText("3344004"));
+        onView(withId(R.id.login_button_login)).check(matches(isEnabled()));
+        onView(withId(R.id.login_button_login)).perform(click());
+
+        intended(hasComponent(TasksActivity.class.getName()));
+
+    }
+
+
+    @Test
     public void buttonRegisterClicked_shouldShowRegisterScreen() {
+
 
         onView(withId(R.id.login_button_register)).perform(click());
 

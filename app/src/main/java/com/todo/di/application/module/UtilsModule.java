@@ -12,10 +12,10 @@ import com.todo.util.DateUtils;
 import com.todo.util.DateUtilsImpl;
 import com.todo.util.RxFirebaseUtils;
 import com.todo.util.RxFirebaseUtilsImpl;
-import com.todo.util.SchedulerProvider;
-import com.todo.util.SchedulerProviderImpl;
 import com.todo.util.StringUtils;
 import com.todo.util.StringUtilsImpl;
+import com.todo.util.UiSchedulersTransformer;
+import com.todo.util.UiSchedulersTransformerImpl;
 import com.todo.util.validation.validator.RulesFactory;
 import com.todo.util.validation.validator.RulesFactoryImpl;
 import com.todo.util.validation.validator.RulesValidator;
@@ -49,8 +49,8 @@ public final class UtilsModule {
 
     @Provides
     @Singleton
-    SchedulerProvider provideSchedulerProvider() {
-        return new SchedulerProviderImpl();
+    UiSchedulersTransformer provideSchedulersTransformer() {
+        return new UiSchedulersTransformerImpl();
     }
 
 
@@ -94,7 +94,7 @@ public final class UtilsModule {
 
         RxFirebaseUtils rxFirebaseUtils();
 
-        SchedulerProvider schedulerProvider();
+        UiSchedulersTransformer uiSchedulersTransformer();
 
         StringUtils stringUtils();
 
