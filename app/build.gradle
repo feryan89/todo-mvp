@@ -70,7 +70,7 @@ def supportLibVersion = "27.1.1"
 def constraintLayoutVersion = "1.1.0"
 def firebaseVersion = "15.0.0"
 def jobDispatcher = "0.8.5"
-def rxJava2Version = "2.1.12"
+def rxJava2Version = "2.1.13"
 def rxAndroid2Version = "2.0.2"
 def rxBinding2Version = "2.1.1"
 def timberVersion = "4.7.0"
@@ -79,6 +79,8 @@ def daggerVersion = "2.15"
 def crashlyticsVersion = "2.9.2"
 def junitVersion = "4.12"
 def mockitoVersion = "2.18.3"
+def powerMockitoVersion = "2.0.0-beta.5"
+
 def runnerVersion = "1.0.2"
 def rulesVersion = "1.0.2"
 def espressoVersion = "3.0.2"
@@ -113,6 +115,8 @@ dependencies {
 
     testImplementation 'junit:junit:' + junitVersion
     testImplementation 'org.mockito:mockito-inline:' + mockitoVersion
+    testImplementation 'org.powermock:powermock-module-junit4:'+ powerMockitoVersion
+    testImplementation 'org.powermock:powermock-api-mockito2:'+ powerMockitoVersion
 
     // Dependencies for Android tests
 
