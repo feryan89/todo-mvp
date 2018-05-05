@@ -108,13 +108,11 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
     public void login(final String email, final String password) {
 
         // ideally your testing related code should not be here
-        RxIdlingResource.increment();
         getView().hideKeyboard();
         getView().showLoading();
 
         addDisposable(todoRepository.login(email, password)
                 .compose(uiSchedulersTransformer.applySchedulersToCompletable())
-                .doAfterTerminate(RxIdlingResource::decrement)
                 .subscribe(() -> getView().showTasksActivity(), throwable -> {
                     getView().hideLoading();
                     Timber.e(throwable);

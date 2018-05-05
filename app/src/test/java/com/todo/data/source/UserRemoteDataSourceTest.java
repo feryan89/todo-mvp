@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.todo.data.model.TaskModel;
 import com.todo.util.RxFirebaseUtils;
 import com.todo.util.RxFirebaseUtilsImpl;
+import com.todo.util.RxIdlingResource;
 
 import junit.framework.Assert;
 
@@ -29,6 +30,7 @@ import io.reactivex.observers.TestObserver;
 import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -65,7 +67,8 @@ public class UserRemoteDataSourceTest {
         setupTask(mockVoidTask);
         setupTask(mockAuthResultTask);
         fakeTaskModel = new TaskModel("id", "title", 0, 1, false);
-        rxFirebaseUtils = new RxFirebaseUtilsImpl();
+        RxIdlingResource rxIdlingResource = mock(RxIdlingResource.class);
+        rxFirebaseUtils = new RxFirebaseUtilsImpl(rxIdlingResource);
         userRemoteDataSource = Mockito.spy(new UserRemoteDataSource(mockFirebaseDatabase, mockFirebaseAuth, rxFirebaseUtils));
         doReturn(mockChildReference).when(userRemoteDataSource).getChildReference();
 
@@ -82,7 +85,7 @@ public class UserRemoteDataSourceTest {
     public void getCurrentUser_shouldReturnNotNull() {
 
         // Setup conditions of the test
-        FirebaseUser fakeLoggedInUser = Mockito.mock(FirebaseUser.class);
+        FirebaseUser fakeLoggedInUser = mock(FirebaseUser.class);
         when(mockFirebaseAuth.getCurrentUser()).thenReturn(fakeLoggedInUser);
 
         // Execute the code under test

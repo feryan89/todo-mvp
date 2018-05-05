@@ -12,6 +12,7 @@ import com.todo.util.DateUtils;
 import com.todo.util.DateUtilsImpl;
 import com.todo.util.RxFirebaseUtils;
 import com.todo.util.RxFirebaseUtilsImpl;
+import com.todo.util.RxIdlingResourceImpl;
 import com.todo.util.StringUtils;
 import com.todo.util.StringUtilsImpl;
 import com.todo.util.UiSchedulersTransformer;
@@ -44,7 +45,7 @@ public final class UtilsModule {
     @Provides
     @Singleton
     RxFirebaseUtils provideRxFirebaseUtils() {
-        return new RxFirebaseUtilsImpl();
+        return new RxFirebaseUtilsImpl(new RxIdlingResourceImpl());
     }
 
     @Provides

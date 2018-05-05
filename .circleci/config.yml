@@ -227,6 +227,7 @@ jobs:
             --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
             --device model=sailfish,version=26,locale=en_US,orientation=portrait
             --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec
+            --test-targets=class com.todo.E2ETestSuite
             --directories-to-pull=/sdcard
             --timeout 20m
       - run:

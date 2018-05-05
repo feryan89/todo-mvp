@@ -24,7 +24,6 @@ public abstract class DaggerApplication extends Application {
     public void onCreate() {
         super.onCreate();
         applicationComponent = ComponentFactory.createApplicationComponent(this);
-        applicationComponent.inject(this);
 
     }
 

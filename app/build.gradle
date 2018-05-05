@@ -7,6 +7,25 @@ apply from: "$project.rootDir/code_quality_tools/script-lint.gradle"
 apply from: "$project.rootDir/code_quality_tools/script-jacoco.gradle"
 
 check.dependsOn 'findbugs', 'pmd', 'lint'
+
+task clearMainAppData(type: Exec) {
+    android.applicationVariants.all { variant ->
+        if (variant.name.equals("debug")) {
+            def clearDataCommand = ['adb', 'shell', 'pm', 'clear', 'com.todo.test']
+            println "Clearing application data of ${variant.name} variant: [${clearDataCommand}]"
+            commandLine clearDataCommand
+        }
+    }
+}
+tasks.whenTaskAdded { task ->
+    // Both of these targets are equivalent today, although in future connectedCheck
+    // will also include connectedUiAutomatorTest (not implemented yet)
+    if (task.name.equals("connectedAndroidTest") || task.name.equals("connectedCheck")) {
+        task.dependsOn(clearMainAppData)
+    }
+}
+
+
 android {
 
     compileSdkVersion project.ext.compileSdkVersion
@@ -20,8 +39,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "com.todo.runner.UnlockDeviceAndroidJUnitRunner"
 
+
         manifestPlaceholders = [fabric_api_key: project.property('fabric.api.key')]
     }
+
 
     signingConfigs {
         debug {
@@ -29,6 +50,7 @@ android {
             keyPassword project.property('debug.key.password')
             storePassword project.property('debug.store.password')
             storeFile file(project.property('debug.store.file'))
+
         }
         release {
             keyAlias project.property('release.key.alias')
@@ -79,7 +101,6 @@ def daggerVersion = "2.15"
 def crashlyticsVersion = "2.9.2"
 def junitVersion = "4.12"
 def mockitoVersion = "2.18.3"
-def powerMockitoVersion = "2.0.0-beta.5"
 
 def runnerVersion = "1.0.2"
 def rulesVersion = "1.0.2"
@@ -115,8 +136,6 @@ dependencies {
 
     testImplementation 'junit:junit:' + junitVersion
     testImplementation 'org.mockito:mockito-inline:' + mockitoVersion
-    testImplementation 'org.powermock:powermock-module-junit4:'+ powerMockitoVersion
-    testImplementation 'org.powermock:powermock-api-mockito2:'+ powerMockitoVersion
 
     // Dependencies for Android tests
 

@@ -10,12 +10,12 @@ public final class ComponentFactory {
     private ComponentFactory() {
     }
 
-    public static ApplicationComponent createApplicationComponent(final DaggerApplication todoistApplication) {
-        return ApplicationComponent.Initializer.init(todoistApplication);
+    public static ApplicationComponent createApplicationComponent(final DaggerApplication daggerApplication) {
+        return ApplicationComponent.Initializer.init(daggerApplication);
     }
 
-    public static ActivityComponent createActivityComponent(final DaggerActivity daggerActivity, final DaggerApplication todoistApplication) {
-        return ActivityComponent.Initializer.init(daggerActivity, todoistApplication.getApplicationComponent());
+    public static ActivityComponent createActivityComponent(final DaggerActivity daggerActivity, final DaggerApplication daggerApplication) {
+        return ActivityComponent.Initializer.init(daggerActivity, daggerApplication.getApplicationComponent());
     }
 
 }

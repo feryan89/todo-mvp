@@ -1,11 +1,9 @@
 package com.todo.ui.feature.login;
 
 import android.content.res.Resources;
-import android.text.TextUtils;
 
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.todo.data.repository.TodoRepository;
-import com.todo.util.RxIdlingResource;
 import com.todo.util.StringUtils;
 import com.todo.util.StringUtilsImpl;
 import com.todo.util.UiSchedulersTransformer;
@@ -16,14 +14,10 @@ import com.todo.util.validation.validator.RulesValidator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Collections;
 
@@ -35,12 +29,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(RxIdlingResource.class)
 public class LoginPresenterTest {
 
     private static final String FAKE_FIELD_ERROR = "fake_field_error";
@@ -90,8 +81,6 @@ public class LoginPresenterTest {
         when(rulesFactory.createEmailFieldRules()).thenReturn(Collections.emptyList());
         when(rulesFactory.createPasswordFieldRules()).thenReturn(Collections.emptyList());
 
-        mockStatic(RxIdlingResource.class);
-
     }
 
     @After
@@ -103,7 +92,7 @@ public class LoginPresenterTest {
     public void validateEmail_validEmail_shouldHideEmailErrorAndReturnTrue() {
 
         // Setup conditions of the test
-        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(""));
+        when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(""));
 
         // Execute the code under test
         TestObserver<Boolean> testObserver = loginPresenter.validateEmail(fakeEmailObservable).test();
@@ -122,7 +111,7 @@ public class LoginPresenterTest {
     public void validateEmail_invalidEmail_shouldShowEmailErrorAndReturnFalse() {
 
         // Setup conditions of the test
-        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(FAKE_FIELD_ERROR));
+        when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(FAKE_FIELD_ERROR));
 
         // Execute the code under test
         TestObserver<Boolean> testObserver = loginPresenter.validateEmail(fakeEmailObservable).test();
@@ -141,7 +130,7 @@ public class LoginPresenterTest {
     public void validatePassword_validEmail_shouldHidePasswordErrorAndReturnTrue() {
 
         // Setup conditions of the test
-        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(""));
+        when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(""));
 
         // Execute the code under test
         TestObserver<Boolean> testObserver = loginPresenter.validatePassword(fakePasswordObservable).test();
@@ -160,7 +149,7 @@ public class LoginPresenterTest {
     public void validatePassword_invalidPassword_shouldShowPasswordErrorAndReturnFalse() {
 
         // Setup conditions of the test
-        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(FAKE_FIELD_ERROR));
+        when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(FAKE_FIELD_ERROR));
 
         // Execute the code under test
         TestObserver<Boolean> testObserver = loginPresenter.validatePassword(fakePasswordObservable).test();
@@ -222,7 +211,7 @@ public class LoginPresenterTest {
     @Test
     public void login_validCredentials_showShowTaskActivity() {
 
-        Mockito.when(todoRepository.login(anyString(), anyString())).thenReturn(Completable.complete());
+        when(todoRepository.login(anyString(), anyString())).thenReturn(Completable.complete());
 
         loginPresenter.login(FAKE_EMAIL, FAKE_PASSWORD);
 
@@ -237,8 +226,8 @@ public class LoginPresenterTest {
     public void login_invalidCredentials_showSnackBarWithError() {
 
         Exception invalidCredentials = Mockito.mock(FirebaseAuthInvalidCredentialsException.class);
-        Mockito.when(todoRepository.login(anyString(), anyString())).thenReturn(Completable.error(invalidCredentials));
-        Mockito.when(resources.getString(Mockito.anyInt())).thenReturn(FAKE_INVALID_CREDENTIALS_ERROR);
+        when(todoRepository.login(anyString(), anyString())).thenReturn(Completable.error(invalidCredentials));
+        when(resources.getString(Mockito.anyInt())).thenReturn(FAKE_INVALID_CREDENTIALS_ERROR);
 
         loginPresenter.login(FAKE_EMAIL, FAKE_PASSWORD);
 
