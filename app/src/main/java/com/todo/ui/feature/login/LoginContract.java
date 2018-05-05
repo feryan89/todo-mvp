@@ -33,7 +33,12 @@ public interface LoginContract {
 
     interface Presenter extends BaseContract.Presenter<LoginContract.View> {
 
-        void onLoginFormChanges(Observable<String> emailObservable, Observable<String> passwordObservable);
+        Observable<Boolean> validateEmail(Observable<String> emailObservable);
+
+        Observable<Boolean> validatePassword(Observable<String> passwordObservable);
+
+        void enableOrDisableLoginButton(Observable<Boolean> validateEmailObservable, Observable<Boolean> validatePasswordObservable);
+
 
         void login(String email, String password);
 

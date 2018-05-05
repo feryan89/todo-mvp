@@ -74,7 +74,7 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
         setUnbinder(ButterKnife.bind(this));
         initializeToolbar();
         presenter.attachView(this);
-        presenter.onLoginFormChanges(getEmailObservable(), getPasswordObservable());
+        setupFormValidations();
     }
 
     /********* BaseActivity Inherited Methods ********/
@@ -161,6 +161,14 @@ public final class LoginActivity extends BaseActivity implements LoginContract.V
         Toolbar myToolbar = findViewById(R.id.login_toolbar);
         setSupportActionBar(myToolbar);
     }
+
+    private void setupFormValidations() {
+        Observable<Boolean> validateEmailObservable = presenter.validateEmail(getEmailObservable());
+        Observable<Boolean> validatePasswordObservable = presenter.validatePassword(getPasswordObservable());
+        presenter.enableOrDisableLoginButton(validateEmailObservable, validatePasswordObservable);
+
+    }
+
 
     private Observable<String> getEmailObservable() {
         return RxTextView.textChanges(inputEditTextEmail).skip(1).map(CharSequence::toString);

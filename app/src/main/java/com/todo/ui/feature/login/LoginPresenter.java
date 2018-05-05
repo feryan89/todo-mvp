@@ -58,10 +58,11 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
 
     /********* LoginContract.Presenter Inherited Methods ********/
 
-    @Override
-    public void onLoginFormChanges(Observable<String> emailObservable, Observable<String> passwordObservable) {
 
-        Observable<Boolean> emailValidObservable = rulesValidator.validate(emailObservable, rulesFactory.createEmailFieldRules())
+    @Override
+    public Observable<Boolean> validateEmail(Observable<String> emailObservable) {
+        return rulesValidator.
+                validate(emailObservable, rulesFactory.createEmailFieldRules())
                 .compose(uiSchedulersTransformer.applyObserveOnSchedulersToObservable())
                 .doOnNext(errorMessage -> {
                     if (stringUtils.isEmpty(errorMessage)) {
@@ -71,8 +72,12 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
                     }
                 })
                 .map(String::isEmpty);
+    }
 
-        Observable<Boolean> passwordValidObservable = rulesValidator.validate(passwordObservable, rulesFactory.createPasswordFieldRules())
+    @Override
+    public Observable<Boolean> validatePassword(Observable<String> passwordObservable) {
+        return rulesValidator
+                .validate(passwordObservable, rulesFactory.createPasswordFieldRules())
                 .compose(uiSchedulersTransformer.applyObserveOnSchedulersToObservable())
                 .doOnNext(errorMessage -> {
                     if (stringUtils.isEmpty(errorMessage)) {
@@ -81,9 +86,14 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
                         getView().showPasswordError(errorMessage);
                     }
                 }).map(String::isEmpty);
+    }
 
-        addDisposable(Observable.combineLatest(emailValidObservable, passwordValidObservable,
-                (emailValid, passwordValid) -> emailValid && passwordValid)
+    @Override
+    public void enableOrDisableLoginButton(Observable<Boolean> validateEmailObservable, Observable<Boolean> validatePasswordObservable) {
+
+        addDisposable(Observable.combineLatest(validateEmailObservable, validatePasswordObservable,
+                (emailValid, passwordValid)
+                        -> emailValid && passwordValid)
                 .subscribe(isValid -> {
                     if (isValid) {
                         getView().enableLoginButton();
@@ -91,8 +101,8 @@ public final class LoginPresenter extends BasePresenter<LoginContract.View> impl
                         getView().disableLoginButton();
                     }
                 }));
-
     }
+
 
     @Override
     public void login(final String email, final String password) {

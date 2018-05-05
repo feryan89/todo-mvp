@@ -1,8 +1,9 @@
 package com.todo.ui.feature.login;
 
-import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.Toolbar;
 
 import com.todo.R;
 import com.todo.ui.feature.register.RegisterActivity;
@@ -20,10 +21,11 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.todo.util.EspressoTextInputLayoutUtils.onErrorViewWithinTilWithId;
+import static com.todo.util.TextInputLayoutMatchers.withTextInputLayoutError;
+import static com.todo.util.ToolbarMatchers.withToolbarTitle;
 import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -35,7 +37,7 @@ public class LoginActivityTest {
 
 
     @Rule
-    public IntentsTestRule<LoginActivity> loginActivityIntentsTestRule = new IntentsTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> loginActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
 
     @Test
@@ -44,7 +46,7 @@ public class LoginActivityTest {
         onView(withId(R.id.login_input_edit_text_email)).perform(typeText(INVALID_EMAIL));
 
         onView(withId(R.id.login_button_login)).check(matches(not(isEnabled())));
-        onErrorViewWithinTilWithId(R.id.login_input_layout_email).check(matches(withText(getString(R.string.all_error_email_invalid))));
+        onView(withId(R.id.login_input_layout_email)).check(matches(withTextInputLayoutError(R.string.all_error_email_invalid)));
 
     }
 
@@ -54,7 +56,7 @@ public class LoginActivityTest {
         onView(withId(R.id.login_input_edit_text_password)).perform(typeText("password"), clearText());
 
         onView(withId(R.id.login_button_login)).check(matches(not(isEnabled())));
-        onErrorViewWithinTilWithId(R.id.login_input_layout_password).check(matches(withText(getString(R.string.all_error_password_required))));
+        onView(withId(R.id.login_input_layout_password)).check(matches(withTextInputLayoutError(R.string.all_error_password_required)));
 
     }
 
@@ -68,7 +70,8 @@ public class LoginActivityTest {
         onView(withId(R.id.login_button_login)).check(matches(isEnabled()));
         onView(withId(R.id.login_button_login)).perform(scrollTo(), click());
 
-        intended(hasComponent(TasksActivity.class.getName()));
+        onView(isAssignableFrom(Toolbar.class)).check(matches(withToolbarTitle(R.string.all_name_app)));
+
 
     }
 
@@ -79,11 +82,11 @@ public class LoginActivityTest {
 
         onView(withId(R.id.login_button_register)).perform(click());
 
-        intended(hasComponent(RegisterActivity.class.getName()));
+        onView(isAssignableFrom(Toolbar.class)).check(matches(withToolbarTitle(R.string.register_title)));
     }
 
     private String getString(int resId) {
 
-        return loginActivityIntentsTestRule.getActivity().getString(resId);
+        return loginActivityTestRule.getActivity().getString(resId);
     }
 }

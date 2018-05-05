@@ -29,8 +29,12 @@ import java.util.Collections;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
@@ -96,29 +100,122 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void onLoginFormChanges_validEmailPassword_shouldEnableLoginButton() {
+    public void validateEmail_validEmail_shouldHideEmailErrorAndReturnTrue() {
 
-        Mockito.when(rulesValidator.validate(Mockito.any(), Mockito.anyList())).thenReturn(Observable.just(""));
+        // Setup conditions of the test
+        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(""));
 
+        // Execute the code under test
+        TestObserver<Boolean> testObserver = loginPresenter.validateEmail(fakeEmailObservable).test();
 
-        loginPresenter.onLoginFormChanges(fakeEmailObservable, fakePasswordObservable);
+        // Make assertions on the results
+        verify(view).hideEmailError();
+        testObserver.assertNoErrors();
+        testObserver.assertValue(Boolean.TRUE);
+        testObserver.assertComplete();
+        testObserver.dispose();
 
-        Mockito.verify(view, Mockito.times(1)).hideEmailError();
-        Mockito.verify(view, Mockito.times(1)).hidePasswordError();
-        Mockito.verify(view, Mockito.times(1)).enableLoginButton();
 
     }
 
     @Test
-    public void onLoginFormChanges_invalidEmailPassword_shouldDisableLoginButton() {
+    public void validateEmail_invalidEmail_shouldShowEmailErrorAndReturnFalse() {
 
-        Mockito.when(rulesValidator.validate(Mockito.any(), Mockito.anyList())).thenReturn(Observable.just(FAKE_FIELD_ERROR));
+        // Setup conditions of the test
+        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(FAKE_FIELD_ERROR));
 
-        loginPresenter.onLoginFormChanges(fakeEmailObservable, fakePasswordObservable);
+        // Execute the code under test
+        TestObserver<Boolean> testObserver = loginPresenter.validateEmail(fakeEmailObservable).test();
 
-        Mockito.verify(view, Mockito.times(1)).showEmailError(FAKE_FIELD_ERROR);
-        Mockito.verify(view, Mockito.times(1)).showPasswordError(FAKE_FIELD_ERROR);
-        Mockito.verify(view, Mockito.times(1)).disableLoginButton();
+        // Make assertions on the results
+        verify(view).showEmailError(FAKE_FIELD_ERROR);
+        testObserver.assertNoErrors();
+        testObserver.assertValue(Boolean.FALSE);
+        testObserver.assertComplete();
+        testObserver.dispose();
+
+
+    }
+
+    @Test
+    public void validatePassword_validEmail_shouldHidePasswordErrorAndReturnTrue() {
+
+        // Setup conditions of the test
+        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(""));
+
+        // Execute the code under test
+        TestObserver<Boolean> testObserver = loginPresenter.validatePassword(fakePasswordObservable).test();
+
+        // Make assertions on the results
+        verify(view).hidePasswordError();
+        testObserver.assertNoErrors();
+        testObserver.assertValue(Boolean.TRUE);
+        testObserver.assertComplete();
+        testObserver.dispose();
+
+
+    }
+
+    @Test
+    public void validatePassword_invalidPassword_shouldShowPasswordErrorAndReturnFalse() {
+
+        // Setup conditions of the test
+        Mockito.when(rulesValidator.validate(any(), anyList())).thenReturn(Observable.just(FAKE_FIELD_ERROR));
+
+        // Execute the code under test
+        TestObserver<Boolean> testObserver = loginPresenter.validatePassword(fakePasswordObservable).test();
+
+        // Make assertions on the results
+        verify(view).showPasswordError(FAKE_FIELD_ERROR);
+        testObserver.assertNoErrors();
+        testObserver.assertValue(Boolean.FALSE);
+        testObserver.assertComplete();
+        testObserver.dispose();
+
+
+    }
+
+    @Test
+    public void enableOrDisable_validEmailPassword_shouldEnableRegisterButton() {
+
+        // Execute the code under test
+        loginPresenter.enableOrDisableLoginButton(Observable.just(Boolean.TRUE), Observable.just(Boolean.TRUE));
+
+        // Make assertions on the results
+        verify(view).enableLoginButton();
+
+    }
+
+    @Test
+    public void enableOrDisable_invalidEmailValidPassword_shouldDisableRegisterButton() {
+
+        // Execute the code under test
+        loginPresenter.enableOrDisableLoginButton(Observable.just(Boolean.FALSE), Observable.just(Boolean.TRUE));
+
+        // Make assertions on the results
+        verify(view).disableLoginButton();
+
+    }
+
+    @Test
+    public void enableOrDisable_validEmailInvalidPassword_shouldDisableRegisterButton() {
+
+        // Execute the code under test
+        loginPresenter.enableOrDisableLoginButton(Observable.just(Boolean.TRUE), Observable.just(Boolean.FALSE));
+
+        // Make assertions on the results
+        verify(view).disableLoginButton();
+
+    }
+
+    @Test
+    public void enableOrDisable_invalidEmailPassword_shouldDisableRegisterButton() {
+
+        // Execute the code under test
+        loginPresenter.enableOrDisableLoginButton(Observable.just(Boolean.FALSE), Observable.just(Boolean.FALSE));
+
+        // Make assertions on the results
+        verify(view).disableLoginButton();
 
     }
 
