@@ -19,6 +19,7 @@ import com.todo.data.model.TaskModel;
 import com.todo.di.activity.ActivityComponent;
 import com.todo.ui.base.BaseActivity;
 import com.todo.ui.feature.addedittask.AddEditTaskActivity;
+import com.todo.ui.feature.login.LoginActivity;
 import com.todo.util.DateUtils;
 
 import java.util.ArrayList;
@@ -107,6 +108,9 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
                 presenter.setTasksSortType(TasksSortType.BY_TITLE);
                 presenter.getTasks();
                 return true;
+            case R.id.tasks_menu_item_logout:
+                presenter.logout();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -123,6 +127,11 @@ public final class TasksActivity extends BaseActivity implements TasksContract.V
     @Override
     public void showAddEditTaskActivity() {
         AddEditTaskActivity.startActivity(this);
+    }
+
+    @Override
+    public void showLoginUi() {
+        LoginActivity.startActivity(this);
     }
 
     @Override

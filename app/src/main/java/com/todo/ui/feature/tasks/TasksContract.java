@@ -11,6 +11,8 @@ public interface TasksContract {
 
         void showAddEditTaskActivity();
 
+        void showLoginUi();
+
         void showTasks(List<TaskModel> taskModels);
 
         void showTasksEmptyView();
@@ -27,6 +29,8 @@ public interface TasksContract {
         void addTask();
 
         void getTasks();
+
+        void logout();
 
         void deleteTask(TaskModel taskModel);
 

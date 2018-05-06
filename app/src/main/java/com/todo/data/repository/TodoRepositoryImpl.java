@@ -41,6 +41,11 @@ public class TodoRepositoryImpl implements TodoRepository {
     }
 
     @Override
+    public void logout() {
+        userRemoteDataSource.logout();
+    }
+
+    @Override
     public Completable register(String email, String password) {
         return Completable.fromSingle(userRemoteDataSource.register(email, password));
     }
@@ -59,6 +64,11 @@ public class TodoRepositoryImpl implements TodoRepository {
     @Override
     public Completable deleteTask(TaskModel taskModel) {
         return userRemoteDataSource.deleteTask(taskModel);
+    }
+
+    @Override
+    public Completable deleteTasks() {
+        return userRemoteDataSource.deleteTasks();
     }
 
     @Override

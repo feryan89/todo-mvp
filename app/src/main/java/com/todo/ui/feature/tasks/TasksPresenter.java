@@ -2,6 +2,7 @@ package com.todo.ui.feature.tasks;
 
 import android.content.res.Resources;
 
+import com.todo.BuildConfig;
 import com.todo.data.model.TaskModel;
 import com.todo.data.model.TaskModelComparator;
 import com.todo.data.repository.TodoRepository;
@@ -11,6 +12,7 @@ import java.util.Collections;
 
 import javax.inject.Inject;
 
+import io.reactivex.functions.Action;
 import timber.log.Timber;
 
 public final class TasksPresenter extends BasePresenter<TasksContract.View> implements TasksContract.Presenter {
@@ -71,6 +73,19 @@ public final class TasksPresenter extends BasePresenter<TasksContract.View> impl
                         getView().showTasks(tasks);
                     }
                 }, Timber::e));
+    }
+
+    @Override
+    public void logout() {
+        if (BuildConfig.DEBUG) {
+            addDisposable(todoRepository.deleteTasks().subscribe(() -> {
+                todoRepository.logout();
+                getView().showLoginUi();
+            }));
+        } else {
+            todoRepository.logout();
+            getView().showLoginUi();
+        }
     }
 
     @Override

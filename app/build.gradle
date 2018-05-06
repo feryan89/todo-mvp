@@ -144,6 +144,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:' + rulesVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:' + espressoVersion
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:' + espressoVersion
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:' + espressoVersion
 
     // Resolve conflicts between main and test APK:
 

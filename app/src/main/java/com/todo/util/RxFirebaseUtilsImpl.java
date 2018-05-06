@@ -88,8 +88,10 @@ public class RxFirebaseUtilsImpl implements RxFirebaseUtils {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!emitter.isDisposed()) {
                     emitter.onNext(dataSnapshot);
-                    if (firstTime)
+                    if (firstTime) {
                         rxIdlingResource.decrement();
+                        firstTime = false;
+                    }
                 }
             }
 

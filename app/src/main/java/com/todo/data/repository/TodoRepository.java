@@ -15,6 +15,8 @@ public interface TodoRepository {
 
     Completable login(String email, String password);
 
+    void logout();
+
     Completable register(String email, String password);
 
 
@@ -24,6 +26,7 @@ public interface TodoRepository {
 
     Completable deleteTask(TaskModel taskModel);
 
+    Completable deleteTasks();
 
     Observable<List<TaskModel>> getTasks();
 

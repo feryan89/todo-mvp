@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.todo.BuildConfig;
 import com.todo.data.model.TaskModel;
 import com.todo.util.RxFirebaseUtils;
 
@@ -48,6 +49,11 @@ public class UserRemoteDataSource extends RemoteDataSource {
         return rxFirebaseUtils.getSingle(firebaseAuth.signInWithEmailAndPassword(email, password));
     }
 
+
+    public void logout() {
+        firebaseAuth.signOut();
+    }
+
     public Single<AuthResult> register(final String email, final String password) {
         return rxFirebaseUtils.getSingle(firebaseAuth.createUserWithEmailAndPassword(email, password));
 
@@ -74,6 +80,10 @@ public class UserRemoteDataSource extends RemoteDataSource {
         return rxFirebaseUtils.getCompletable(getChildReference().child(taskModel.getId()).removeValue());
 
 
+    }
+
+    public Completable deleteTasks() {
+        return rxFirebaseUtils.getCompletable(getChildReference().removeValue());
     }
 
     public Observable<List<TaskModel>> getTasks() {

@@ -21,5 +21,10 @@
         </menu>
     </item>
 
+    <item
+        android:id="@+id/tasks_menu_item_logout"
+        android:title="@string/tasks_action_logout"
+        app:showAsAction="never" />
+
 
 </menu>

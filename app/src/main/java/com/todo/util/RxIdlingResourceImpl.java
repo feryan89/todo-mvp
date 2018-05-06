@@ -32,7 +32,6 @@ public class RxIdlingResourceImpl implements RxIdlingResource {
 
     @Override
     public void decrement() {
-
         countingIdlingResource.decrement();
     }
 

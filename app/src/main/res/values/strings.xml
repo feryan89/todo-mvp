@@ -35,6 +35,7 @@
     <string name="tasks_action_by_date">By date</string>
     <string name="tasks_action_by_priority">By priority</string>
     <string name="tasks_action_by_name">By name</string>
+    <string name="tasks_action_logout">Logout</string>
     <string name="tasks_action_undo">Undo</string>
     <string name="tasks_message_deleted">Deleted</string>
     <string name="tasks_message_completed">Completed</string>
