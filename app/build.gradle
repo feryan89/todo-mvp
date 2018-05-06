@@ -39,8 +39,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "com.todo.runner.UnlockDeviceAndroidJUnitRunner"
 
-
         manifestPlaceholders = [fabric_api_key: project.property('fabric.api.key')]
+
+
+        buildConfigField 'String', 'FIREBASE_TEST_EMAIL', "\"${project.property('firebase.test.email')}\""
+        buildConfigField 'String', 'FIREBASE_TEST_PASSWORD', "\"${project.property('firebase.test.password')}\""
+
     }
 
 

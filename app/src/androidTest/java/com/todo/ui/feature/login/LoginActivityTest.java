@@ -5,6 +5,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
 
+import com.todo.BuildConfig;
 import com.todo.R;
 import com.todo.ui.feature.register.RegisterActivity;
 import com.todo.ui.feature.tasks.TasksActivity;
@@ -33,7 +34,6 @@ import static org.hamcrest.CoreMatchers.not;
 public class LoginActivityTest {
 
     public static final String INVALID_EMAIL = "invalid_email";
-    public static final String VALID_EMAIL = "valid_email@android.com";
 
 
     @Rule
@@ -64,8 +64,8 @@ public class LoginActivityTest {
     public void loginForm_validEmailAndPassword_shouldShowTasksActivity() {
 
 
-        onView(withId(R.id.login_input_edit_text_email)).perform(typeText("waleed_sarwar@hotmail.com"));
-        onView(withId(R.id.login_input_edit_text_password)).perform(typeText("3344004"));
+        onView(withId(R.id.login_input_edit_text_email)).perform(typeText(BuildConfig.FIREBASE_TEST_EMAIL));
+        onView(withId(R.id.login_input_edit_text_password)).perform(typeText(BuildConfig.FIREBASE_TEST_PASSWORD));
 
         onView(withId(R.id.login_button_login)).check(matches(isEnabled()));
         onView(withId(R.id.login_button_login)).perform(scrollTo(), click());
