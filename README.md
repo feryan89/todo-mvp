@@ -59,6 +59,16 @@ Todo Lite app, is a wokring(production ready) sample that showcases the **MVP Pa
   
     * Junit
     * Mockito
+
+# Setup
+
+1. Clone or download this repo.
+2. This app runs off a Firebase backend. You will need to generate your firebase backend. To do this, navigate to https://firebase.google.com/ and sign up. Create a project called 
+"Todo Lite" (or what ever you want to call it).
+3. Generate your own google-services.json file to use with the app. Navigate to the Firebase project settings dashboard. You should see an option to download the 
+google-services.json file. This must then be placed into the app folder of this project.
+4. Create an account on Fabric for Crashlytics. To do this, navigate to https://fabric.io/sign_up and Signup and get `fabric_api_key`
+5. Rename the `gradle.sample.properties` to `gradle.poperties` and put the values accordingly and you are good to go. 
   
 ## Future work
 
